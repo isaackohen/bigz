@@ -45,21 +45,15 @@
 
             <hr>
 
-                                        <div id="popular"></div>
-
-
+    <div id="popular"></div>
           <div id="c1" class="container-flex owl-carousel o1" style="z-index: 1;">
-
         @foreach(\App\Slotslist::get()->shuffle() as $slots)
                     @if($slots->f == '1')
-
           @if(auth()->guest())
                     <div onclick="$.auth()" class="slots_thumbnail" style="background-image:url('/assets/game/preview/{{ $slots->UID }}.webp');">
                 @else
                     <div onclick="redirect('/game/{{ $slots->UID }}')" class="slots_thumbnail" style="background-image:url('https://cdn.static.bet/i/long/jpg/{{ $slots->id }}.jpg');">
             @endif
-
-
                 <div class="name">
                 <div class="gamename" style="display: flex; justify-content: center; margin-top: 2px;">
                     <span><b>{{ $slots->n }}</b></span>
@@ -79,20 +73,15 @@
             @endif
         @endforeach
     </div>
-        
-
-          <div id="c2" class="container-flex owl-carousel o2" style="z-index: 1;">
-
+    
+    <div id="c2" class="container-flex owl-carousel o2" style="z-index: 1;">
         @foreach(\App\Slotslist::get()->shuffle() as $slots)
                     @if($slots->f == '2')
-
           @if(auth()->guest())
                     <div onclick="$.auth()" class="slots_thumbnail" style="background-image:url('/assets/game/preview/{{ $slots->UID }}.webp');">
                 @else
                     <div onclick="redirect('/game/{{ $slots->UID }}')" class="slots_thumbnail" style="background-image:url('https://cdn.static.bet/i/long/jpg/{{ $slots->id }}.jpg');">
             @endif
-
-
                 <div class="name">
                 <div class="gamename" style="display: flex; justify-content: center; margin-top: 2px;">
                     <span><b>{{ $slots->n }}</b></span>
@@ -111,9 +100,5 @@
             </div>  
             @endif
         @endforeach
-    </div>
-        
-
-
-
+   </div>     
 </div>

@@ -43,17 +43,20 @@ class Bigwinnerinhouse extends Command {
      * @return mixed
      */
     public function handle() {
-        $bigwinner_player = \App\Settings::where('name', 'bigwinner_player')->first()->value;
-        $bigwinner_game = \App\Settings::where('name', 'bigwinner_game')->first()->value;
-        $bigwinner_amount = \App\Settings::where('name', 'bigwinner_amount')->first()->value;
-        $bigwinner_multi = \App\Settings::where('name', 'bigwinner_multi')->first()->value;
+        $cronenabled = floatval(Settings::where('name', 'tg_bigwinner_inhouse_cron')->first()->value);
+        if($cronenabled == '1') {
+
+        $bigwinner_player = \App\Settings::where('name', 'bigwinner_inhouse_player')->first()->value;
+        $bigwinner_game = \App\Settings::where('name', 'bigwinner_inhouse_game')->first()->value;
+        $bigwinner_amount = \App\Settings::where('name', 'bigwinner_inhouse_amount')->first()->value;
+        $bigwinner_multi = \App\Settings::where('name', 'bigwinner_inhouse_multi')->first()->value;
 
 
-        $bot = new TeleBot('1885265380:AAHK6BO9nfchHQWu5mb6VHvBbHTYu6LlSQ8');
+        $bot = new TeleBot(env('TELEGRAM_BOT_TOKEN'));
 
         // See docs for details:  https://core.telegram.org/bots/api#sendmessage
         $message = $bot->sendMessage([
-            'chat_id' => -535787624,
+            'chat_id' => -1001199743876,
             'text' => 'Congratz to '.$bigwinner_player.' on our in-house '.$bigwinner_game.' game, with a whopping '.$bigwinner_multi.'x multiplier with a '.$bigwinner_amount.'$ wager',
             'reply_markup' => [
                     'inline_keyboard' => [[[
@@ -62,7 +65,8 @@ class Bigwinnerinhouse extends Command {
                 ]]]
             ]
         ]);
-
+            Settings::where('name', 'tg_bigwinner_cron')->update(['value' => 0]);
+    }
     }
 
 }

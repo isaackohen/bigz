@@ -183,13 +183,13 @@ abstract class QuickGame extends Game {
             ]);
 
 
-                        if ($multiplierfloat > 2.0 && $usd_wager > 0.1) {
-                        Settings::where('name', 'bigwinner_player')->update(['value' => $data->user()->name]);
-                        Settings::where('name', 'bigwinner_game')->update(['value' => $this->metadata()->id()]);
-                        Settings::where('name', 'bigwinner_amount')->update(['value' => $usd_wager]);
-                        Settings::where('name', 'bigwinner_multi')->update(['value' => $multiplierfloat]);
+                    if ($multiplierfloat > 1 && $usd_wager > 0.2) {
+                        Settings::where('name', 'bigwinner_inhouse_player')->update(['value' => $data->user()->name]);
+                        Settings::where('name', 'bigwinner_inhouse_game')->update(['value' => $this->metadata()->id()]);
+                        Settings::where('name', 'bigwinner_inhouse_amount')->update(['value' => $usd_wager]);
+                        Settings::where('name', 'bigwinner_inhouse_multi')->update(['value' => $multiplierfloat]);
 
-            \Artisan::call('datagamble:bigwinnerinhouse');
+                    Settings::where('name', 'tg_bigwinner_inhouse_cron')->update(['value' => 1]);
 
             }
 

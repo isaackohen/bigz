@@ -528,8 +528,8 @@ $(document).ready(function() {
         const e = $(`<tr>
             <th>
                 <div>
-                    <div class="icon d-none d-md-inline-block" onclick="redirect('/game/${game.metadata.id}')">
-                        <img class="tiny-game" src="/assets/game/tiny/${game.metadata.id}.webp">
+                    <div class="icon d-none d-md-inline-block" onclick="redirect('/game/${(game.metadata.id != 'slotmachine' ? game.metadata.id : game.game.nonce)}')">
+                        <img class="tiny-game" src="/assets/game/tiny/${(game.metadata.id != 'slotmachine' ? game.metadata.id : game.game.nonce)}.webp">
                     </div>
                     <div class="name">
                         <div><a href="javascript:void(0)" onclick="$.overview('${game.game._id}', '${game.game.game}')">${(game.metadata.id != 'slotmachine' ? game.metadata.name : game.game.nonce)} </a></div>

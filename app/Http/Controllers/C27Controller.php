@@ -556,16 +556,20 @@ class C27Controller extends Controller
         ]);
         event(new \App\Events\LiveFeedGame($game, 10));
 
-                                     if($multi > 2.00) {
 
-        Settings::where('name', 'bigwinner_player')->update(['value' => $user->name]);
-        Settings::where('name', 'bigwinner_slot')->update(['value' => $gameguid]);
-        Settings::where('name', 'bigwinner_amount')->update(['value' => ($content->params->deposit / 100)]);
-        Settings::where('name', 'bigwinner_multi')->update(['value' => $multi]);
-        Settings::where('name', 'bigwinner_game')->update(['value' => $gameslug]);
-        Settings::where('name', 'bigwinner_gamevuid')->update(['value' => $gamevuid]);
+            $minmulti = \App\Settings::where('name', 'bigwinner_min_multi')->first()->value;
+            $getcronstate = \App\Settings::where('name', 'tg_bigwinner_cron')->first()->value;
 
-            \Artisan::call('datagamble:bigwinner');
+            if($multi > $minmulti) {
+                if($getcronstate == '0')
+                Settings::where('name', 'bigwinner_player')->update(['value' => $user->name]);
+                Settings::where('name', 'bigwinner_slot')->update(['value' => $gameguid]);
+                Settings::where('name', 'bigwinner_amount')->update(['value' => ($content->params->deposit / 100)]);
+                Settings::where('name', 'bigwinner_multi')->update(['value' => $multi]);
+                Settings::where('name', 'bigwinner_game')->update(['value' => $gameslug]);
+                Settings::where('name', 'bigwinner_gamevuid')->update(['value' => $gamevuid]);
+
+                Settings::where('name', 'tg_bigwinner_cron')->update(['value' => 1]);
 
             }
 

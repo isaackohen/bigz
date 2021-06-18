@@ -43,12 +43,18 @@ class Bigwinner extends Command {
      * @return mixed
      */
     public function handle() {
+        $cronenabled = floatval(Settings::where('name', 'tg_bigwinner_cron')->first()->value);
+        if($cronenabled == '1') {
+
         $bigwinner_player = \App\Settings::where('name', 'bigwinner_player')->first()->value;
         $bigwinner_slot = \App\Settings::where('name', 'bigwinner_slot')->first()->value;
         $bigwinner_amount = \App\Settings::where('name', 'bigwinner_amount')->first()->value;
         $bigwinner_multi = \App\Settings::where('name', 'bigwinner_multi')->first()->value;
         $bigwinner_gamevuid = \App\Settings::where('name', 'bigwinner_gamevuid')->first()->value;
         $bigwinner_historyid = \App\Settings::where('name', 'bigwinner_historyid')->first()->value;
+
+
+       
         $bigwinner_game = \App\Settings::where('name', 'bigwinner_game')->first()->value;
 
         $inlinemessage = $bigwinner_player.' just hit '.$bigwinner_slot.' with a '.$bigwinner_multi.'x multiplier for '.$bigwinner_amount.'$ profit.';
@@ -64,9 +70,10 @@ class Bigwinner extends Command {
                 ]]]
             ]
         ]);
+                Settings::where('name', 'tg_bigwinner_cron')->update(['value' => 0]);
 
     }
-
+}
 }
 
 
