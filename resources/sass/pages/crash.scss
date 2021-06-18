@@ -1,0 +1,149 @@
+@import "../variables";
+
+.game-content-crash {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	flex-direction: column;
+    position: relative;
+
+    .cashout {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 10px 15px;
+        border-radius: 3px;
+        @include themed() {
+            background: t('body');
+        }
+    }
+
+    .crashCustomHistory {
+        position: absolute;
+		right: 30px;
+        top: 30px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        height: 228px;
+        width: 45px;
+        border-radius: 5px;
+        overflow: hidden;
+        @include themed() {
+            background: darken(t('sidebar'), 10%);
+        }
+
+        .crashCustomHistoryElement {
+            padding: 0.955em 0;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: black;
+        }
+    }
+	
+	.crashMultiplayerTable { 
+	  width: 100%;
+	  border-top: 5px solid #ff9900;
+	  margin-top: 5px;
+	  display: flex;
+	  flex-direction: column;
+	}
+
+	.crashMultiplayerTable .user {
+	  display: flex;
+	  flex-direction: row;
+	  align-items: center;
+	  padding: 15px;
+	  @include themed() {
+            background: lighten(t('body'), 3%);
+      }
+	  transition: background 0.3s ease;
+	  cursor: pointer;
+	}
+
+	.crashMultiplayerTable .user:hover {
+	  background: #171f2c;
+	}
+
+	.crashMultiplayerTable .user:first-child {
+	  margin-top: 5px;
+	}
+
+	.crashMultiplayerTable .user:nth-child(even) {
+	  @include themed() {
+            background: lighten(t('body'), 3%);
+      }
+	}
+
+	.crashMultiplayerTable .user:nth-child(even):hover {
+	  background: #171f2c !important;
+	}
+
+	.crashMultiplayerTable .user .avatar img {
+	  border-radius: 50%;
+	  width: 32px;
+	  height: 32px;
+	}
+
+	.crashMultiplayerTable .user .name {
+	  margin-left: 5px;
+	}
+
+	.crashMultiplayerTable .user .bet {
+	  margin-left: auto;
+	}
+
+	.crashMultiplayerTable .user .crash {
+	  margin-left: 5px;
+	}
+
+    .game-history {
+        height: 10px;
+        padding: 0 !important;
+        position: relative;
+		top: 0 !important;
+		bottom: unset !important;
+
+        .history-crash {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            will-change: width;
+			background: #1957ec;
+
+            span {
+                position: absolute;
+                right: 5px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: white;
+                font-size: 0.65em;
+            }
+        }
+    }
+}
+
+@media(max-width: 1400px) {
+    .game-content-crash {
+        canvas {
+            width: 100%;
+        }
+    }
+}
+
+
+@include media-breakpoint-down(md) {
+    .game-content-crash {
+        .crashCustomHistory {
+            right: 10px;
+            top: 10px;
+            transform: unset !important;
+            height: 180px;
+        }
+    }
+}

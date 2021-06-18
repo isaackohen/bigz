@@ -1,0 +1,57 @@
+@import "variables";
+
+.pageLoader {
+    z-index: 999999;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+
+    @include themed() {
+        background: #172327 !important;
+    }
+
+    .error {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: 120px;
+        text-align: center;
+    }
+
+    .loader {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: unset;
+        height: unset;
+        transform: translate(-50%, -50%);
+
+        div {
+            left: unset;
+            top: unset;
+            margin: unset;
+        }
+    }
+}
+
+.loader {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    div {
+        display: block;
+        position: relative;
+        left: 50%;
+        top: 50%;
+        width: 200px;
+        height: 200px;
+        margin: -100px 0 0 -100px;
+        border: 3px solid transparent;
+
+    }
+
+}

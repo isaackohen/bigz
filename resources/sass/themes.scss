@@ -1,0 +1,62 @@
+$themes: (
+    default: (
+        header: white,
+        body: darken(white, 5.5%),
+        secondary: #4764e1,
+        text: black,
+        logo: url('/img/logo/logo_black.png'),
+        sidebar: white,
+        link: #539bf5,
+        link-hover: black,
+        input: #f0f3f6,
+        green: #27ae60,
+        uiblock: lighten(#000000, 0.2%),
+        bodybg: url('/img/misc/stars.png'),       
+        headerbg: url('/img/misc/animtop-2.svg'),
+        red: #e74c3c,
+        draggableWindowHeader: #1a191e,
+        draggableWindowBody: lighten(#1a191e, 5.5%),
+        draggableWindowText: white
+    ),
+    dark: (
+        header: #172327,
+        body: #111a1e,
+        secondary: #33c16c,
+        text: #718e98,
+        logo: url('/img/logo/bigz-full.svg'),
+        sidebar: darken(#111a1e, 0.15%),
+        sidebartwo: darken(#111a1e, 0.35%),
+        link: #718e98,
+        link-hover: #ffffff,
+        input: #19272b,
+        backgroundbody: #222,
+        uiblock: lighten(#111a1e, 1.2%),
+        green: #2ecc71,
+        red: #e74c3c,
+        draggableWindowHeader: darken(white, 5.5%),
+        draggableWindowBody: white,
+        draggableWindowText: black
+
+    )
+);
+
+
+
+@mixin themed() {
+    @each $theme, $map in $themes {
+        .theme--#{$theme} & {
+            $theme-map: () !global;
+            @each $key, $submap in $map {
+                $value: map-get(map-get($themes, $theme), '#{$key}');
+                $theme-map: map-merge($theme-map, ($key: $value)) !global;
+            }
+            @content;
+            $theme-map: null !global;
+        }
+    }
+}
+
+@function t($key) {
+    //noinspection SassScssUnresolvedVariable
+    @return map-get($theme-map, $key);
+}

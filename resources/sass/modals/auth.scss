@@ -1,0 +1,114 @@
+@import "../variables";
+
+.auth {
+    display: unset;
+    
+    .auth-button-group {
+        display: flex;
+        button {
+            position: relative;
+            display: inline-flex;
+            width: 33.333%;
+            margin: 0 5px;
+            padding: 15px;
+            align-items: center;
+            justify-content: center;
+
+            i {
+                position: absolute;
+            }
+        }
+    } 
+
+    .auth-footer {
+        text-align: center;
+        margin-top: 15px;
+
+        div:first-child {
+            font-size: 11px;
+            margin-bottom: 10px;
+        }
+
+        span:first-of-type, span:last-of-type {
+            @include themed() {
+                color: t('link');
+                cursor: pointer;
+                &:hover {
+                    color: t('link-hover');
+                }
+            }
+        }
+
+        .or {
+            display: inline-flex;
+            margin: 7px 5px 0;
+            cursor: default;
+            user-select: none;
+            @include themed() {
+                background: t('link');
+            }
+            width: 1px;
+            height: 9px;
+        }
+    }
+}
+
+.modal-content {
+  padding: 9px !important;
+}
+.modal-header {
+    border-bottom: none !important;
+}
+
+
+.authTabs {
+    @include themed() {
+
+        display: flex;
+        flex-direction: row;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        
+        .authTab {
+        width: 100%;
+        display: inline-flex;
+        align-content: center;
+        justify-content: center;
+        padding: 15px;
+        text-align: center;
+        background: lighten(t('sidebar'), 3.33%);
+        border-bottom: 2px solid transparent;
+        color: rgba(t('text'), 0.7);
+        transition: border-bottom-color 0.3s ease, color 0.3s ease;
+        cursor: pointer;
+
+                &:hover {
+                    color: t('text');
+                }
+
+                &:first-child {
+                    border-top-left-radius: 3px;
+                    border-top-right-radius: 3px;
+                }
+            }
+
+            .authTab.active {
+                color: t('text');
+                border-bottom-color: t('secondary');
+            }
+        }
+}
+
+
+
+@media(max-width: 1300px) {
+    .sm-column {
+        flex: 0 0 50%;
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    .sm-column {
+        flex: 0 0 100%;
+    }
+}

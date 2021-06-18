@@ -1,0 +1,657 @@
+@import "../variables";
+
+.nav {
+    margin-top: 0 !important;
+    width: calc(100% + 80px) !important;
+}
+
+header {
+    .fixed {
+    box-shadow: none !important;
+    @include themed() {
+         background: t('header') !important; 
+    }
+}
+}
+
+
+.bullet-point {
+    position: relative;
+    color: #fff;  
+    .icon{
+    display: inline-block;
+    width: 1.1em;
+    line-height: 0;
+    vertical-align: text-bottom;
+    }
+
+}
+
+.subtitle {
+    font-size: 1.45rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: IndustryBlack, Open Sans;
+    color: #fff;
+}
+
+
+.content-slideinleft {
+    position: relative;
+    flex-direction: column;
+    padding: 1.5rem;
+    grid-gap: 1.5rem;
+    gap: 1.5rem;
+    z-index: 1;
+  -webkit-animation-name: slideInLeft;
+  animation-name: slideInLeft;
+  -webkit-animation-duration: 0.1s;
+  animation-duration: 0.1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+
+    .title {
+    font-weight: 900;
+    font-size: 54px;
+    line-height: 60px;
+    text-transform: uppercase;
+    font-family: IndustryBlack, Open Sans;
+    }
+    .accent {
+        color: #00e258;
+    }
+
+    .text {
+    color: #fff;
+    }
+    
+}
+
+
+  @-webkit-keyframes pulse {
+  0% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  50% {
+  -webkit-transform: scale3d(1.05, 1.05, 1.05);
+  transform: scale3d(1.05, 1.05, 1.05);
+  }
+  100% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  }
+  @keyframes pulse {
+  0% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  50% {
+  -webkit-transform: scale3d(1.05, 1.05, 1.05);
+  transform: scale3d(1.05, 1.05, 1.05);
+  }
+  100% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  } 
+
+
+ @-webkit-keyframes slideInLeft {
+  0% {
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+  visibility: visible;
+  }
+  100% {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  }
+  }
+  @keyframes slideInLeft {
+  0% {
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+  visibility: visible;
+  }
+  100% {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  }
+  } 
+
+  @-webkit-keyframes slideInRight {
+  0% {
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+  visibility: visible;
+  }
+  100% {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  }
+  }
+  @keyframes slideInRight {
+  0% {
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+  visibility: visible;
+  }
+  100% {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  }
+  } 
+
+.content-bg-slideright {
+    position: absolute;
+    z-index: -1;
+    height: calc(100vh - 8.375rem);
+    top: 1rem;
+    object-fit: contain;
+    -webkit-animation-name: slideInRight;
+    animation-name: slideInRight;
+   -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+
+
+    img, svg {
+        vertical-align: middle;
+
+    }
+}
+.content-bg-pulse {
+    position: absolute;
+    z-index: -1;
+    height: calc(100vh - 14.375rem);
+    top: 1.1rem;
+    object-fit: contain;
+      animation-delay: 0.2s;
+
+  -webkit-animation-name: pulse;
+  animation-name: pulse;
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+
+
+    img, svg {
+        vertical-align: middle;
+
+    }
+}
+
+
+.slider {
+    margin-top: -15px;
+    height: 388px;
+    margin-bottom: 0 !important;
+
+    .glide {
+        height: 100%;
+
+        .glide__track {
+            height: 100%;
+        }
+
+        .glide__slides {
+            height: 100%;
+        }
+
+        .glide__arrow--left, .glide__arrow--right {
+            padding: 0 !important;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            height: 35px;
+            width: 15px;
+            opacity: 0.5 !important;
+            transition: opacity 0.3s ease;
+            &:hover {
+                opacity: 1 !important;
+            }
+        }
+
+        .glide__arrow--right {
+            background: url("data:image/svg+xml;charset=utf-8,%3Csvg width='14' height='37' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.738 18.663l-12.448 18L0 34.8l11.176-16.136L0 2.527 1.29.663l12.448 18z' fill='%23fff'/%3E%3C/svg%3E");
+        }
+
+        .glide__arrow--left {
+            background: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='36' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M.994 18l12.928 18 1.34-1.864L3.655 18 15.262 1.864 13.922 0 .994 18z' fill='%23fff'/%3E%3C/svg%3E");
+            left: 75px;
+        }
+
+        .glide__slide {
+            width: 100%;
+            height: 100% !important;
+            position: relative;
+
+            .image {
+                position: absolute;
+                background-size: cover;
+                background-repeat: no-repeat;
+                top: 0;
+                right: 0;
+                height: 100%;
+                width: 100%;
+                z-index: 1;
+                background-position-x: right;
+                background-position-y: center;
+            }
+
+            .slideContent {
+                width: 70%;
+                display: flex;
+                margin-left: auto;
+                margin-right: auto;
+                height: 100%;
+                flex-direction: column;
+                color: white;
+                position: relative;
+                z-index: 2;
+
+                .slideContentWrapper {
+                    display: flex;
+                    flex-direction: column;
+                    margin-top: auto;
+                    margin-bottom: auto;
+                }
+
+                .header, .description {
+                    text-shadow: 1px 1px 3px rgba(black, 0.2);
+                }
+
+                .header {
+                    font-weight: 600;
+                    font-size: 2em;
+                    margin-bottom: 25px;
+                }
+
+                .description {
+                    font-size: 1.5em;
+                    margin-bottom: 25px;
+                    width: 420px;
+                }
+
+                .button {
+                    width: 150px;
+                    text-align: center;
+                    padding: 10px 25px;
+                    background: rgba(white, 0.1);
+                    border: 1px solid rgba(white, 0.15);
+                    cursor: pointer;
+                    transition: background 0.3s ease, border-color 0.3s ease;
+
+                    &:hover {
+                        background: rgba(white, 0.2);
+                        border-color: rgba(white, 0.25);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .slider {
+        margin-left: -65px;
+        width: calc(100% + 80px);
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .slider {
+        margin-left: -15px;
+        width: calc(100% + 30px);
+        height: 250px;
+
+        .glide__arrow--left {
+            left: 2em !important;
+        }
+
+        .image {
+            opacity: 0.7;
+        }
+
+        .slideContentWrapper {
+            .header {
+                font-size: 1.6em !important;
+            }
+
+            .description {
+                font-size: 1.2em !important;
+            }
+        }
+    }
+}
+
+.game_poster {
+    display: inline-flex;
+    width: 215px;
+    height: 215px;
+    margin: 7px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    z-index: 1;
+    transition: all 0.15s ease-in;
+    top: 0;
+    position: relative;
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: rgba(black, 0.2) 0 4px 6px -1px, rgba(black, 0.12) 0px 2px 4px -1px;
+    transition: all ease-in 0.2s;
+
+
+    &:hover {
+        top: -5px;
+        @include blur(black, 0.5, 0.8, 5px);
+
+        .name {
+        display: block;
+        }
+    }
+
+    &:after {
+        content: '';
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        opacity: 1 !important;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position-x: center;
+        background-size: cover;
+        pointer-events: none;
+        will-change: transform;
+        transition: all 200ms ease-in 0s;
+    }
+
+    .name {
+        display: none;
+        z-index: 3;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        @include blur(black, 0.5, 0.8, 5px);
+        border-radius: 5px;
+        color: white;     
+    }
+
+
+    .unavailable {
+        z-index: 4;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(black, 0.7);
+        border-radius: 5px;
+        color: white;
+        .slanting {
+            transform: skewY(-5deg) translateY(-50%);
+            padding: 25px;
+            position: absolute;
+            top: 50%;
+            background: rgba(black, 0.8);
+            width: 100%;
+            .content {
+                font-size: 15px;
+                transform: skewY(5deg);
+                text-align: center;
+            }
+        }
+    }
+}
+
+
+.slots_thumbnail {
+    display: inline-flex;
+    width: 200px;
+    height: 260px;
+    font-size: 15px;
+    margin: 7px;
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    z-index: 1;
+    transition: all 0.15s ease-in;
+    top: 0;
+    position: relative;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: rgba(black, 0.2) 0 4px 6px -1px, rgba(black, 0.12) 0px 2px 4px -1px;
+    transition: all ease-in 0.2s;
+
+
+    &:hover {
+        top: -5px;
+        @include blur(black, 0.5, 0.8, 5px);
+
+        .name {
+        display: block;
+        }
+    }
+
+    &:after {
+        content: '';
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        opacity: 1 !important;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position-x: center;
+        background-size: cover;
+        pointer-events: none;
+        will-change: transform;
+        transition: all 200ms ease-in 0s;
+    }
+
+    .name {
+        display: none;
+        z-index: 3;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        @include blur(black, 0.5, 0.8, 5px);
+        border-radius: 5px;
+        color: white;     
+
+        .gametitle {
+        font-family: "Proxima Nova Semi Bd";
+        font-size: 15.5px;
+        }
+    }
+
+
+    .unavailable {
+        z-index: 4;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(black, 0.7);
+        border-radius: 5px;
+        color: white;
+        .slanting {
+            transform: skewY(-5deg) translateY(-50%);
+            padding: 25px;
+            position: absolute;
+            top: 50%;
+            background: rgba(black, 0.8);
+            width: 100%;
+            .content {
+                font-size: 15px;
+                transform: skewY(5deg);
+                text-align: center;
+            }
+        }
+    }
+}
+
+.games {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.games-left {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@include media-breakpoint-down(sm) {
+    .game_poster {
+        width: calc(50% - 15px);
+    }
+
+   .slots_thumbnail {
+        width: calc(50% - 15px);
+        height: 250px !important;
+    }
+      
+    .games-left {
+    justify-content: center;
+    }
+
+    .content-bg-pulse {
+    display: none !important;
+    }
+
+    .content-slideinleft .text {
+    display: none !important;
+    }
+
+    .content-slideinleft {
+    padding: 0.5rem !important;
+    }
+
+    .bullet-point {
+        font-size: 30px !important;
+    }
+
+    .subtitle {
+    font-size: 0.85rem !important;
+    }
+
+    .bullet-point .icon {
+    width: 25px;
+    max-width: 25px;
+    }
+
+    .content-slideinleft .title {
+    font-size: 30px;
+    }
+
+    .image {
+        width: 100%;
+        background-position: center;
+    }
+
+    .slideContent .description {
+        width: calc(100% - 15px) !important;
+        margin-bottom: 15px !important;
+    }
+
+    .slideContent .header {
+        margin-bottom: 15px !important;
+    }
+
+    .glide__bullets, .glide__arrows {
+        display: none;
+    }
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+
+}
+
+}
+
+@media(max-width: 1010px) {
+  
+    .content-bg-pulse {
+    display: none !important;
+    }
+
+    .games-left {
+    max-width: 950px;
+    justify-content: center;
+    }
+
+
+}
+
+@media(max-height: 1200px) {
+  
+    .slots_thumbnail {
+    transform: scale(0.95) !important;
+    margin: 3px;
+    }
+
+    .content-slideinleft .title {
+    font-size: 45px;
+    line-height: 46px;
+    }
+
+    .game_poster {
+    transform: scale(0.95) !important;
+    margin: 3px;
+    }
+
+    .games-left {
+    max-width: 1020px;
+    margin-left: 0px;
+    margin-right: 0px;
+    }
+
+}
+
+@media(max-height: 800px) {
+  
+    .slots_thumbnail {
+    transform: scale(0.85) !important;
+    margin: 1px;
+    }
+
+    .game_poster {
+    transform: scale(0.85) !important;
+    margin: 1px;
+    }
+
+    .games-left {
+    max-width: 999px;
+    margin-left: 0px;
+    margin-right: 0px;
+    }
+
+    .content-slideinleft .title {
+    font-size: 38px;
+    line-height: 39px;
+    }
+
+
+}
+
+
+
+
