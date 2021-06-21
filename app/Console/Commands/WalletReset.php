@@ -42,9 +42,8 @@ class WalletReset extends Command {
             'wallet_btc' => null,
             'wallet_ltc' => null,
             'wallet_doge' => null,
+            'wallet_matic' => null,
             'wallet_xrp' => null,
-            'wallet_bnb' => null,
-            'wallet_usdc' => null,
             'wallet_usdt' => null,
             'wallet_trx' => null,
             'wallet_bch' => null

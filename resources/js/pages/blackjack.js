@@ -624,7 +624,7 @@ $.on('/game/blackjack', function() {
         }, function() {
 			$.sidebarData().currency(($.sidebarData().bet() * $.getPriceCurrency()).toFixed(4));
     });
-}, ['/css/pages/blackjack.css']);
+}, ['/css/subpage/blackjack.css']);
 
 const deck = {
     1: {type: 'spades', value: 'A', slot: 1},

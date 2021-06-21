@@ -185,7 +185,7 @@ $.on('/game/dice', function() {
         $('.dice-number').val(value);
         $('.dice-header').html($.lang('dice.'+currentTarget));
     });
-}, ['/css/pages/dice.css']);
+}, ['/css/subpage/dice.css']);
 
 const diceProfit = function(min, max) {
     let payout, range;

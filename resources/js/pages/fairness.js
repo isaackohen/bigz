@@ -15,7 +15,7 @@ import Cards from './fairness/games/Cards';
 import Triple from './fairness/games/Triple';
 import Slots from './fairness/games/Slots';
 import Slide from './fairness/games/Slide';
-import Double from './fairness/games/Double';
+import Multiroulette from './fairness/games/Multiroulette';
 
 const bundle = {
     'dice': {
@@ -73,7 +73,7 @@ const bundle = {
             ];
         }
     },
-	'double': {
+	'multiroulette': {
         verify: function({ serverSeed, clientSeed, nonce }) {
             return new Double().verify({ serverSeed, clientSeed, nonce });
         }

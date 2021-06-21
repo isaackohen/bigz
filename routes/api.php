@@ -64,7 +64,7 @@ Route::get('blockNotify/{currency}/{blockId}', function($currency, $blockId) {
 
 Route::post('search/games', function(Request $request) {
         $request->validate([
-            'text' => ['required', 'string', 'min:1']
+            'text' => ['required', 'string', 'min:0']
         ]);
         $games = \App\Slotslist::get();
         $items = json_decode(json_encode($games));
@@ -75,8 +75,28 @@ Route::post('search/games', function(Request $request) {
         }
         return false;
         });
-        return success(array_values($result));
+
+
+        return success(array_values(array_slice($result, 0, 8)));
     });
+
+Route::post('search/random', function(Request $request) {
+
+        $games = \App\Slotslist::get()->shuffle();
+        $items = json_decode(json_encode($games));
+        $input = " ";
+        $result = array_filter($items, function ($item) use ($input) {
+        if ((stripos($item->n, $input) !== false) || (stripos($item->p, $input) !== false)) {
+        return true;
+        }
+        return false;
+        });
+
+
+        return success(array_values(array_slice($result, 0, 8)));
+    });
+
+
 Route::post('chatHistory', function() {
     $history = \App\Chat::latest()->limit(25)->where('deleted', '!=', true)->get()->toArray();
     if(\App\Settings::where('name', 'quiz_active')->first()->value !== 'false')

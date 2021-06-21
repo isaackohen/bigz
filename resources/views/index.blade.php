@@ -2,6 +2,14 @@
                     <div style="margin-top: 50px;"></div>
             @endif
 
+          @if(!auth()->guest())
+        @php        
+    header("Location: /welcome/");
+
+        die();
+        @endphp
+
+            @endif
   <div id="slide control loff" class="owl-carousel owl-theme loff">
 
   <div id="large-slide" class="container-fluid" style="margin: 0px !important; padding-right: 0 !important; padding-left: 0 !important; margin-right: 0px !important;margin-left: 0px !important;">    
@@ -121,7 +129,7 @@
         @foreach(\App\Games\Kernel\Game::list() as $game)
         @if(!$game->isDisabled() &&  $game->metadata()->id() !== "slotmachine" && $game->metadata()->id() !== "evoplay" && $game->metadata()->id() !== "livecasino")
 
-            <div class="game_poster" @if(!$game->isDisabled()) onclick="redirect('/game/{{ $game->metadata()->id() }}')" @endif style="background-image: url('/img/game/{{ $game->metadata()->id() }}.jpg')">
+            <div class="game_poster" @if(!$game->isDisabled()) onclick="redirect('/game/{{ $game->metadata()->id() }}')" @endif style="background-image: url('/assets/turnkey/thumbnail/{{ $game->metadata()->id() }}.png')">
                 @if($game->isDisabled())
                     <div class="unavailable">
                         <div class="slanting">

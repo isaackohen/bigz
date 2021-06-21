@@ -9,6 +9,7 @@ $('.game_poster').tilt({
 })
 
 
+
 $('.loff').owlCarousel({
     loop:true,
     autoplay:false,

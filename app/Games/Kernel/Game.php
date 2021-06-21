@@ -54,26 +54,30 @@ abstract class Game {
 
     public static function list() {
         return [
+            /*
             new \App\Games\Slide(),
-            new \App\Games\Double(),
             new \App\Games\Mines(),
             new \App\Games\Baccarat(),
             new \App\Games\Wheel(),
-            new \App\Games\Dice(),
             new \App\Games\Blackjack(),
-            new \App\Games\Plinko(),
-            new \App\Games\Coinflip(),
             new \App\Games\VideoPoker(),
             new \App\Games\Tower(),
-            new \App\Games\Keno(),
-            new \App\Games\Stairs(),
-            new \App\Games\Diamonds(),
-            new \App\Games\Roulette(),
-            new \App\Games\Crash(),
-            new \App\Games\HiLo(),
+            new \App\Games\Triple(),
+            new \App\Games\Slots(),
             new \App\Games\Limbo(),
-			new \App\Games\Slots(),
-			new \App\Games\Triple(),
+            new \App\Games\HiLo(),
+            new \App\Games\Crash(),
+            new \App\Games\Roulette(),
+            new \App\Games\Stairs(),
+            */
+
+
+            new \App\Games\Multiroulette(),
+            new \App\Games\Dice(),
+            new \App\Games\Plinko(),
+            new \App\Games\Coinflip(),
+            new \App\Games\Keno(),
+            new \App\Games\Diamonds(),
             new \App\Games\EvoPlay(),
             new \App\Games\LiveCasino(),
             new \App\Games\SlotMachine()

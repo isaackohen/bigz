@@ -65,7 +65,7 @@ class Bigwinnerinhouse extends Command {
                 ]]]
             ]
         ]);
-            Settings::where('name', 'tg_bigwinner_cron')->update(['value' => 0]);
+            Settings::where('name', 'tg_bigwinner_inhouse_cron')->update(['value' => 0]);
     }
     }
 

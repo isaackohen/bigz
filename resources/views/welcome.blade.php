@@ -4,13 +4,18 @@
 
 
 <div class="container-xl"> 
-    <div class="container mt-4 mb-4">
-            <input type="text" id="gamelist-search" placeholder="Search game or provider..">
+    <div class="container mt-5 mb-3">
+
+<style>
+</style>
+
+
+
     </div>
 
     <div class="divider">
                 <div class="line-small-left"></div>
-                <div class="divider-title-left"><i class="fas fa-club"></i> BIGZ.IO Games</div>
+                <div class="divider-title-left"><i class="fak fa-bigz-letter"></i> BIGZ.IO Games</div>
                 <div class="line-small-left"></div>
     </div>
 
@@ -47,21 +52,15 @@
                 </div>
 
                 </div>
-
     </div>
-</div>
-    
-        <div class="empty-between mt-5 mb-5"></div>
-
-
+</div>   
+    <div class="empty-between mt-5 mb-5"></div>
     <div class="divider">
                 <div class="line-small-left"></div>
                 <div class="divider-title-left"><i class="fas fa-club"></i> Recommended for you</div>
                 <div class="line-small-left"></div>
     </div>
-
     <div class="container-flex owl-carousel casinogames" style="z-index: 1;">
-
         @foreach(\App\Slotslist::get()->shuffle() as $slots)
                     @if($slots->f == '3'|| $slots->p == 'upgames')
 
@@ -78,8 +77,6 @@
                     <div onclick="redirect('/game/{{ $slots->UID }}')" class="casino_thumbnail" style="background-image:url('https://cdn.static.bet/i/wide/{{ $slots->p }}/{{ $slots->id }}.jpg');">
                         @endif
             @endif
-
-
                 <div class="name">
                 <div class="gamename" style="display: flex; justify-content: center; margin-top: 2px;">
                     <span><b>{{ $slots->n }}</b></span>
@@ -93,21 +90,57 @@
                 <div class="button" style="display: flex; justify-content: center; margin-top: 10px;">
                     <div class="btn btn-primary-small m-1">Play</div>
                 </div>
-
                 </div>
             </div>  
             @endif
         @endforeach
 </div>
 
+    <div class="search">                      
+        <div class="divider">
+            <div class="line-small-left"></div>
+            <div class="divider-title-left"><i class="fak fa-bigz-letter"></i> Explore <button style="margin-left: 10px;"class="btn btn-primary-small-dark randomize">Random</button></div>
+            <div class="line-small-left"></div>
+        </div> 
+            <input id="searchbar" autocomplete="off" type="text" class="lobby search-input" placeholder="Search in 1438 games.." name="">
+    </div>
+    <div class="search-container" style="background: transparent !important;" id="searchbar_result">
+
+    </div>
     <div class="empty-between mt-4 mb-4"></div>
     <div class="divider">
-                <div class="line-small-left"></div>
-                <div class="divider-title-left"><i class="fas fa-mistletoe"></i> Popular</div>
-                <div class="line-small-left"></div>
+            <div class="line-small-left"></div>
+            <div class="divider-title-left"><i class="fas fa-mistletoe"></i> Popular</div>
+            <div class="line-small-left"></div>
     </div>
-
     <div id="popular"></div>
+          <div id="c0" class="container-flex owl-carousel o0" style="z-index: 1;">
+        @foreach(\App\Slotslist::get()->shuffle() as $slots)
+                    @if($slots->f == '2')
+          @if(auth()->guest())
+                    <div onclick="$.auth()" class="game_long_thumbnail" style="background-image:url('/assets/game/preview/{{ $slots->UID }}.webp');">
+                @else
+                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_long_thumbnail" style="background-image:url('https://cdn.static.bet/i/long/jpg/{{ $slots->id }}.jpg');">
+            @endif
+                <div class="name">
+                <div class="gamename" style="display: flex; justify-content: center; margin-top: 2px;">
+                    <span><b>{{ $slots->n }}</b></span>
+                </div>
+                <div class="gamename" style="text-transform: uppercase; display: flex; justify-content: center; margin-top: 1px;">
+                    <span style="font-size: 0.65rem">{{ $slots->p }}</span>
+                </div>
+                <div class="gamename" style="display: flex; justify-content: center; margin-top: 10px;">
+                    <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
+                </div>
+                <div class="button" style="display: flex; justify-content: center; margin-top: 25px;">
+                    <div class="btn btn-primary-small m-1">Play</div>
+                </div>
+
+                </div>
+            </div>  
+            @endif
+        @endforeach
+    </div>
           <div id="c1" class="container-flex owl-carousel o1" style="z-index: 1;">
         @foreach(\App\Slotslist::get()->shuffle() as $slots)
                     @if($slots->f == '1')
@@ -135,7 +168,6 @@
             @endif
         @endforeach
     </div>
-    
     <div id="c2" class="container-flex owl-carousel o2" style="z-index: 1;">
         @foreach(\App\Slotslist::get()->shuffle() as $slots)
                     @if($slots->f == '2')

@@ -11,9 +11,9 @@
 
     <link rel="shortcut icon" href="{{ asset('/img/logo/ico.png') }}">
 
-    <link href="{{ mix('css/admin/app.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ mix('/css/admin/app.css') }}" rel="stylesheet" type="text/css" />
 
-    <script type="text/javascript" src="{{ mix('js/admin/app.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/js/admin/app.js') }}"></script>
         <link href="https://coderthemes.com/shreyu/preview/assets/css/bootstrap-dark.min.css" rel="stylesheet" type="text/css" /> 
     <link href="https://coderthemes.com/shreyu/preview/assets/css/app-dark.min.css" rel="stylesheet" type="text/css">
 

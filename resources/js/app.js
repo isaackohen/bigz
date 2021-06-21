@@ -339,8 +339,8 @@ $.overview = function(game_id, api_id) {
         e.uiBlocker();
 
         $.whisper('Info', { game_id: game_id }).then(function(response) {
-            $.loadScripts([`/js/pages/${api_id}.js`], function() {
-                $.loadCSS([`/css/pages/${api_id}.css`], function() {
+            $.loadScripts([`/js/subpage/${api_id}.js`], function() {
+                $.loadCSS([`/css/subpage/${api_id}.css`], function() {
                                     if(api_id == "slotmachine") {
                     $('.overview .heading').html(`<strong>${response.info.nonce}</strong> #${response.info.id}`);
                                    } else {
@@ -393,24 +393,7 @@ $.userinfo = function(userid) {
         });
     });
 };
-  $.moveNumbers = function moveNumbers(num) { 
-    $('.card').hide();
-    document.getElementById("gamelist-search").value='';
 
-      var txt=document.getElementById("gamelist-search").value; 
-      txt=txt + num; 
-    document.getElementById("gamelist-search").value=txt;   
-    
-   $('.img-small-slots').lazy({
-          bind: "event"
-        });
-
-    $('.card').each(function(){
-      if($(this).text().toLowerCase().indexOf(""+num+"") != -1 ){
-      $(this).closest('.card').show();
-    }
-    });
-};
 
 let currentLiveTab = 'all';
 $(document).ready(function() {
@@ -445,7 +428,6 @@ $(document).ready(function() {
         $('.chat').toggleClass('hidden');
         $(`.floatingButtons`).toggleClass('chatIsHidden');
         $(document).trigger('win5x:chatToggle');
-
         $.setCookie('chatVisibility', $('.chat').hasClass('hidden'));
     });
 

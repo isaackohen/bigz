@@ -2,32 +2,32 @@
 <html lang="en" class="theme--{{ $_COOKIE['theme'] ?? 'dark' }}">
     <head>
         <title>{{ \App\Settings::where('name', 'platform_name')->first()->value }}</title>
-        <link href="//cloud.typenetwork.com/projects/5774/fontface.css/" rel="stylesheet" type="text/css">
-        <link rel="icon" type="image/png" href="/img/logo/ico.png"/>
-        <meta charset="utf-8">
-        <link href="/css/webfonting.css" rel="stylesheet" type="text/css">
-        <noscript><meta http-equiv="refresh" content="0; /no_js"></noscript>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta name="description" content="{{ \App\Settings::where('name', 'platform_description')->first()->value }}">
-        <meta property="og:description" content="{{ \App\Settings::where('name', 'platform_description')->first()->value }}" />
-        <meta property="og:image:type" content="image/svg+xml" />
-        <meta property="og:image:width" content="295" />
-        <meta property="og:image:height" content="295" />
-        <meta property="og:site_name" content="{{ \App\Settings::where('name', 'platform_name')->first()->value }}" />
-        @if(env('APP_DEBUG'))
-        <meta http-equiv="Expires" content="Mon, 26 Jul 1997 05:00:00 GMT">
-        <meta http-equiv="Pragma" content="no-cache">
-        @endif
-        <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+        <link rel="manifest" href="/manifest.json">
         <link rel="preload" href="{{ mix('/js/app.js') }}" as="script">
-        <script src="https://kit.fontawesome.com/2dba14c7e6.js" crossorigin="anonymous"></script>
         <link rel="preload" href="{{ mix('/css/app.css') }}" as="style">
         <link rel="preload" href="{{ mix('/css/loader.css') }}" as="style">
-        <script src="{{ mix('/js/bootstrap.js') }}" type="text/javascript" defer></script>
+
+        <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
         <link rel="stylesheet" href="{{ mix('/css/loader.css') }}">
+        <script src="{{ mix('/js/bootstrap.js') }}" type="text/javascript" defer></script>
+
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+        <link href="/css/webfonting.css" rel="stylesheet" type="text/css">
+        <link href="//cloud.typenetwork.com/projects/5774/fontface.css/" rel="stylesheet" type="text/css">
+        <script src="https://kit.fontawesome.com/2dba14c7e6.js" crossorigin="anonymous"></script>
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link rel="manifest" href="/manifest.json">
+
+        <link rel="icon" type="image/png" href="/img/logo/ico.png"/>
+        <meta charset="utf-8">
+
+        <noscript><meta http-equiv="refresh" content="0; /no_js"></noscript>
+
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
         <script>
         window._locale = '{{ app()->getLocale() }}';
         window._translations = {!! cache('translations') !!};
@@ -112,7 +112,7 @@
                                         </div>
                                         @foreach(\App\Games\Kernel\Game::list() as $game)
                                         @if(!$game->isDisabled() &&  $game->metadata()->id() !== "slotmachine" && $game->metadata()->id() !== "evoplay" && $game->metadata()->id() !== "livecasino")
-                                        <div class="game_thumbnail" @if(!$game->isDisabled()) onclick="redirect('/game/{{ $game->metadata()->id() }}')" @endif style="background-image: url('/img/game/{{ $game->metadata()->id() }}.png')">
+                                        <div class="game_thumbnail" @if(!$game->isDisabled()) onclick="redirect('/game/{{ $game->metadata()->id() }}')" @endif style="background-image: url('/assets/turnkey/thumbnail/{{ $game->metadata()->id() }}.png')">
                                             @if($game->isDisabled())
                                             <div class="unavailable">
                                                 <div class="slanting">
@@ -186,7 +186,7 @@
                             </div>
                             @endif
                             @endforeach
-                            <div class="option" onclick="redirect('/pokertransfer/')" style="font-family: Proxima Nova Semi Bd;text-shadow: 1px 1px black;border-top: 1px solid #354144;background: #212e34;">
+                            <div class="option" onclick="redirect('/poker/')" style="font-family: Proxima Nova Semi Bd;text-shadow: 1px 1px black;border-top: 1px solid #354144;background: #212e34;">
                                 <div class="wallet-switcher-icon">
                                     <img src="/img/currency/svg/bonus.svg" style="width: 18px; height: 18px;">
                                 </div>
@@ -382,10 +382,6 @@
             <i class="far fa-money-bill-wave"></i>
             <div>Earn Wall</div>
         </div>
-        <div class="control" onclick="$.races()">
-            <i class="fas fa-comet"></i>
-            <div>Races</div>
-        </div>
         <div class="control" onclick="$.leaderboard()">
             <i class="fas fa-trophy-alt"></i>
             <div>Leaderboard</div>
@@ -449,10 +445,12 @@
 <div class="modal-overlay"></div>
 </div>
 <div class="notifications">
+<div class="container">
 <i class="fal fa-times" data-close-notifications></i>
 <div class="title">{{ __('general.notifications.title') }}</div>
 <div class="notifications-content os-host-flexbox"></div>
-</div>
+</div></div>
+
 <div class="notifications-overlay"></div>
 <div class="searchbar">
 <i class="fal fa-times" data-close-searchbar></i>

@@ -6,25 +6,9 @@ $.displaySearchBar = function() {
 $(document).ready(function() {
     $(document).on('click', '.searchbar-overlay, .searchbar [data-close-searchbar]', $.displaySearchBar);
 
-    $('.searchbar-content').overlayScrollbars({
-        scrollbars: {
-            autoHide: 'leave'
-        },
-    callbacks : 
-    {
-        onScroll: function() 
-        { 
-            $('.img-small-slots').lazy({
-                bind: "event",
-                visibleOnly: true,
-                appendScroll: $('#searchbar_result')
-            });
-        },
-    }
-    });
     
 var typingTimer;
-var doneTypingInterval = 250; 
+var doneTypingInterval = 300; 
     
 $('#searchbar').keyup(function(){
     clearTimeout(typingTimer);
@@ -32,6 +16,53 @@ $('#searchbar').keyup(function(){
         typingTimer = setTimeout(doneTyping, doneTypingInterval);
     }
 }); 
+
+
+
+
+    
+    $('.randomize').on('click', function() {
+            var text = $('#searchbar').val();
+            $.request('search/random', { text: text }).then(function(response) {
+                $('#searchbar_result').html('');
+                var data = response;
+                var result = data.map(function(response){
+                    var linkslot = function(){
+                        if(response.p == 'evoplay'){
+                            return `onclick="redirect('/slots-evo/${response.UID}')"`;
+                        } else {
+                            return `onclick="redirect('/slots/${response.UID}')"`;
+                        }
+                    };
+                    return `
+                <div onclick="redirect('/game/${response.UID}')" class="search_thumbnail" style="background-image:url('https://cdn.static.bet/i/wide/${response.p}/${response._id}.jpg');">
+                                    
+
+                <div class="name">
+                <div class="gametitle" style="display: flex; justify-content: center; margin-top: 15px;">
+                    <span><b>${response.n}</b></span>
+                </div>
+                <div class="gameprovider">
+                    <span>${response.p}</span>
+                </div>
+                <div class="button" style="display: flex; justify-content: center; margin-top: 5px;">
+                    <div class="btn btn-primary-small m-1">Play</div>
+                </div>
+                <div class="gamedesc">
+                    <span>${response.desc}</span>
+                </div>
+
+
+                </div>
+                </div>
+                    `;
+
+                });
+                $('#searchbar_result').append(result);
+
+            });
+});
+    
 
 function doneTyping () {
             var text = $('#searchbar').val();
@@ -41,36 +72,42 @@ function doneTyping () {
                 var result = data.map(function(response){
 					var linkslot = function(){
 						if(response.p == 'evoplay'){
-							return `onclick="redirect('/slots-evo/${response._id}')"`;
+							return `onclick="redirect('/slots-evo/${response.UID}')"`;
 						} else {
-							return `onclick="redirect('/slots/${response._id}')"`;
+							return `onclick="redirect('/slots/${response.UID}')"`;
 						}
 					};
                     return `
-                    <div class="card gamepostercard m-2">
-                    <div class="slots_small_poster" ` + linkslot() + ` >
-					<img class="img-small-slots" data-src="/img/slots-wide/${response.p}/${response._id}.webp">
-                    <div class="label">${response.p}</div>
-                    <div class="name">
-                    <div class="name-text">
-                    <div class="title">${response.n}</div>
-                    <div class="desc">${response.desc}</div>
-                    <button class="btn btn-secondary" ` + linkslot() + ` >Play</button>                  
-                    </div>
-                    </div>
-                    </div>
-                    <div class="card-footer p-2" style="max-width: 190px;">
-                    <small><p class="card-title">${response.n}</p>
-                    <span class="cardprovider"><a href="/provider/${response.p}">${response.p}</a></span></small></div>
-                    </div>
+
+
+            <div onclick="redirect('/game/${response.UID}')" class="search_thumbnail" style="background-image:url('https://cdn.static.bet/i/wide/${response.p}/${response._id}.jpg');">
+                                    
+
+                <div class="name">
+                <div class="gamename" style="display: flex; justify-content: center; margin-top: 15px;">
+                    <span><b>${response.n}</b></span>
+                </div>
+                <div class="gameprovider">
+                    <span>${response.p}</span>
+                </div>
+                <div class="button" style="display: flex; justify-content: center; margin-top: 5px;">
+                    <div class="btn btn-primary-small m-1">Play</div>
+                </div>
+                <div class="gamedesc">
+                    <span>${response.desc}</span>
+                </div>
+
+
+                </div>
+            </div>
+
                     `;
+
                 });
                 $('#searchbar_result').append(result);
                    $('.img-small-slots').lazy({
                         bind: "event"
                     });
-            }, function(error) {
-                $.error(error);
             });
 }
     

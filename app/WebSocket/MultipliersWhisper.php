@@ -11,7 +11,7 @@ class MultipliersWhisper extends WebSocketWhisper {
     public function process($data): array {
         $game = Game::find($data->api_id);
         if($game == null) return reject(-3, 'Unknown API game id');
-        if($data->api_id == 'crash' || $data->api_id == 'slide' || $data->api_id == 'double') return success($game->data());
+        if($data->api_id == 'crash' || $data->api_id == 'slide' || $data->api_id == 'multiroulette') return success($game->data());
         return success($game->multipliers());
     }
 

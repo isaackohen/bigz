@@ -366,7 +366,7 @@ $.on('/game/crash', function () {
   }, function() {
 			$.sidebarData().currency(($.sidebarData().bet() * $.getPriceCurrency()).toFixed(4));
     });
-}, ['/css/pages/crash.css']);
+}, ['/css/subpage/crash.css']);
 /**
  * Animates bezier-curve
  *
