@@ -65,13 +65,13 @@ $.darktoast = function(message) {
     iziToast.success({
         'layout': '2',
         'titleSize': '14px',
-        'iconUrl':'/img/logo/icoblack.svg',
+        'iconUrl':'/img/logo/ico.png',
         'font-weight': '700',
         'transitionIn': 'bounceInDown',
         'transitionOut': 'fadeOutUp',
         'messageSize': '15px',
         'messageHeight': '1.5',
-        'title': 'BitsArcade Message',
+        'title': 'BIGZ Message',
         'message': message,
         'position': 'topCenter'
     });

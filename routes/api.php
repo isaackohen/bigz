@@ -75,10 +75,32 @@ Route::post('search/games', function(Request $request) {
         }
         return false;
         });
+        $showamount = $request->showamount;
 
 
-        return success(array_values(array_slice($result, 0, 8)));
+        return success(array_values(array_slice($result, 0, $showamount)));
     });
+
+
+Route::post('search/provider', function(Request $request) {
+
+        $games = \App\Slotslist::get()->shuffle();
+        $items = json_decode(json_encode($games));
+        $input = $request->provider;
+        $result = array_filter($items, function ($item) use ($input) {
+        if ((stripos($item->n, $input) !== false) || (stripos($item->p, $input) !== false)) {
+        return true;
+        }
+        return false;
+        });
+        $showamount = $request->showamount;
+
+
+        
+        
+        return success(array_values(array_slice($result, 0, $showamount)));
+    });
+
 
 Route::post('search/random', function(Request $request) {
 
@@ -91,9 +113,11 @@ Route::post('search/random', function(Request $request) {
         }
         return false;
         });
+                $showamount = $request->showamount;
 
 
-        return success(array_values(array_slice($result, 0, 8)));
+
+        return success(array_values(array_slice($result, 0, $showamount)));
     });
 
 

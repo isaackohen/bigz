@@ -71,6 +71,11 @@ class Bigwinner extends Command {
             ]
         ]);
                 Settings::where('name', 'tg_bigwinner_cron')->update(['value' => 0]);
+                Settings::where('name', 'toast_message')->update(['value' => $inlinemessage]);
+
+                
+                event(new \App\Events\UserNotification());
+
 
     }
 }

@@ -88,6 +88,7 @@ class C27Controller extends Controller
     public function game($slug)
     {
         $slug = (\App\Slotslist::get()->where('UID', $slug)->first());
+        $slugrecents = ($slug->UID);
         $slug = ($slug->id);
         $mainid = env('mainid');
         $mainbonusid = env('mainbonusid');     
@@ -104,6 +105,7 @@ class C27Controller extends Controller
                 if (strlen($slug) > 50){
                     return redirect('/');
                 }
+                $slugrecentssanitize = preg_replace("/[\/\{\}\)\(\%#\$]/", "sanitize", $slugrecents);
 
                 $slugsanitize = preg_replace("/[\/\{\}\)\(\%#\$]/", "sanitize", $slug);
 
@@ -114,9 +116,9 @@ class C27Controller extends Controller
 
 
                 /* Record Slotpage Visit */
-                if(\App\RecentSlots::where('user_id', $user->id)->where('s', $slugsanitize)->first() == null) {
+                if(\App\RecentSlots::where('player', $user->id)->where('s', $slugrecentssanitize)->first() == null) {
                     \App\RecentSlots::create([
-                    'user_id' => $user->id, 's' => $slugsanitize, 'b' => 0,
+                    'player' => $user->id, 's' => $slugrecentssanitize, 'b' => "0"
                     ]);
                 }
 
@@ -580,7 +582,13 @@ class C27Controller extends Controller
             'balance-after' => number_format($balance/100, 2, '.', ''),
             'currency' => strtolower($currency)
         ]);
-        
+                
+       if($recentslots = \App\RecentSlots::where('user_id', $user->id)->where('s', $gamevuid)->first()) {
+                    $recentslots->update([
+                    'b' => $recentslots->b + 1
+                    ]);      
+                }
+
             event(new \App\Events\LiveFeedGame($game, 10));
 
             $minmulti = \App\Settings::where('name', 'bigwinner_min_multi')->first()->value;

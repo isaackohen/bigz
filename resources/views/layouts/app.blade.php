@@ -29,6 +29,10 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <script>
+              function resizeIframe(obj){
+     obj.style.height = 0;
+     obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+  }
         window._locale = '{{ app()->getLocale() }}';
         window._translations = {!! cache('translations') !!};
         window._mixManifest = {!! file_get_contents(public_path('mix-manifest.json')) !!}
@@ -454,11 +458,75 @@
 <div class="notifications-overlay"></div>
 <div class="searchbar">
 <i class="fal fa-times" data-close-searchbar></i>
-<div class="title">{{ __('general.searchbar') }}</div>
 <div class="searchbar-content os-host-flexbox" style="color: white;">
-    <input type="text" id="searchbar" placeholder="Search game or provider..">
-    <div class="our-games" style="background: transparent !important;" id="searchbar_result">
+<div class="container-lg">
+
+
+    <div class="search">                      
+        <div class="divider">
+            <div class="line-small-left"></div>
+            <div class="divider-title-left"><i class="fak fa-bigz-letter"></i> Search & Explore <button style="margin-left: 10px;"class="btn btn-primary-small-dark randomize">Random</button>
+</div>
+            <div class="line-small-left"></div>
+        </div> 
+
+          <div class="row">
+    <div class="col-md-10">
+
+    <input id="searchbar" autocomplete="off" type="text" class="lobby search-input" placeholder="Search in 1438 games.." name=""></input>
+
+</div>
+
+
+    <div class="col-md-2" style="font-size: 11px; max-width: 180px !important; padding: 8px;">
+<div class="provider-select-menu">
+<select id="searchbar-provider" style="border: none !important;" onchange="$.selectProvider();" data-mdb-placeholder="Explore Providers" class="form-select" data-mdb-clear-button="true">
+    <option value="Explore Providers" disabled selected hidden>Select Provider</option>
+    <option value="all">all</option>
+
+    @foreach(\App\Providers::get() as $provider)
+<option class="" value="{{ $provider->name }}">{{ $provider->name }}</option>
+    @endforeach
+</select>  
+</div>
+</div>
+
+    <div class="search-container" style="background: transparent !important;" id="searchbar_result"></div>
+    <div class="container" id="bottom-search" style="display: none;">
+            <div class="divider">
+            <div class="line"></div>
+            <div class="divider-title"><button style="margin-left: 5px;" class="btn btn-primary-small-dark randomize"><i class="fas fa-random"></i> Refresh</button>
+
+            <select id="searchbar-showamount" class="btn btn-primary-small-dark">
+                    <option style="color: black;" value="10">Show 10</option>
+                    <option style="color: black;" value="25">Show 25</option>
+                    <option style="color: black;" value="100">Show 100</option>
+            </select> 
+            </div>
+            <div class="line"></div>
     </div>
+</div>
+
+
+</div>
+    </div>
+
+    <div class="search-container" style="background: transparent !important;" id="searchbar_result"></div>
+    <div class="container" id="bottom-search" style="display: none;">
+            <div class="divider">
+            <div class="line"></div>
+            <div class="divider-title"><button style="margin-left: 5px;" class="btn btn-primary-small-dark randomize"><i class="fas fa-random"></i> Refresh</button>
+
+            <select id="searchbar-showamount" class="btn btn-primary-small-dark">
+                    <option style="color: black;" value="15">Show 15</option>
+                    <option style="color: black;" value="30">Show 30</option>
+                    <option style="color: black;" value="100">Show 100</option>
+            </select> 
+            </div>
+            <div class="line"></div>
+    </div>
+</div>
+</div>
 </div>
 </div>
 <div class="searchbar-overlay"></div>

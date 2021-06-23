@@ -15,8 +15,6 @@ use App\Games\Kernel\Game;
 class LivecasinoController extends Controller
 
 {
-
-
     public function balance(Request $request)
      {
             $token = $request['username'];
@@ -51,11 +49,10 @@ class LivecasinoController extends Controller
                 $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarEth()), 2, '.', ''));
         }
         
-
         return response()->json([
                 'balance' => $balanceA
         ])->setStatusCode(200);
-}
+        }
     
 
     
@@ -156,24 +153,24 @@ class LivecasinoController extends Controller
             'type' => 'quick',
             'currency' => strtolower($currency)
         ]);
-        usleep(2000);
+        usleep(20);
 
-        return response()->json([
-            'balance' => $balanceA
-       ])->setStatusCode(200);
+            return response()->json([
+                'balance' => $balanceA
+           ])->setStatusCode(200);
 
-      }    
-    else {
-        return response()->json([
-            'status' => 'error',
-            'error' => ([
-                'scope' => "user",
-                'no_refund' => "1",
-                'message' => "Not enough money"
-            ])
-        ])->setStatusCode(403);
-    }
-    }
+        }    
+        else {
+            return response()->json([
+                'status' => 'error',
+                'error' => ([
+                    'scope' => "user",
+                    'no_refund' => "1",
+                    'message' => "Not enough money"
+                ])
+            ])->setStatusCode(403);
+        }
+        }
 
     public function win(Request $request)
     {
@@ -213,9 +210,6 @@ class LivecasinoController extends Controller
         }
 
 
-
-
-
         $getwagerdollar = (\App\Game::where('user', $user->id)->where('server_seed', $transactionId)->where('status', 'in-progress')->first())->client_seed;
         $getwager = (\App\Game::where('user', $user->id)->where('server_seed', $transactionId)->where('status', 'in-progress')->first())->wager;
 
@@ -228,7 +222,6 @@ class LivecasinoController extends Controller
             $multi = 0;
         }
 
-
        if($game = \App\Game::where('user', $user->id)->where('server_seed', $transactionId)->where('status', 'in-progress')->first()) {
                     $game->update([
                     'status' => $status,
@@ -238,10 +231,13 @@ class LivecasinoController extends Controller
 
                 event(new \App\Events\LiveFeedGame($game, 10));
                 
-                Leaderboard::insert($game);
+                    Leaderboard::insert($game);
+                    
+
+                    $user->balance(Currency::find($currency))->add($cryptoamount);
 
                 if($multi < 0.95 || $multi > 1.25 && $getwagerdollar > 0.05) {
-                Races::insert($game);
+                    Races::insert($game);
 
                 
                 if($user->bonus1 == '2' && $currency == 'bonus') {
@@ -253,6 +249,7 @@ class LivecasinoController extends Controller
                         }
                     }
                 }
+
                 if($user->bonus2 == '2' && $currency == 'bonus') {
                     if($multi < 0.95 || $multi > 1.20) {
                     if($getwagerdollar > floatval(0.1)) {
@@ -262,47 +259,47 @@ class LivecasinoController extends Controller
                         }
                     }
                 }
-            if ((Currency::find($currency)->dailyminslots() ?? 0) <= $getwagerdollar) {
-             if ($user->vipLevel() > 0 && ($user->weekly_bonus ?? 0) < 100) {
-                $user->update([
-                    'weekly_bonus' => ($user->weekly_bonus ?? 0) + 0.1
-                ]);
-               }
-             }
-            }
-            }
 
-        $user->balance(Currency::find($currency))->add($cryptoamount);
-        $balance = $user->balance(Currency::find($currency))->get();
-        if ($currency == 'BTC' || $currency == 'btc') {
-                $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarBtc()), 2, '.', ''));
-        } elseif ($currency == 'doge' || $currency == "DOGE") {
-                $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarDoge()), 2, '.', ''));
-        } elseif ($currency == 'trx' || $currency == 'TRX') {
-                $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarTron()), 2, '.', ''));
-        } elseif ($currency == 'ltc' || $currency == 'LTC') {
-                $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarLtc()), 2, '.', ''));
-        } elseif ($currency == 'bnb' || $currency == 'BNB') {
-                $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarBnb()), 2, '.', ''));
-        } elseif ($currency == 'usdt' || $currency == 'USDT') {
-                $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarUsdt()), 2, '.', ''));
-        } elseif ($currency == 'bonus' || $currency == 'BONUS') {
-                $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarBonus()), 2, '.', ''));
-        } elseif ($currency == 'usdc' || $currency == 'USDC') {
-                $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarUsdc()), 2, '.', ''));
-        } elseif ($currency == 'xrp' || $currency == 'XRP') {
-                $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarXrp()), 2, '.', ''));
-        } elseif ($currency == 'bch' || $currency == 'BCH') {
-                $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarBtcCash()), 2, '.', ''));
-        } elseif ($currency == 'eth' || $currency == 'ETH') {
-                $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarEth()), 2, '.', ''));
-        }
+                if ((Currency::find($currency)->dailyminslots() ?? 0) <= $getwagerdollar) {
+                 if ($user->vipLevel() > 0 && ($user->weekly_bonus ?? 0) < 100) {
+                    $user->update([
+                        'weekly_bonus' => ($user->weekly_bonus ?? 0) + 0.1
+                    ]);
+                   }
+                }
+                }
+              }
 
-        return response()->json([
-            'balance' => $balanceA
-        ])->setStatusCode(200);
+                $balance = $user->balance(Currency::find($currency))->get();
+                if ($currency == 'BTC' || $currency == 'btc') {
+                        $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarBtc()), 2, '.', ''));
+                } elseif ($currency == 'doge' || $currency == "DOGE") {
+                        $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarDoge()), 2, '.', ''));
+                } elseif ($currency == 'trx' || $currency == 'TRX') {
+                        $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarTron()), 2, '.', ''));
+                } elseif ($currency == 'ltc' || $currency == 'LTC') {
+                        $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarLtc()), 2, '.', ''));
+                } elseif ($currency == 'bnb' || $currency == 'BNB') {
+                        $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarBnb()), 2, '.', ''));
+                } elseif ($currency == 'usdt' || $currency == 'USDT') {
+                        $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarUsdt()), 2, '.', ''));
+                } elseif ($currency == 'bonus' || $currency == 'BONUS') {
+                        $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarBonus()), 2, '.', ''));
+                } elseif ($currency == 'usdc' || $currency == 'USDC') {
+                        $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarUsdc()), 2, '.', ''));
+                } elseif ($currency == 'xrp' || $currency == 'XRP') {
+                        $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarXrp()), 2, '.', ''));
+                } elseif ($currency == 'bch' || $currency == 'BCH') {
+                        $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarBtcCash()), 2, '.', ''));
+                } elseif ($currency == 'eth' || $currency == 'ETH') {
+                        $balanceA = floatval(number_format(($balance * \App\Http\Controllers\Api\WalletController::rateDollarEth()), 2, '.', ''));
+                }
+
+                return response()->json([
+                    'balance' => $balanceA
+                ])->setStatusCode(200);
     
-    }
+                }
 
     public function seamless(Request $request)
     {
@@ -339,8 +336,7 @@ class LivecasinoController extends Controller
         elseif ($request['name'] === 'refund') {
             return $this->refund($request);
         }
-*/
-
+    */
 
  
     }
@@ -351,17 +347,18 @@ class LivecasinoController extends Controller
         
 
         if (strlen($slug) > 50)
-        {
+            {
             return redirect('/');
-        }
+            }
     
-        $slugsanitize = preg_replace("/[\/\{\}\)\(\%#\$]/", "sanitize", $slug);
+            $slugsanitize = preg_replace("/[\/\{\}\)\(\%#\$]/", "sanitize", $slug);
 
 
             $id = auth()->user()->_id;
             $idreplace = preg_replace("/[^0-9]/", "", $id );
+            $name = auth()->user()->name;
             $user = auth()->user()->_id.'-'.auth()->user()->clientCurrency()->id();
-            $userdata = array('userId' => $idreplace, 'username' => $user, 'nick' => "test3231", 'currency' => "USD");
+            $userdata = array('userId' => $idreplace, 'username' => $user, 'nick' => $name, 'currency' => "USD");
             $jsonbody = json_encode($userdata);
             $curlcatalog = curl_init();
             curl_setopt_array($curlcatalog, array(
@@ -412,6 +409,5 @@ class LivecasinoController extends Controller
         $view = view('liveplayer')->with('url', $url);
         return view('layouts.app')->with('page', $view);
     }
-
     
 }

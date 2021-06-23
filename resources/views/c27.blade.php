@@ -27,7 +27,7 @@
     <div id=parent>
 
 
-      <iframe src="<?php echo $url; ?>" border="0"></iframe>
+      <iframe src="<?php echo $url; ?>" border="0" style="max-height: 600px"></iframe>
     <div class="container">
       <button onclick="redirect('/')" title="Return to Home" class="btn btn-info p-1 m-1 ripple-surface" style="min-width: 45px; font-size: 12px;"><i class="fas fa-home"></i></button>
       <button id="fullscreeniframe" title="Play Full Screen" class="btn btn-secondary p-1 m-1 ripple-surface" style="min-width: 45px; font-size: 12px;"><i class="fas fa-expand"></i></button>
