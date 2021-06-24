@@ -529,7 +529,7 @@
 		}
 		self.spinner = $({
 			deg: self.now
-		}).animate({
+		}).velocity({
 			deg: _deg
 		}, {
 			duration: parseInt(self.o.duration,10),
@@ -576,7 +576,7 @@
 						var markerNow = 0;
 						MarkerAnimator = $({
 							deg: (BDeg > 40 ? -40 : -BDeg > -10 ? 0 : -BDeg)
-						}).animate({
+						}).velocity({
 							deg: -50
 						}, {
 							easing: "linear",
@@ -594,7 +594,7 @@
 							complete: function(animation, progress, remainingMs) {
 								MarkerAnimator = $({
 									deg: markerNow
-								}).animate({
+								}).velocity({
 									deg: 0
 								}, {
 									easing: "linear",

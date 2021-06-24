@@ -21,7 +21,7 @@ $.game('slide', function (container, overviewData) {
           center = gw / 2,
           containerCenter = $('.slide_container').outerWidth(true) / 2;
 
-      $('.slide_container_row').stop().animate({
+      $('.slide_container_row').stop().velocity({
         left: "-=".concat(amount * gw + id * gw - containerCenter + center)
       }, 6000);
     };
@@ -125,7 +125,7 @@ var setRoundTimer = function setRoundTimer(seconds) {
   seconds *= 1000;
   $('.slide-time').hide().stop().css({
     'width': '100%'
-  }).fadeIn('fast').animate({
+  }).fadeIn('fast').velocity({
     'width': '0%'
   }, {
     duration: seconds,

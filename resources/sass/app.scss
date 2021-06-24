@@ -972,7 +972,7 @@ header {
         }
 
         .right {
-            margin-right: $padding;
+            margin-right: 75px;
             display: flex;
             margin-left: auto;
             align-items: center;
@@ -3196,8 +3196,8 @@ footer {
 .search_thumbnail {
     display: inline-flex;
     width: calc(100% / 5.5);
-    height: 135px;
-    font-size: 12px;
+    height: 145px;
+    font-size: 13px;
     margin-right: 10px !important;
     margin-top: 8px; 
     background-size: cover;
@@ -3205,18 +3205,18 @@ footer {
     background-position: center;
     background-color: #19272b;
     z-index: 1;
-    transition: all 0.2s ease-in;
+    transition: all 0.3s ease-in;
     top: 0;
     position: relative;
     cursor: pointer;
-    border-radius: 12px;
+    border-radius: 20px;
     box-shadow: rgba(black, 0.3) 0 4px 6px -1px, rgba(black, 0.1) 0px 2px 4px -1px;
     -webkit-backface-visibility: visible !important;
     backface-visibility: visible !important;
     -webkit-animation-name: flipInX;
     animation-name: flipInX;
-    -webkit-animation-duration: 1.5s;
-    animation-duration: 1.5s;
+    -webkit-animation-duration: 1.6s;
+    animation-duration: 1.6s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
 
@@ -3256,7 +3256,7 @@ footer {
             background-size: cover;
             pointer-events: none;
             will-change: transform;
-            transition: all 100ms ease-in 0.2s;
+            transition: all 300ms ease-in 0.3s;
     }
 
     .name {
@@ -3268,8 +3268,8 @@ footer {
             height: 100%;
             padding: 2px;
             width: 100%;
-            @include blur(black, 0.45, 0.9, 3px);
-            border-radius: 11px;
+            @include blur(black, 0.4, 0.9, 2px);
+            border-radius: 19px;
             color: white;     
 
         .gametitle {
@@ -3633,13 +3633,76 @@ a:link {
 }
 
 
+.gameWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+border-top-left-radius: 16px;
+border-top-right-radius: 16px;
+border: 2px solid #213237;
+}
+.gameWrapper iframe {
+  position: absolute;
+  top: 0;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#slotcontainer {
+  background: #213237;
+  padding-right: 0px;
+  margin-top: 25px;
+  max-width: 1500px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding-left: 0px !important; 
+  padding-right: 0px !important; 
+}
+
 
 @include media-breakpoint-down(sm) {
       
+      .gameWrapper {
+     position: relative;
+
+       padding-bottom: 1px !important;
+       height: 100%;
+       border-top-left-radius: 0px;
+       border-top-right-radius: 0px;
+       border: none !important;
+}
+    .gameWrapper iframe {
+        position: relative;
+      top: 0;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+     min-height: 80vh;
+    }
+
+    #slotcontainer {
+      background: #213237;
+      padding-right: 0px;
+      margin-top: 25px;
+
+      max-width: 1500px;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      padding-left: 0px !important; 
+      padding-right: 0px !important; 
+    }
+
+
      .search_thumbnail {
         width: calc(50% - 15px);
     }
 }
+
 
 @include media-breakpoint-down(md) {
     .floatingButtons {

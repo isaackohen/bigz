@@ -65,15 +65,15 @@ $.darktoast = function(message) {
     iziToast.success({
         'layout': '2',
         'titleSize': '14px',
-        'iconUrl':'/img/logo/ico.png',
+        'iconUrl':'/img/logo/bigz-icon.svg',
         'font-weight': '700',
         'transitionIn': 'bounceInDown',
         'transitionOut': 'fadeOutUp',
         'messageSize': '15px',
         'messageHeight': '1.5',
-        'title': 'BIGZ Message',
+        'title': 'BIGZ',
         'message': message,
-        'position': 'topCenter'
+        'position': 'topLeft'
     });
 };
 

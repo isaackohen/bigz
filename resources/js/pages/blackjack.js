@@ -492,7 +492,7 @@ $.game('blackjack', function(container, overviewData) {
                 }
             }
 
-            $(`${ele} .card-${i}`).css({'z-index': i, top: 0, right: 0 }).animate({
+            $(`${ele} .card-${i}`).css({'z-index': i, top: 0, right: 0 }).velocity({
                 'top': posy,
                 'right': posx
             }, speed);
@@ -624,7 +624,7 @@ $.on('/game/blackjack', function() {
         }, function() {
 			$.sidebarData().currency(($.sidebarData().bet() * $.getPriceCurrency()).toFixed(4));
     });
-}, ['/css/subpage/blackjack.css']);
+}, ['/css/pages/blackjack.css']);
 
 const deck = {
     1: {type: 'spades', value: 'A', slot: 1},

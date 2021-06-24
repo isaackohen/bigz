@@ -9,7 +9,6 @@
     }
 @endphp
 <div class="container-lg" id="gamecontainer">
-<div class="balance-icon" style="z-index: 3;min-width:20px;max-width:21px;top: 76px;left: 15px;background: transparent !important;"><img class="" data-selected-currency="" width="15px" height="15px"></div>
 
     <div class="game-container mt-1">
         <div class="row">
@@ -22,22 +21,6 @@
         </div>
  </div>
  </div>
-
-<div class="container-lg mt-5 mb-4">
-
-          <div class="divider">
-            <div class="line"></div>
-                        <div class="btn btn-primary p-1 m-2" style="min-width: 100px" onclick="redirect('/gamelist/')">Games</div>
-                        <div class="btn btn-primary p-1 m-2" style="min-width: 100px" onclick="redirect('/bonus/')">Rewards</div>
-                        <div class="btn btn-primary p-1 m-2" style="min-width: 100px" onclick="redirect('/earn/')">Earn</div>
-
-            <div class="line"></div>
-        </div>
-
-      </div>
-
-
-
 
 @if(!auth()->guest())
     @php $latest_game = \App\Game::latest()->where('game', $data)->where('user', auth()->user()->_id)->where('status', 'in-progress')->first(); @endphp
@@ -56,11 +39,3 @@
     @endif
 @endif
 
-  <script>
-
-  const containerElement = document.getElementById("gamecontainer");
-  function toggleThing() {
-  const newClass = containerElement.className == "container" ? "container-fluid" : "container";
-  containerElement.className = newClass;
-  }
-    </script>

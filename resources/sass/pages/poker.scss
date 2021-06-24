@@ -8,6 +8,18 @@
     display: none !important;
 }
 
+
+
+
+
+header {
+    .fixed {
+    box-shadow: none !important;
+    @include themed() {
+         background: t('header') !important; 
+    }
+}
+}
 .pageContent .heading {
     margin: 15px 0;
     padding-left: 16px;

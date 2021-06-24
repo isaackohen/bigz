@@ -22,21 +22,56 @@
 </div>
 <hr>
       @else
-<div id="slotcontainer" class="container">
-  <div class="card p-1" style="background: #111a1e !important; box-shadow: none !important;">
-    <div id=parent>
+
+  <!--   
+.gameWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+border-top-left-radius: 16px;
+border-top-right-radius: 16px;
+border: 2px solid #213237;
+}
+.gameWrapper iframe {
+  position: absolute;
+  top: 0;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#slotcontainer {
+  background: #213237;
+  padding-right: 0px;
+  margin-top: 25px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding-left: 0px !important; 
+  padding-right: 0px !important; 
+}
+
+!-->
+
+<style>
+.live {
+  display:  none;
+}
+</style>
+<div id="slotcontainer" class="container-fluid">
+
+                <div class="gameWrapper">
+                    <iframe src="<?php echo $url; ?>" border="0"></iframe>
+                </div>
 
 
-      <iframe src="<?php echo $url; ?>" border="0" style="max-height: 600px"></iframe>
-    <div class="container">
+
+    <div class="container-fluid">
       <button onclick="redirect('/')" title="Return to Home" class="btn btn-info p-1 m-1 ripple-surface" style="min-width: 45px; font-size: 12px;"><i class="fas fa-home"></i></button>
       <button id="fullscreeniframe" title="Play Full Screen" class="btn btn-secondary p-1 m-1 ripple-surface" style="min-width: 45px; font-size: 12px;"><i class="fas fa-expand"></i></button>
-      <button onclick="toggleClass()" title="Toggle Width" class="btn btn-secondary p-1 m-1 ripple-surface" style="min-width: 45px; font-size: 12px;"><i class="far fa-rectangle-wide"></i></button>
-      <button onclick="$.leaderboard()" title="Leaderboard" class="btn btn-secondary p-1 m-1 ripple-surface" style="min-width: 45px; font-size: 12px;"><i class="fad fa-trophy"></i></button>
     </div>
     </div>
-  </div>
-</div>
 <!-- 
 <div class="container-lg">
   <div class="bonus-box-small mt-3 mb-3" style="z-index: 1;">
@@ -89,7 +124,7 @@
   <script>
   const containerElement = document.getElementById("slotcontainer");
   function toggleClass() {
-  const newClass = containerElement.className == "container" ? "container-fluid" : "container";
+  const newClass = containerElement.className == "container" ? "container-lg" : "container";
   containerElement.className = newClass;
   }
   (function(window, document){

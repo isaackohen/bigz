@@ -1,3 +1,8 @@
+import ApexCharts from 'apexcharts';
+
+window.ApexCharts = ApexCharts;
+
+
 const {Howl} = require('howler');
 import bitcoin from 'bitcoin-units';
 let playTimeout = false;

@@ -1,21 +1,28 @@
-<div class="container-lg" style="margin-top:50px">
+<div class="container-lg mt-4">
 
-        ** Bonus & Challenges Placeholder **
-</div>
-@if(!auth()->guest())<!--
 
-      <div class="bonus-box" style="max-width: 1200px;">
-          <h5 style="font-weight: 600;"><i style="color: #2367ff; margin-right: 7px;" class="fad fa-layer-plus"></i>       <button style="font-size: 8px !important;" onclick="redirect('/provider/mascot')" class="btn btn-light p-1 m-1">NEW</a> </button>
-         Your Bonus</h5>
+@if(!auth()->guest())
+
+<style>
+
+.bonus-container {
+    background:  #263337;
+    border-radius:  6px;
+    padding:  6px;
+}
+</style>
+
+      <div class="container-lg " style="max-width: 1300px;">
+          <h5 style="font-weight: 600;"><i style="color: #2367ff; margin-right: 7px;" class="fad fa-layer-plus"></i> Deposit Offers</h5>
 
                   <div class="row">
             <div class="col-12 col-sm-12 col-md-12">
-                <div class="bonus-box-small">
+                <div class="bonus-container">
                    <div class="text">
                         <div class="header"><h5>Deposit Doubler Bonus</h5></div>
                         @if(auth()->user()->bonus1 == '0' || auth()->user()->bonus1 == null)
                         <p>First Deposit Bonus, only useable once, simply enable this bonus and deposit to double your first deposit 100%!</p>
-                        <p>Make sure to first activate this bonus and afterwards deposit. There is a 20x rollover wager requirement.</p>
+                        <p>Make sure to first activate this bonus and afterwards deposit. There is a 15x rollover wager requirement.</p>
                         
                         @elseif(auth()->user()->bonus1 == '1')
                         <p>You have enabled the deposit doubler bonus, now simply deposit any crypto and in any amount.</p>
@@ -109,7 +116,7 @@
                 </div>
             </div>
         </div>
-                    <div class="col-12 col-sm-12 col-md-6">
+            <div class="col-12 col-sm-12 col-md-6">
                 <div class="bonus-box-small">
                     <div class="banner-img">
                         <div class="text" style=" height: 100%;">
@@ -118,7 +125,6 @@
                         </div>
                     </div></div>
                 </div>
-
                 <div class="col-12 col-sm-12 col-md-6">
                     <div class="bonus-box-small">
                         <div class="banner-img">
@@ -191,7 +197,9 @@
                     </div>
                 </div>
 
+                <div class="container-sm">
+                   <div class="alert mt-1 mb-3 p-2 text-center" role="alert"><p class="mb-1"><button onclick="redirect('/earn/')" style="font-size: 10px;" class="btn btn-danger p-1 mt-1">HOT</button> Complete offers on <a href="/earn/"> Earn Wall</a> for free instant ETHEREUM!</p></div>
+                </div>
+
             </div>
             <div class="bonus-side-menu"></div>
-!-->
-

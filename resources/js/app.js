@@ -1,4 +1,7 @@
+require('velocity-animate');
+
 require('jquery-pjax');
+
 import 'owl.carousel';
 
 import { modal } from 'mdb-ui-kit'; // module
@@ -126,7 +129,7 @@ $.loadCSS = function(urls, callback, unload = true) {
     let loaded = 0;
     const finish = function() {
         if(loadedContents != null) $(container).html(loadedContents);
-        $(container).animate({opacity: 1}, 250, callback);
+        $(container).animate({opacity: 1}, 150, callback);
         NProgress.done();
         $(document).trigger('page:ready');
     };

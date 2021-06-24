@@ -174,7 +174,7 @@ class Plinko {
         const animationCallback = function() {
             instance.animationCallback($(this), instance);
         };
-        ball.animate(this.getDataFromObj(ball), this.speed, animationCallback);
+        ball.velocity(this.getDataFromObj(ball), this.speed, animationCallback);
     }
 
     animationCallback(obj, plinkoInstance) {
@@ -205,7 +205,7 @@ class Plinko {
             const animationCallback = function() {
                 plinkoInstance.animationCallback($(this), plinkoInstance);
             };
-            obj.animate(plinkoInstance.getDataFromObj(obj), plinkoInstance.speed, animationCallback);
+            obj.velocity(plinkoInstance.getDataFromObj(obj), plinkoInstance.speed, animationCallback);
         } else {
             obj.removeAttr('heading').delay(plinkoInstance.speed / 10).queue(function() {
                 $(this).attr('heading', 2).dequeue();

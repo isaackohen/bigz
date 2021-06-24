@@ -57,7 +57,7 @@ class Bigwinnerinhouse extends Command {
         // See docs for details:  https://core.telegram.org/bots/api#sendmessage
         $message = $bot->sendMessage([
             'chat_id' => -1001199743876,
-            'text' => 'Congratz to '.$bigwinner_player.' on our in-house '.$bigwinner_game.' game, with a whopping '.$bigwinner_multi.'x multiplier with a '.$bigwinner_amount.'$ wager',
+            'text' => 'Insane MULTI! '.$bigwinner_player.' on '.$bigwinner_game.' got '.$bigwinner_multi.'x multiplier with a '.$bigwinner_amount.'$ wager',
             'reply_markup' => [
                     'inline_keyboard' => [[[
                     'text' => 'Play '.$bigwinner_game,

@@ -41,6 +41,22 @@ class Leaderboard extends Model
 		$usd_wager = $game->wager * WalletController::rateDollarBtc();
 		$usd_profit= $game->profit * WalletController::rateDollarBtc();
 		}
+        if($game->currency == 'xrp'){
+        $usd_wager = $game->wager * WalletController::rateDollarXrp();
+        $usd_profit= $game->profit * WalletController::rateDollarXrp();
+        }
+        if($game->currency == 'usdt'){
+        $usd_wager = $game->wager * WalletController::rateDollarUsdt();
+        $usd_profit= $game->profit * WalletController::rateDollarUsdt();
+        }
+        if($game->currency == 'usdc'){
+        $usd_wager = $game->wager * WalletController::rateDollarUsdc();
+        $usd_profit= $game->profit * WalletController::rateDollarUsdc();
+        }
+        if($game->currency == 'bnb'){
+        $usd_wager = $game->wager * WalletController::rateDollarBnb();
+        $usd_profit= $game->profit * WalletController::rateDollarBnb();
+        }
 		if($game->currency == 'eth'){
 		$usd_wager = $game->wager * WalletController::rateDollarEth();
 		$usd_profit= $game->profit * WalletController::rateDollarEth();
@@ -61,7 +77,14 @@ class Leaderboard extends Model
 		$usd_wager = $game->wager * WalletController::rateDollarTron();
 		$usd_profit= $game->profit * WalletController::rateDollarTron();
 		}
-		
+        if($game->currency == 'bonus'){
+        $usd_wager = 0;
+        $usd_profit = 0;
+        $game->wager = 0;
+        $game->profit = 0;
+        }   
+	
+			
 		
 		if(!$entry) {
             Leaderboard::create([
