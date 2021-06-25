@@ -31,10 +31,7 @@
 
 
         <script>
-              function resizeIframe(obj){
-     obj.style.height = 0;
-     obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-  }
+
         window._locale = '{{ app()->getLocale() }}';
         window._translations = {!! cache('translations') !!};
         window._mixManifest = {!! file_get_contents(public_path('mix-manifest.json')) !!}
@@ -138,9 +135,62 @@
                                     <div class="col-12">
                                         <div class="divider">
                                             <div class="line"></div>
-                                            <div class="menu-title">Popular Slots</div>
+                                            <div class="menu-title">Recent Games</div>
                                             <div class="line"></div>
                                         </div>
+                                                @php
+        $user = auth()->user()->id;
+        $recent = \App\RecentSlots::where('player', $user)->get();
+        $recent = json_decode($recent);
+        $recent = array_column($recent, 's');
+        $recentcount = count($recent);
+
+        Log::notice($recent); 
+        Log::notice($recentcount); 
+
+        @endphp
+
+        @if($recentcount > 0)
+
+        @foreach(\App\Slotslist::get()->shuffle() as $slots)
+
+
+        @if($recentcount > 0 && $slots->UID == $recent[0] || $recentcount > 1 && $slots->UID == $recent[1] || $recentcount > 2 && $slots->UID == $recent[2] || $recentcount > 3 && $slots->UID == $recent[3] || $recentcount > 4 && $slots->UID == $recent[4] || $recentcount > 5 && $slots->UID == $recent[5])
+          @if(auth()->guest())          
+                    @if($slots->p == 'upgames')
+                    <div onclick="redirect('/live/{{ $slots->UID }}')" class="game_thumbnail" style="background-image:url('/assets/game/livecasino/wide/{{ $slots->id }}.jpg');">
+                        @else
+                    <div onclick="$.auth()" class="game_thumbnail" style="background-image:url('/assets/game/preview/{{ $slots->UID }}.webp');">
+                    @endif
+                @else
+                        @if($slots->p == 'upgames')
+                    <div onclick="redirect('/live/{{ $slots->UID }}')" class="game_thumbnail" style="background-image:url('/assets/game/livecasino/wide/{{ $slots->id }}.jpg');">
+                        @else
+                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_thumbnail" style="background-image:url('https://cdn.static.bet/i/wide/{{ $slots->p }}/{{ $slots->id }}.jpg');">
+                        @endif
+            @endif
+                <div class="name">
+                <div class="gamename" style="display: flex; justify-content: center; margin-top: 15px;">
+                    <span><b>{{ $slots->n }}</b></span>
+                </div>
+                <div class="gamename" style="text-transform: uppercase; display: flex; justify-content: center; margin-top: 1px;">
+                    <span style="font-size: 0.65rem">{{ $slots->p }}</span>
+                </div>
+                <div class="gamename" style="display: flex; justify-content: center; margin-top: 5px;">
+                    <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
+                </div>
+                <div class="button" style="display: flex; justify-content: center; margin-top: 10px;">
+                    <div class="btn btn-primary-small m-1">Play</div>
+                </div>
+                </div>
+            </div>  
+            @endif
+        @endforeach
+
+        
+
+         @else
+
                                         @foreach(\App\Slotslist::where('f','1')->take(5)->get() as $slots)
                                         @if(auth()->guest())
                                         <div onclick="$.auth()" class="game_thumbnail" style="background-image:url(https://cdn.static.bet/i/wide/{{ $slots->p }}/{{ $slots->id }}.webp);">
@@ -160,6 +210,8 @@
                                                 </div>
                                             </div>
                                             @endforeach
+                                                    @endif
+
                                             <div class="container-fluid" style="background: #28373D; padding: 8px;">
                                                 <div class="divider">
                                                     <div class="line" style="background: transparent;"></div>
@@ -264,11 +316,11 @@
             </div>
             <div class="container-xl">
                 <div class="live">
-                    <div class="header">
-                        <span class="live-title"><div class="bigz-icon" style="margin-right: 5px; height: 24px; width: 24px;"></div> ACTIVITY FEED</span>
+                    <div class="tabs"> 
+                        <span class="live-title"><i class="fak fa-bigz-letter"></i>  ACTIVITY FEED</span>
                         <div class="tabs"><span class="menu-title">
-                            @if(!auth()->guest()) <div class="tab" data-live-tab="mine">{{ __('general.bets.mine') }}</div> @endif
                             <div class="tab active" id="allBetsTab" data-live-tab="all">{{ __('general.bets.all') }}</div>
+                            @if(!auth()->guest()) <div class="tab" data-live-tab="mine">{{ __('general.bets.mine') }}</div> @endif
                             <div class="tab" data-live-tab="lucky_wins">{{ __('general.bets.lucky_wins') }}</div>
                         </div>
                         <!--
@@ -287,8 +339,7 @@
         </footer>
         <div class="navbar-bottom">
             <div class="headermiddle"><div class="bigz-icon" style="margin-right: 1px; padding: 2px 2px; height: 20px; width: 20px;"></div></div>
-            <a href="#news">News</a>
-            <a href="#contact">Contact</a>
+           <span class="navbar-bottom-icon"><i class="fad fa-megaphone"></i></span>  <span class="navbar-bottom-toastbar" id="toastbar">{{ \App\Settings::where('name', 'toast_message')->first()->value }}</span>
         </div>
     </div>
     <!--
@@ -467,7 +518,7 @@
     <div class="search">                      
         <div class="divider">
             <div class="line-small-left"></div>
-            <div class="divider-title-left"><i class="fak fa-bigz-letter"></i> Search & Explore <button style="margin-left: 10px;"class="btn btn-primary-small-dark randomize">Random</button>
+            <div class="divider-title-left"><i class="fak fa-bigz-letter"></i> Search & Explore <button style="margin-left: 10px;"class="btn btn-primary-small-dark overlayrandomize">Random</button>
 </div>
             <div class="line-small-left"></div>
         </div> 
@@ -475,14 +526,14 @@
           <div class="row">
     <div class="col-md-10">
 
-    <input id="searchbar" autocomplete="off" type="text" class="lobby search-input" placeholder="Search in 1438 games.." name=""></input>
+    <input id="searchbaroverlay" autocomplete="off" type="text" class="lobby search-input" placeholder="Search in 1438 games.." name=""></input>
 
 </div>
 
 
     <div class="col-md-2" style="font-size: 11px; max-width: 180px !important; padding: 8px;">
 <div class="provider-select-menu">
-<select id="searchbar-provider" style="border: none !important;" onchange="$.selectProvider();" data-mdb-placeholder="Explore Providers" class="form-select" data-mdb-clear-button="true">
+<select id="searchoverlay-provider" style="border: none !important;" onchange="$.selectProviderOverlay();" data-mdb-placeholder="Explore Providers" class="form-select" data-mdb-clear-button="true">
     <option value="Explore Providers" disabled selected hidden>Select Provider</option>
     <option value="all">all</option>
 
@@ -493,15 +544,16 @@
 </div>
 </div>
 
-    <div class="search-container" style="background: transparent !important;" id="searchbar_result"></div>
-    <div class="container" id="bottom-search" style="display: none;">
+    <div class="search-container" style="background: transparent !important;" id="searchoverlay_result"></div>
+    <div class="container" id="overlay-search" style="display: none;">
             <div class="divider">
             <div class="line"></div>
-            <div class="divider-title"><button style="margin-left: 5px;" class="btn btn-primary-small-dark randomize"><i class="fas fa-random"></i> Refresh</button>
+            <div class="divider-title"><button style="margin-left: 5px;" class="btn btn-primary-small-dark overlayrandomize"><i class="fas fa-random"></i> Refresh</button>
 
-            <select id="searchbar-showamount" class="btn btn-primary-small-dark">
+            <select id="searchoverlay-showamount" class="btn btn-primary-small-dark">
                     <option style="color: black;" value="10">Show 10</option>
-                    <option style="color: black;" value="25">Show 25</option>
+                    <option style="color: black;" value="20">Show 20</option>
+                    <option style="color: black;" value="40">Show 40</option>
                     <option style="color: black;" value="100">Show 100</option>
             </select> 
             </div>
@@ -513,21 +565,6 @@
 </div>
     </div>
 
-    <div class="search-container" style="background: transparent !important;" id="searchbar_result"></div>
-    <div class="container" id="bottom-search" style="display: none;">
-            <div class="divider">
-            <div class="line"></div>
-            <div class="divider-title"><button style="margin-left: 5px;" class="btn btn-primary-small-dark randomize"><i class="fas fa-random"></i> Refresh</button>
-
-            <select id="searchbar-showamount" class="btn btn-primary-small-dark">
-                    <option style="color: black;" value="15">Show 15</option>
-                    <option style="color: black;" value="30">Show 30</option>
-                    <option style="color: black;" value="100">Show 100</option>
-            </select> 
-            </div>
-            <div class="line"></div>
-    </div>
-</div>
 </div>
 </div>
 </div>

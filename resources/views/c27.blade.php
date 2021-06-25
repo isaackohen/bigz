@@ -1,5 +1,7 @@
+
 @php
-@endphp    
+use Carbon\Carbon;
+@endphp
 <?php
     $user = auth()->user();
     $explode = explode('?', $url);
@@ -10,6 +12,8 @@
     $slotname = \App\Slotslist::get()->where('id', $freespinslot)->first()->n;
     $evoslotname = \App\Slotslist::get()->where('u_id', $freespinevo)->first()->n;
     $evoslotabsolute = \App\Slotslist::get()->where('u_id', $freespinevo)->first()->id;
+    $slotregname = \App\Slotslist::where('_id', $name)->first()->n;
+
 
     ?>
     @if($name != $freespinslot && $user->freegames > 0)
@@ -23,43 +27,26 @@
 <hr>
       @else
 
-  <!--   
-.gameWrapper {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 */
-  height: 0;
-border-top-left-radius: 16px;
-border-top-right-radius: 16px;
-border: 2px solid #213237;
-}
-.gameWrapper iframe {
-  position: absolute;
-  top: 0;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
 
-#slotcontainer {
-  background: #213237;
-  padding-right: 0px;
-  margin-top: 25px;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  padding-left: 0px !important; 
-  padding-right: 0px !important; 
-}
-
-!-->
 
 <style>
 .live {
   display:  none;
 }
+
+.slotcontainer-name {
+    background:  #263337;
+    margin-top:  20px;
+    margin-bottom:  20px;
+    border-radius:  6px;
+    padding:  6px;
+}
 </style>
-<div id="slotcontainer" class="container-fluid">
+
+
+
+<div id="slotcontainer-toggle" class="container-lg">
+<div id="slotcontainer">
 
                 <div class="gameWrapper">
                     <iframe src="<?php echo $url; ?>" border="0"></iframe>
@@ -67,64 +54,240 @@ border: 2px solid #213237;
 
 
 
-    <div class="container-fluid">
-      <button onclick="redirect('/')" title="Return to Home" class="btn btn-info p-1 m-1 ripple-surface" style="min-width: 45px; font-size: 12px;"><i class="fas fa-home"></i></button>
-      <button id="fullscreeniframe" title="Play Full Screen" class="btn btn-secondary p-1 m-1 ripple-surface" style="min-width: 45px; font-size: 12px;"><i class="fas fa-expand"></i></button>
+      <button onclick="toggleClass()" title="Return to Home" class="btn btn-primary-small-dark btn-rounded p-1 m-2" style="min-width: 45px; font-size: 13px;"><i class="fas fa-home"></i></button>
+      <button id="fullscreeniframe" title="Play Full Screen" class="btn btn-primary-small-dark btn-rounded p-1 m-2 ripple-surface" style="min-width: 45px; font-size: 13px;"><i class="fas fa-expand"></i></button>
+      <button onclick="toggleClass()" title="Toggle Width" class="btn btn-primary-small-dark btn-rounded p-1 m-2 ripple-surface" style="min-width: 45px; font-size: 12px;"><i class="far fa-rectangle-wide"></i></button>
     </div>
-    </div>
-<!-- 
+</div>
+
 <div class="container-lg">
-  <div class="bonus-box-small mt-3 mb-3" style="z-index: 1;">
-  <button onclick="redirect('/provider/{{ $provider }}')" style="padding-top: 5px; font-size: 10px; padding-left: 10px;" class="btn btn-success m-2 p-1">More {{ $provider }}</a></button>
-  <h5 style="padding-top: 9px; padding-left: 6px; font-weight: 600;">Relevant Games</h5>
-  <div id="customNav71" class="owl-nav d-none d-md-block" style="padding-top: 6px;"></div>
-  <div class="container-flex owl-carousel relevantgames"  style="z-index: 1;">
-    @foreach(\App\Slotslist::all()->where('p', $provider)->random(7) as $slots)
-    <div class="card gamepostercard" style="cursor: pointer; margin-left: 5px; margin-right: 5px;">
-      @if(!auth()->guest())
-      <div onclick="redirect('/slots/{{ $slots->id }}')" class="game_poster" style="background-image:url(/img/slots-wide/{{ $slots->p }}/{{ $slots->id }}.webp)">
-        @else
-        <div onclick="$.auth()" class="game_poster" style="background-image:url(/img/slots-wide/{{ $slots->p }}/{{ $slots->id }}.webp)">
-          @endif
-          <div class="label">
-            {{ $slots->p }}
-          </div>
-        </div>
-        <div class="card-footer">
-        <h7 class="card-title">{{ $slots->n }}</h7></div>
-      </div>
-      @endforeach
-    </div>
+    <div class="slotcontainer-name">
+    <span class="live-title">{{ $slotregname }}</span>
   </div>
-  <div class="bonus-box-small mt-3 mb-3" style="z-index: 1;">
-      <h5 style="padding-top: 9px; padding-left: 10px; font-weight: 600;"><i style="color: #5f3fd0; margin-right: 7px;" class="fad fa-random"></i>  Random Games</h5>
-      <div id="customNav1" class="owl-nav d-none d-md-block" style="padding-top: 6px;"></div>
-    <div class="container-flex owl-carousel randomgames"  style="z-index: 1;">
-      @foreach(\App\Slotslist::all()->random(10) as $slots)
-      <div class="card gamepostercard" style="cursor: pointer; margin-left: 5px; margin-right: 5px;">
-        @if(!auth()->guest())
-        <div onclick="redirect('/slots/{{ $slots->id }}')" class="game_poster" style="background-image:url(/img/slots-wide/{{ $slots->p }}/{{ $slots->id }}.webp)">
-          @else
-          <div onclick="$.auth()" class="game_poster" style="background-image:url(/img/slots-wide/{{ $slots->p }}/{{ $slots->id }}.webp)">
+</div>
+
+<div class="container-lg">
+          <div id="o5" class="container-flex owl-carousel o5" style="z-index: 1;">
+        @foreach(\App\Slotslist::get()->shuffle() as $slots)
+                    @if($slots->f == '1')
+          @if(auth()->guest())
+                    <div onclick="$.auth()" class="game_long_thumbnail" style="background-image:url('/assets/game/preview/{{ $slots->UID }}.webp');">
+                @else
+                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_long_thumbnail" style="margin-left: 30px !important;background-image:url('https://cdn.static.bet/i/long/jpg/{{ $slots->id }}.jpg');">
             @endif
-            <div class="label">
-              {{ $slots->p }}
-            </div>
-          </div>
-          <div class="card-footer">
-          <h7 class="card-title">{{ $slots->n }}</h7></div>
-        </div>
+                <div class="name">
+                <div class="gamename" style="display: flex; justify-content: center; margin-top: 30px;">
+                    <span><b>{{ $slots->n }}</b></span>
+                </div>
+                <div class="gamename" style="text-transform: uppercase; display: flex; justify-content: center; margin-top: 1px;">
+                    <span style="font-size: 0.65rem">{{ $slots->p }}</span>
+                </div>
+                <div class="gamename" style="display: flex; justify-content: center; margin-top: 10px;">
+                    <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
+                </div>
+                <div class="button" style="display: flex; justify-content: center; margin-top: 25px;">
+                    <div class="btn btn-primary-small m-1">Play</div>
+                </div>
+
+                </div>
+            </div>  
+            @endif
         @endforeach
-      </div>
     </div>
-  </div>
-  !-->
+      </div>
+
+<div class="leaderboard-header">
+    <div class="leaderboard-PageTitle">
+        <div class="leaderboard-BackTitle">Leaderboard</div>
+        <div class="leaderboard-TitleWrap">Leaderboard</div>
+    </div>
+    <div class="leaderboard-TabContainer">
+        <div class="leaderboard-Tabs">
+            <div class="leaderboard-TabGroup">
+                <div class="leaderboard-Tab active">
+                    Hourly
+          <canvas class="ink" height="73.00000108778477" width="196.0000029206276" style="border-radius: inherit; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%;"></canvas>
+                </div>
+                <div class="leaderboard-Tab">
+                    Daily
+          <canvas class="ink" height="73.00000108778477" width="196.0000029206276" style="border-radius: inherit; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%;"></canvas>
+                </div>
+                <div class="leaderboard-Tab">
+                    Weekly
+          <canvas class="ink" height="73.00000108778477" width="196.0000029206276" style="border-radius: inherit; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%;"></canvas>
+                </div>
+                <div class="leaderboard-TabFill"></div>
+            </div>
+        </div>
+    
+    <!--- test --->
+    
+    <!---
+    
+    now: {{ Carbon::now() }}
+    hourly: {{ Carbon::now()->minute(59)->second(59) }}
+    daily: {{ Carbon::now()->endOfDay() }}
+    weekly: {{ Carbon::now()->endOfWeek() }}
+    
+    --->
+      
+    <!--- test end --->
+    
+        <div class="leaderboard-timerStyles-container">
+            <div class="leaderboard-timerStyles-timer">
+                <div class="leaderboard-container">
+                    <div class="leaderboard-digit-wrapper">
+                        <div id="days" class="leaderboard-digits">00</div>
+                        <div class="leaderboard-label"><span>Day</span></div>
+                    </div>
+                    <span class="leaderboard-digits-colon">:</span>
+                    <div class="leaderboard-digit-wrapper">
+                        <div id="hours" class="leaderboard-digits">00</div>
+                        <div class="leaderboard-label"><span>Hour</span></div>
+                    </div>
+                    <span class="leaderboard-digits-colon">:</span>
+                    <div class="leaderboard-digit-wrapper">
+                        <div id="minutes" class="leaderboard-digits">00</div>
+                        <div class="leaderboard-label"><span>Min</span></div>
+                    </div>
+                    <span class="leaderboard-digits-colon">:</span>
+                    <div class="leaderboard-digit-wrapper">
+                        <div id="seconds" class="leaderboard-digits">00</div>
+                        <div class="leaderboard-label"><span>Sec</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="leaderboard-timerbar">
+                <div class="leaderboard-component-timer">
+                    <div class="leaderboard-tracktimer"><div class="leaderboard-tracktimer-bar" style="background: rgb(51, 193, 108); width: 35.4231%;"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+  <!--- hourly --->
+    <div class="leaderboard-Table">
+        <div class="leaderboard-RowBase Header">
+            <div class="leaderboard-cell1">#</div>
+            <div class="leaderboard-cell2">Player</div>
+            <div class="leaderboard-cell3"></div>
+            <div class="leaderboard-cell4">Hourly Prize</div>
+            <div class="leaderboard-cell5">Wagered</div>
+        </div>
+        <div class="leaderboard-RowGroup">
+    
+      @foreach (\App\Leaderboard::where('type', 'hourly')->where('currency', 'usd')->where('time', Carbon::now()->minute(59)->second(59)->timestamp)->orderBy('usd_wager', 'desc')->take(10)->get() as $entry)
+            <div class="leaderboard-RowTable row-main" style="display: none;">
+                <div class="leaderboard-user-num">{{ $loop->index + 1 }}</div>
+                <div class="leaderboard-user-name">
+        <a style="color: #cccccc;">
+                    <div href="javascript:void(0)"  onclick="$.userinfo('{{ \App\User::where('_id', $entry->user)->first()->_id }}');" class="leaderboard-user-info">
+            <div class="leaderboard-user-name-fix">{{ \App\User::where('_id', $entry->user)->first()->name }}</div>
+          </div>
+        </a>
+                </div>
+                <div class="leaderboard-user-fill"></div>
+                <div class="leaderboard-user-wager">
+                    <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
+                    <div class="leaderboard-user-wager-info">--<span>.--</span></div>
+                </div>
+                <div class="leaderboard-user-wager">
+                    <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
+          @php
+          $wager = number_format(floatval($entry->usd_wager), 2, '.', '');
+          $wagerdecimal = explode('.', $wager);
+          @endphp
+                    <div class="leaderboard-user-wager-info">{{ number_format(floatval($wager), 0, '.', '') }}<span>.{{ $wagerdecimal[1] }}</span></div>
+                </div>
+            </div>
+      @endforeach
+        </div>
+    </div>
+  <!--- hourly end --->
+    <!--- daily --->
+    <div class="leaderboard-Table" style="display: none;">
+        <div class="leaderboard-RowBase Header">
+            <div class="leaderboard-cell1">#</div>
+            <div class="leaderboard-cell2">Player</div>
+            <div class="leaderboard-cell3"></div>
+            <div class="leaderboard-cell4">Daily Prize</div>
+            <div class="leaderboard-cell5">Wagered</div>
+        </div>
+        <div class="leaderboard-RowGroup">
+      @foreach (\App\Leaderboard::where('type', 'daily')->where('currency', 'usd')->where('time', Carbon::now()->endOfDay()->timestamp)->orderBy('usd_wager', 'desc')->take(10)->get() as $entry)
+            <div class="leaderboard-RowTable row-main" style="display: none;">
+                <div class="leaderboard-user-num">{{ $loop->index + 1 }}</div>
+                <div class="leaderboard-user-name">
+        <a style="color: #cccccc;">
+                    <div href="javascript:void(0)"  onclick="$.userinfo('{{ \App\User::where('_id', $entry->user)->first()->_id }}');" class="leaderboard-user-info">
+            <div class="leaderboard-user-name-fix">{{ \App\User::where('_id', $entry->user)->first()->name }}</div>
+          </div>
+        </a>
+                </div>
+                <div class="leaderboard-user-fill"></div>
+                <div class="leaderboard-user-wager">
+                    <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
+                    <div class="leaderboard-user-wager-info">--<span>.--</span></div>
+                </div>
+                <div class="leaderboard-user-wager">
+                    <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
+          @php
+          $wager = number_format(floatval($entry->usd_wager), 2, '.', '');
+          $wagerdecimal = explode('.', $wager);
+          @endphp
+                    <div class="leaderboard-user-wager-info">{{ number_format(floatval($wager), 0, '.', '') }}<span>.{{ $wagerdecimal[1] }}</span></div>
+                </div>
+            </div>
+      @endforeach
+        </div>
+    </div>
+  <!--- daily end --->
+    <!--- weekly --->
+    <div class="leaderboard-Table" style="display: none;">
+        <div class="leaderboard-RowBase Header">
+            <div class="leaderboard-cell1">#</div>
+            <div class="leaderboard-cell2">Player</div>
+            <div class="leaderboard-cell3"></div>
+            <div class="leaderboard-cell4">Weekly Prize</div>
+            <div class="leaderboard-cell5">Wagered</div>
+        </div>
+        <div class="leaderboard-RowGroup">
+      @foreach (\App\Leaderboard::where('type', 'weekly')->where('currency', 'usd')->where('time', Carbon::now()->endOfWeek()->timestamp)->orderBy('usd_wager', 'desc')->take(10)->get() as $entry)
+            <div class="leaderboard-RowTable row-main" style="display: none;">
+                <div class="leaderboard-user-num">{{ $loop->index + 1 }}</div>
+                <div class="leaderboard-user-name">
+        <a style="color: #cccccc;">
+                    <div href="javascript:void(0)"  onclick="$.userinfo('{{ \App\User::where('_id', $entry->user)->first()->_id }}');" class="leaderboard-user-info">
+            <div class="leaderboard-user-name-fix">{{ \App\User::where('_id', $entry->user)->first()->name }}</div>
+          </div>
+        </a>
+                </div>
+                <div class="leaderboard-user-fill"></div>
+                <div class="leaderboard-user-wager">
+                    <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
+                    <div class="leaderboard-user-wager-info">--<span>.--</span></div>
+                </div>
+                <div class="leaderboard-user-wager">
+                    <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
+          @php
+          $wager = number_format(floatval($entry->usd_wager), 2, '.', '');
+          $wagerdecimal = explode('.', $wager);
+          @endphp
+                    <div class="leaderboard-user-wager-info">{{ number_format(floatval($wager), 0, '.', '') }}<span>.{{ $wagerdecimal[1] }}</span></div>
+                </div>
+            </div>
+      @endforeach
+        </div>
+    </div>
+  <!--- weekly end --->
+</div>
+
 
         @endif
   <script>
-  const containerElement = document.getElementById("slotcontainer");
+
+  const containerElement = document.getElementById("slotcontainer-toggle");
   function toggleClass() {
-  const newClass = containerElement.className == "container" ? "container-lg" : "container";
+  const newClass = containerElement.className == "container-lg" ? "container-fluid slotcontainer-big" : "container-lg";
   containerElement.className = newClass;
   }
   (function(window, document){

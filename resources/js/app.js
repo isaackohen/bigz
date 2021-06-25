@@ -342,8 +342,8 @@ $.overview = function(game_id, api_id) {
         e.uiBlocker();
 
         $.whisper('Info', { game_id: game_id }).then(function(response) {
-            $.loadScripts([`/js/subpage/${api_id}.js`], function() {
-                $.loadCSS([`/css/subpage/${api_id}.css`], function() {
+            $.loadScripts([`/js/pages/${api_id}.js`], function() {
+                $.loadCSS([`/css/pages/${api_id}.css`], function() {
                                     if(api_id == "slotmachine") {
                     $('.overview .heading').html(`<strong>${response.info.nonce}</strong> #${response.info.id}`);
                                    } else {
@@ -568,14 +568,17 @@ $(document).ready(function() {
         else e.show();
     };
 
-    setInterval($.putNextInLiveQueue, 200);
+    setInterval($.putNextInLiveQueue, 150);
+
 
          
     window.Echo.channel(`laravel_database_Everyone`)
         .listen('ChatMessage', (e) => $.addChatMessage(e.message))
             .listen('UserNotification', function(e) {
-                $.playSound('/sounds/open.mp3');
-                $.multiplier(e.message);
+                $.playSound('/sounds/toast1.mp3');
+                $.toastmessage(e.message);
+                $('#searchoverlay_result').html('');
+                $('#toastbar').html(e.message).fadeIn(300);
             })
             .listen('PromoNotification', function(e) {
                 $.playSound('/sounds/open.mp3');

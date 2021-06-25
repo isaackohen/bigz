@@ -19,7 +19,7 @@
                 <div class="line-small-left"></div>
     </div>
 
-    <div class="container-flex owl-carousel bigzgames" style="z-index: 1;">
+    <div class="games" style="z-index: 1;">
         @foreach(\App\Games\Kernel\Game::list() as $game)
         @if(!$game->isDisabled() &&  $game->metadata()->id() !== "slotmachine" && $game->metadata()->id() !== "evoplay" && $game->metadata()->id() !== "livecasino")
 
@@ -34,11 +34,9 @@
             </div>  
         @endif
         @endforeach
-                    <div onclick="redirect('/slots/')" class="bigz_thumbnail" style="background-image:url(/img/misc/gameposter-bigz.webp);">
-
-
+                <div onclick="redirect('/slots/')" class="bigz_thumbnail" style="background-image:url(/img/misc/gameposter-bigz.webp);">
                 <div class="name">
-                <div class="gamename" style="display: flex; justify-content: center; margin-top: 70px;">
+                <div class="gamename" style="display: flex; justify-content: center; margin-top: 20px;">
                     <span><b>Register now!</b></span>
                 </div>
                 <div class="gamename" style="text-transform: uppercase; display: flex; justify-content: center; margin-top: 1px;">
@@ -48,7 +46,7 @@
                     <span style="font-size: 0.80rem">Wager Races, VIP and more.</span>
                 </div>
                 <div class="button" onclick="$.auth()" style="display: flex; justify-content: center; margin-top: 25px;">
-                    <div class="btn btn-primary m-2">Register</div>
+                    <div class="btn btn-primary m-2" onclick="redirect('/provably-fair/')">Provably Fair</div>
                 </div>
 
                 </div>
@@ -106,7 +104,7 @@
                     <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
                 </div>
                 <div class="button" style="display: flex; justify-content: center; margin-top: 10px;">
-                    <div class="btn btn-primary-small m-1">Play</div>
+                    <div class="btn btn-play"><i class="fad fa-play"></i></div>
                 </div>
                 </div>
             </div>  
@@ -140,7 +138,7 @@
                     <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
                 </div>
                 <div class="button" style="display: flex; justify-content: center; margin-top: 10px;">
-                    <div class="btn btn-primary-small m-1">Play</div>
+                    <div class="btn btn-play m-1"><i class="fad fa-play"></i></div>
                 </div>
                 </div>
             </div>  
@@ -189,7 +187,7 @@
             <div class="divider-title"><button style="margin-left: 5px;" class="btn btn-primary-small-dark randomize"><i class="fas fa-random"></i> Refresh</button>
 
             <select id="searchbar-showamount" class="btn btn-primary-small-dark">
-                    <option style="color: black;" value="15">Show 10</option>
+                    <option style="color: black;" value="10">Show 10</option>
                     <option style="color: black;" value="20">Show 20</option>
                     <option style="color: black;" value="40">Show 40</option>
                     <option style="color: black;" value="100">Show 100</option>

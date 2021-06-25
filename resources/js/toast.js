@@ -31,27 +31,23 @@ $.error = function(message) {
 
 
     // custom toast
-$.multiplier = function(message) {
-
-        iziToast.success({
+$.toastmessage = function(message) {
+        iziToast.show({
+        timeout: '10000',
         color: 'dark',
-        icon: '/img/logo/ico.png',
-        title: 'BIG WINZ',
+        iconurl: '/img/logo/bigz-icon.svg',
+        title: 'BIGZ',
         message: message,
-        position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+        transitionIn: 'fadeInRight',
+        transitionOut: 'fadeOutLeft',
+        position: 'topLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
         progressBarColor: 'rgb(0, 255, 184)',
         buttons: [
-          [
-            '<button>Ok</button>',
-            function (instance, toast) {
-              alert("Hello world!");
-            }
-          ],
           [
             '<button>Close</button>',
             function (instance, toast) {
               instance.hide({
-                transitionOut: 'fadeOutUp'
+                transitionOut: 'fadeOutRight'
               }, toast);
             }
           ]

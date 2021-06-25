@@ -291,8 +291,17 @@ class LivecasinoController extends Controller
 					}
 				}
 			}
-		} else {
+			
 			$balance = $transaction->newbalance;
+			
+			return response()->json([
+				'balance' => $balance
+			])->setStatusCode(200);
+			
+		} else {
+			
+			$balance = $transaction->newbalance;
+			
 			return response()->json([
 				'balance' => $balance
 			])->setStatusCode(200);

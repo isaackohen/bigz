@@ -146,7 +146,7 @@ var setRoundTimer = function setRoundTimer(seconds) {
 };
 
 $.on('/game/multiroulette', function () {
-  $.render('double');
+  $.render('multiroulette');
   $.sidebar(function (component) {
     component.bet();
 	component.buttons($.lang('general.color'))
