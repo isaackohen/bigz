@@ -11,14 +11,14 @@ $(document).ready(function() {
 var typingTimer;
 var doneTypingInterval = 300; 
     
-$('#searchbar').keyup(function(){
+$('#searchbar').keypress(function(){
     clearTimeout(typingTimer);
     if ($('#searchbar').val()) {
         typingTimer = setTimeout(doneTyping, doneTypingInterval);
     }
 }); 
 
-$('#searchbaroverlay').keyup(function(){
+$('#searchbaroverlay').keypress(function(){
     clearTimeout(typingTimer);
     if ($('#searchbaroverlay').val()) {
         typingTimer = setTimeout(doneTypingOverlay, doneTypingInterval);

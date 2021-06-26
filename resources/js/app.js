@@ -425,28 +425,6 @@ $(document).ready(function() {
     $.setCurrency($.currency());
     $.setUnit($.unit());
     $(document).trigger('pjax:start');
-/**
-    window.Echo.connector.socket.on('connect', function() {
-        $('.connectionLostContainer').addClass('recovered');
-        $('.connectionLostContainer span').html($.lang('general.error.connection_recovered'));
-        $('.connectionLostContainer i').attr('class', 'fal fa-check');
-        setTimeout(function() {
-            $('.connectionLostContainer').fadeOut('fast', function() {
-                $('body').css({ 'padding-top': 0 });
-            });
-        }, 3000);
-    });
-
-    const disconnectNotify = function() {
-        $('.connectionLostContainer').removeClass('recovered');
-        $('.connectionLostContainer span').html($.lang('general.error.connection_lost'));
-        $('.connectionLostContainer i').attr('class', 'fal fa-times');
-        $('.connectionLostContainer').fadeIn('fast');
-        $('body').css({ 'padding-top': '53px' });
-    };
-    window.Echo.connector.socket.on('disconnect', disconnectNotify);
-    if(!window.Echo.connector.socket.connected) disconnectNotify();
-**/
 
     $(`[data-chat-toggle]`).on('click', function() {
         $('.chat').toggleClass('hidden');

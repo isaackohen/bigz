@@ -9,7 +9,7 @@
     <div class="modal-content">
             <div class="modal-header"><img src="/img/logo/ico.png" style="max-height: 19px; margin-right: 5px;"><span>Loyalty Club</span>
         <button
-          type="button"
+          type="button"  
           data-mdb-dismiss="vip modal"
                 aria-label="Close"
                 class="btn-secondary btn-close"

@@ -15,7 +15,24 @@ $.on('/bonus', function() {
         }
     });
 
+        $('#activate').on('click', function() {
+            $('.modal-ui-block').fadeIn('fast');
+            $.request('promocode/activate', { code: $('#code').val() }).then(function() {
+                $('.modal-ui-block').fadeOut('fast', () => $(this).html(''));
+                $('.bonus-overlay').click();
+                $.success($.lang('bonus.promo.success'));
+            }, function(error) {
+                if(error === 1) $.error($.lang('bonus.promo.invalid'));
+                if(error === 2) $.error($.lang('bonus.promo.expired_time'));
+                if(error === 3) $.error($.lang('bonus.promo.expired_usages'));
+                if(error === 4) $.error($.lang('bonus.promo.used'));
+                if(error === 5) $.error($.lang('general.error.promo_limit'));
+                if(error === 7) $.error($.lang('general.error.vip_only_promocode'));
 
+                $('.modal-ui-block').fadeOut('fast', () => $(this).html(''));
+            });
+        });
+        
     $('.bo1').on('click', function() {
             $.request('offers/bonus1').then(function() {
                 $.success($.lang('bonus.offers.bonus1started'));
@@ -447,25 +464,7 @@ class Modal {
         });
     }
 
-    promocode() {
-        $('#activate').on('click', function() {
-            $('.modal-ui-block').fadeIn('fast');
-            $.request('promocode/activate', { code: $('#code').val() }).then(function() {
-                $('.modal-ui-block').fadeOut('fast', () => $(this).html(''));
-                $('.bonus-overlay').click();
-                $.success($.lang('bonus.promo.success'));
-            }, function(error) {
-                if(error === 1) $.error($.lang('bonus.promo.invalid'));
-                if(error === 2) $.error($.lang('bonus.promo.expired_time'));
-                if(error === 3) $.error($.lang('bonus.promo.expired_usages'));
-                if(error === 4) $.error($.lang('bonus.promo.used'));
-                if(error === 5) $.error($.lang('general.error.promo_limit'));
-                if(error === 7) $.error($.lang('general.error.vip_only_promocode'));
 
-                $('.modal-ui-block').fadeOut('fast', () => $(this).html(''));
-            });
-        });
-    }
 
     discord() {
         $('[data-check-subscription]').on('click', function() {

@@ -90,7 +90,7 @@
                         @if($slots->p == 'upgames')
                     <div onclick="redirect('/live/{{ $slots->UID }}')" class="casino_thumbnail" style="background-image:url('/assets/game/livecasino/wide/{{ $slots->id }}.jpg');">
                         @else
-                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="casino_thumbnail" style="background-image:url('https://cdn.static.bet/i/wide/{{ $slots->p }}/{{ $slots->id }}.jpg');">
+                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="casino_thumbnail" style="background-image:url('/assets/i/wide/{{ $slots->p }}/{{ $slots->id }}.jpg');">
                         @endif
             @endif
                 <div class="name">
@@ -124,7 +124,7 @@
                         @if($slots->p == 'upgames')
                     <div onclick="redirect('/live/{{ $slots->UID }}')" class="casino_thumbnail" style="background-image:url('/assets/game/livecasino/wide/{{ $slots->id }}.jpg');">
                         @else
-                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="casino_thumbnail" style="background-image:url('https://cdn.static.bet/i/wide/{{ $slots->p }}/{{ $slots->id }}.jpg');">
+                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="casino_thumbnail" style="background-image:url('/assets/i/wide/{{ $slots->p }}/{{ $slots->id }}.jpg');">
                         @endif
             @endif
                 <div class="name">
@@ -210,7 +210,7 @@
           @if(auth()->guest())
                     <div onclick="$.auth()" class="game_long_thumbnail" style="background-image:url('/assets/game/preview/{{ $slots->UID }}.webp');">
                 @else
-                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_long_thumbnail" style="background-image:url('https://cdn.static.bet/i/long/jpg/{{ $slots->id }}.jpg');">
+                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_long_thumbnail" style="background-image:url('/assets/i/long/jpg/{{ $slots->id }}.jpg');">
             @endif
                 <div class="name">
                 <div class="gamename" style="display: flex; justify-content: center; margin-top: 30px;">
@@ -237,7 +237,7 @@
           @if(auth()->guest())
                     <div onclick="$.auth()" class="game_long_thumbnail" style="background-image:url('/assets/game/preview/{{ $slots->UID }}.webp');">
                 @else
-                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_long_thumbnail" style="background-image:url('https://cdn.static.bet/i/long/jpg/{{ $slots->id }}.jpg');">
+                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_long_thumbnail" style="background-image:url('/assets/i/long/jpg/{{ $slots->id }}.jpg');">
             @endif
                 <div class="name">
                 <div class="gamename" style="display: flex; justify-content: center; margin-top: 30px;">
@@ -264,7 +264,7 @@
           @if(auth()->guest())
                     <div onclick="$.auth()" class="game_long_thumbnail" style="background-image:url('/assets/game/preview/{{ $slots->UID }}.webp');">
                 @else
-                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_long_thumbnail" style="background-image:url('https://cdn.static.bet/i/long/jpg/{{ $slots->id }}.jpg');">
+                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_long_thumbnail" style="background-image:url('/assets/i/long/jpg/{{ $slots->id }}.jpg');">
             @endif
                 <div class="name">
                 <div class="gamename" style="display: flex; justify-content: center; margin-top: 30px;">

@@ -1,15 +1,17 @@
+            @if(!auth()->guest())
+                @php        
+                header("Location: /welcome/");
+
+                die();
+                @endphp
+
+            @endif     
+            
           @if(auth()->guest())
                     <div style="margin-top: 50px;"></div>
             @endif
 
-          @if(!auth()->guest())
-        @php        
-    header("Location: /welcome/");
 
-        die();
-        @endphp
-
-            @endif
   <div id="slide control loff" class="owl-carousel owl-theme loff">
 
   <div id="large-slide" class="container-fluid" style="margin: 0px !important; padding-right: 0 !important; padding-left: 0 !important; margin-right: 0px !important;margin-left: 0px !important;">    

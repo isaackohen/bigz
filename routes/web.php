@@ -3,6 +3,7 @@
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PokerApi;
+use App\PokerSessions;
 
 
 Route::post('partner_cashout', function() {
@@ -27,24 +28,39 @@ function array_value_recursive($key, array $arr){
     return count($val) > 1 ? $val : array_pop($val);
 }
 
+    $login = auth()->user()->name;
+    $user = auth()->user()->id;
+
+    $now = \Carbon\Carbon::now()->timestamp;
+    $last3minute = \Carbon\Carbon::now()->subMinutes(1)->timestamp;
+    $pokersession = (\App\PokerSessions::orderBy('time', 'desc')->where('user', $user)->where('time', '>=', $last3minute)->first());
+
+    if($pokersession) {
+        $link = ($pokersession->session);
+} else {
+
+
     $api = new PokerApi(123, 'lkq9b2br-w8oy-01oy-qgtv-48a09v8sz91a', '217.182.195.96', 4000);
     $api->connect();
-    $login = auth()->user()->name;
-
-
-        $getRunLink = $api->getRunLink($login);
-//      $linkarray = var_export($getRunLink, true);
-        //$link = json_encode($getRunLink);
+    $getRunLink = $api->getRunLink($login); 
+    //      $linkarray = var_export($getRunLink, true);
+   //$link = json_encode($getRunLink);
 
         $link = $getRunLink['uogetuserrunlink']['@attributes']['runlink'];
         $explode = explode('/', $link);
         $link = 'https://poker.bigz.io/alogin/'.$explode[4].'/';
+ 
+                     \App\PokerSessions::create([
+                    'session' => $link, 'time' => $now, 'user' => $user
+                    ]);
+
 
         Log::notice($getRunLink);
         Log::notice($link);
-        echo '<META HTTP-EQUIV=REFRESH CONTENT="0; '.$link.'">';
+        //echo '<META HTTP-EQUIV=REFRESH CONTENT="0; '.$link.'">';
+}
 
-        $view = view('liveplayer')->with('url', $link);
+        $view = view('pokerplayer')->with('url', $link);
         return view('layouts.app')->with('page', $view);
 
     });
