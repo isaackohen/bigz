@@ -1,57 +1,55 @@
 import iziToast from 'izitoast';
 
 $.success = function(message) {
-    iziToast.success({
-        'font-weight': '700',
-        'transitionIn': 'bounceInDown',
-        'transitionOut': 'fadeOutUp',
-        'color': 'rgb(0, 255, 184)',
-        'layout': '2',
-        'titleSize': '15px',
-        'messageSize': '15px',
-        'messageHeight': '1.5',
-        'message': message,
-        'position': 'topCenter'
-    });
+        iziToast.show({
+        timeout: '3500',
+        color: 'dark',
+        iconUrl: '/img/logo/bigz-icon-success.svg',
+        title: 'OK!',
+        message: message,
+        transitionIn: 'fadeInRight',
+        transitionOut: 'fadeOutLeft',
+        position: 'topLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+        progressBarColor: 'rgb(126, 228, 2)',
+      });
 };
 
 $.error = function(message) {
-    iziToast.error({
-        'transitionIn': 'bounceInDown',
-        'transitionOut': 'fadeOutUp',
-        'font-weight': '700',
-        'titleSize': '15px',
-        'layout': '2',
-        'messageSize': '15px',
-        'icon': 'ico-error',
-        'message': message,
-        'position': 'topCenter'
-    });
-};
+        iziToast.show({
+        timeout: '3500',
+        color: 'dark',
+        iconUrl: '/img/logo/bigz-icon-error.svg',
+        title: 'Oops!',
+        message: message,
+        transitionIn: 'fadeInRight',
+        transitionOut: 'fadeOutLeft',
+        position: 'topLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+        progressBarColor: 'rgb(212, 67, 57)',
+      });
+
+    };
+
+
 
 
     // custom toast
-$.multiplier = function(message) {
-
-        iziToast.success({
+$.toastmessage = function(message) {
+        iziToast.show({
+        timeout: '10000',
         color: 'dark',
-        icon: '/img/logo/ico.png',
-        title: 'BIG WINZ',
+        iconUrl: '/img/logo/bigz-icon.svg',
+        title: 'BIGZ',
         message: message,
-        position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+        transitionIn: 'fadeInRight',
+        transitionOut: 'fadeOutLeft',
+        position: 'topLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
         progressBarColor: 'rgb(0, 255, 184)',
         buttons: [
-          [
-            '<button>Ok</button>',
-            function (instance, toast) {
-              alert("Hello world!");
-            }
-          ],
           [
             '<button>Close</button>',
             function (instance, toast) {
               instance.hide({
-                transitionOut: 'fadeOutUp'
+                transitionOut: 'fadeOutRight'
               }, toast);
             }
           ]
@@ -65,15 +63,15 @@ $.darktoast = function(message) {
     iziToast.success({
         'layout': '2',
         'titleSize': '14px',
-        'iconUrl':'/img/logo/icoblack.svg',
+        'iconUrl':'/img/logo/bigz-icon.svg',
         'font-weight': '700',
-        'transitionIn': 'bounceInDown',
-        'transitionOut': 'fadeOutUp',
+        'transitionIn': 'fadeInRight',
+        'transitionOut': 'fadeOutLeft',
         'messageSize': '15px',
         'messageHeight': '1.5',
-        'title': 'BitsArcade Message',
+        'title': 'BIGZ',
         'message': message,
-        'position': 'topCenter'
+        'position': 'topLeft'
     });
 };
 
@@ -84,7 +82,7 @@ $.warning = function(message) {
         'messageSize': '16px',
         'messageHeight': '1.4',
         'message': message,
-        'position': 'topCenter'
+        'position': 'topLeft'
     });
 };
 
@@ -92,15 +90,15 @@ $.triviamsg = function(message) {
     iziToast.info({
         'layout': '2',
         'titleSize': '14px',
-        'iconUrl':'/img/logo/icoblack.svg',
+        'iconUrl':'/img/logo/bigz-icon.svg',
         'font-weight': '700',
-        'transitionIn': 'bounceInDown',
-        'transitionOut': 'fadeOutUp',
+        'transitionIn': 'fadeInRight',
+        'transitionOut': 'fadeOutLeft',
         'messageSize': '15px',
         'messageHeight': '1.5',
         'title': 'Trivia Time',
         'message': message,
-        'position': 'topCenter'
+        'position': 'topLeft'
     });
 };
 
@@ -108,32 +106,30 @@ $.discordmsg = function(message) {
     iziToast.info({
         'layout': '2',
         'titleSize': '14px',
-        'iconUrl':'/img/logo/icoblack.svg',
+        'iconUrl':'/img/logo/bigz-icon.svg',
         'font-weight': '700',
-        'transitionIn': 'bounceInDown',
-        'transitionOut': 'fadeOutUp',
+        'transitionIn': 'fadeInRight',
+        'transitionOut': 'fadeOutLeft',
         'messageSize': '15px',
         'messageHeight': '1.5',
         'title': 'Discord Promocode',
         'message': message,
-        'position': 'topCenter'
+        'position': 'topLeft'
     });
 };
 
 
 $.info = function(message) {
-    iziToast.info({
-        'layout': '2',
-        'titleSize': '15px',
-        'iconUrl':'/img/logo/icoblack.svg',
-        'font-weight': '700',
-        'transitionIn': 'flipInX',
-        'transitionOut': 'flipOutX',
-        'messageSize': '15px',
-        'messageHeight': '1.5',
-        'message': message,
-        'position': 'topCenter'
-    });
+        iziToast.show({
+        timeout: '3500',
+        color: 'dark',
+        iconUrl: '/img/logo/bigz-icon-info.svg',
+        message: message,
+        transitionIn: 'fadeInRight',
+        transitionOut: 'fadeOutLeft',
+        position: 'topLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+        progressBarColor: 'rgb(2, 106, 228)',
+      });
 };
 
 

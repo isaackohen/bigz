@@ -88,6 +88,7 @@ class C27Controller extends Controller
     public function game($slug)
     {
         $slug = (\App\Slotslist::get()->where('UID', $slug)->first());
+        $slugrecents = ($slug->UID);
         $slug = ($slug->id);
         $mainid = env('mainid');
         $mainbonusid = env('mainbonusid');     
@@ -101,29 +102,45 @@ class C27Controller extends Controller
         $user = auth()->user();
         $freespinslot = \App\Settings::where('name', 'freespin_slot')->first()->value;
 
-        if (strlen($slug) > 50){
-            return redirect('/');
-        }
-        $slugsanitize = preg_replace("/[\/\{\}\)\(\%#\$]/", "sanitize", $slug);
-        if (!$user) {
-            return redirect('/');
-        }
-        if(\App\RecentSlots::where('user_id', $user->id)->where('s', $slugsanitize)->first() == null) {
-                \App\RecentSlots::create([
-                'user_id' => $user->id, 's' => $slugsanitize, 'b' => 0,
-            ]);
-        }
-            $provider = \App\Slotslist::where('_id', $slugsanitize)->first()->p;
-            if($provider == 'evoplay') {
-                return redirect()->route('evoplay', [$slug]);
-            }
+                if (strlen($slug) > 50){
+                    return redirect('/');
+                }
+                $slugrecentssanitize = preg_replace("/[\/\{\}\)\(\%#\$]/", "sanitize", $slugrecents);
+
+                $slugsanitize = preg_replace("/[\/\{\}\)\(\%#\$]/", "sanitize", $slug);
+
+                /* Deny Guests */
+                if (!$user) {
+                    return redirect('/');
+                }
+
+
+                /* Record Slotpage Visit */
+                if(\App\RecentSlots::where('player', $user->id)->where('s', $slugrecentssanitize)->first() == null) {
+                    \App\RecentSlots::create([
+                    'player' => $user->id, 's' => $slugrecentssanitize, 'b' => "0"
+                    ]);
+                }
+
+                /* Get the provider from $slug */
+                $provider = \App\Slotslist::where('_id', $slugsanitize)->first()->p;
+
+                /* Forward Evoplay games to Evoplay Controller */
+                if($provider == 'evoplay') {
+                    return redirect()->route('evoplay', [$slug]);
+                }   
+
+
             if($provider == 'mascot') {
+                /* Deny moderator/streamer role */
                 if(auth()->user()->access == 'moderator') {
                         return redirect('/');
                 }
-                if($slugsanitize == $freespinslot && $user->freegames > 0) {
+
+                /* Request Mascot Free Spins Session */
+        if($slugsanitize == $freespinslot && $user->freegames > 0) {
                 $this->client->mascot->setPlayer(['Id' => $user->id . '-' . 'eth' . '-' . $mascotbonusid , 'BankGroupId' => $mascotbonusbankgroup]);
-                    usleep(11000);
+                usleep(11000);
                 $this->client->mascot->setBonus([   
                     'Id' => 'shared',   
                     'FsType' => 'original', 
@@ -135,41 +152,49 @@ class C27Controller extends Controller
                             ]   
                         ]   
                     ]   
-                ]);      
-         $game = $this->client->mascot->createSession(   
-                [   
-                    'GameId' => $slugsanitize,  
-                    'BonusId' => 'shared',  
-                    'PlayerId' => $user->id . '-' . 'eth' . '-' . $mascotbonusid,  
-                    'AlternativeId' => time() . '_' . $user->id . '_' . 'eth', 
-                    'Params' => [   
-                        'freeround_bet' => 1    
-                    ],  
-                    'RestorePolicy' => 'Create'
-                ]   
-            );  
-            } else {
+                ]);
+                $game = $this->client->mascot->createSession(   
+                        [   
+                            'GameId' => $slugsanitize,  
+                            'BonusId' => 'shared',  
+                            'PlayerId' => $user->id . '-' . 'eth' . '-' . $mascotbonusid,  
+                            'AlternativeId' => time() . '_' . $user->id . '_' . 'eth', 
+                            'Params' => [   
+                                'freeround_bet' => 1    
+                            ],  
+                            'RestorePolicy' => 'Create'
+                        ]   
+                    );  
+        }
+        else {
+
+                /* Request Regular Mascot Session */
                 $this->client->mascot->setPlayer(['Id' => $user->id . '-' . auth()->user()->clientCurrency()->id() . '-' . $mascotid , 'BankGroupId' => $mascotbankgroup]);
                     usleep(11000);
-                $game = $this->client->mascot->createSession(
-                [
+                    $game = $this->client->mascot->createSession(
+                       [
                     'GameId' => $slugsanitize,
                     'PlayerId' => $user->id . '-' . auth()->user()->clientCurrency()->id() . '-' . $mascotid,
                     'AlternativeId' => time() . '_' . $user->id . '_' . auth()->user()->clientCurrency()->id(),
                     'RestorePolicy' => 'Restore'
-                ]
-            );
-            }                       
-            $url = $game['SessionUrl'] . '/?' . $slugsanitize;
-            $view = view('c27')->with('data', $game)->with('url', $url);
-        return view('layouts.app')->with('page', $view);
+                       ]
+                    );
+             }         
 
-} else {
+                /* Deny moderator/streamer role */              
+
+                $url = $game['SessionUrl'] . '/?' . $slugsanitize;
+                $view = view('c27')->with('data', $game)->with('url', $url);
+                return view('layouts.app')->with('page', $view);
+
+        } else {
+       
+                /* Request Free Spins Session for the other providers */ 
        if($slugsanitize == $freespinslot && $user->freegames > 0) {
        if(auth()->user()->access == 'moderator') {
-            $this->client->setPlayer(['Id' => $user->id . '-' . 'eth' . '-' . $mainbonusid , 'BankGroupId' => $mainbonusgroup]);
-                    usleep(11000);
-            $this->client->setBonus([   
+                $this->client->setPlayer(['Id' => $user->id . '-' . 'eth' . '-' . $mainbonusid , 'BankGroupId' => $mainbonusgroup]);
+                        usleep(11000);
+                $this->client->setBonus([   
                     'Id' => 'shared',   
                     'FsType' => 'original',  
                     'CounterType' => 'shared',  
@@ -181,7 +206,8 @@ class C27Controller extends Controller
                         ]   
                     ]   
                 ]);      
-             $game = $this->client->createSession(   
+                
+                $game = $this->client->createSession(   
                 [   
                     'GameId' => $slugsanitize,  
                     'BonusId' => 'shared',
@@ -190,12 +216,14 @@ class C27Controller extends Controller
                     'AlternativeId' => time() . '_' . $user->id . '_' . 'eth', 
                     'Params' => [   
                         'freeround_bet' => 1    
-                    ],  
+                ],  
                     'RestorePolicy' => 'Create'
                 ]   
              );  
              }
+
         else {
+
             $this->client->setPlayer(['Id' => $user->id . '-' . 'eth' . '-' . $mainid , 'BankGroupId' => $mainbankgroup]);
                     usleep(11000);
             $this->client->setBonus([   
@@ -254,11 +282,11 @@ class C27Controller extends Controller
         }
         }
             if($user->freegames > 0 && $slugsanitize == $freespinslot) {
-                $url = 'https://' . $game['SessionId'] . '.spins.sh/?' . $slugsanitize;
+                $url = 'https://' . $game['SessionId'] . '.x10.gg/?' . $slugsanitize;
         }
 
         else {
-                $url = 'https://' . $game['SessionId'] . '.spins.sh/?' . $slugsanitize;
+                $url = 'https://' . $game['SessionId'] . '.x10.gg/?' . $slugsanitize;
             }
                 $view = view('c27')->with('data', $game)->with('url', $url);
                 usleep(150000);
@@ -546,7 +574,7 @@ class C27Controller extends Controller
             'status' => $status,
             'profit' => $profit,
             'server_seed' => $content->params->transactionRef,
-            'client_seed' => $content->params->transactionRef,
+            'client_seed' => $gameslug,
             'nonce' => $gameguid,
             'data' => json_decode($request->getContent(), true),
             'type' => 'quick',
@@ -554,18 +582,28 @@ class C27Controller extends Controller
             'balance-after' => number_format($balance/100, 2, '.', ''),
             'currency' => strtolower($currency)
         ]);
-        event(new \App\Events\LiveFeedGame($game, 10));
+                
+       if($recentslots = \App\RecentSlots::where('user_id', $user->id)->where('s', $gamevuid)->first()) {
+                    $recentslots->update([
+                    'b' => $recentslots->b + 1
+                    ]);      
+                }
 
-                                     if($multi > 2.00) {
+            event(new \App\Events\LiveFeedGame($game, 10));
 
-        Settings::where('name', 'bigwinner_player')->update(['value' => $user->name]);
-        Settings::where('name', 'bigwinner_slot')->update(['value' => $gameguid]);
-        Settings::where('name', 'bigwinner_amount')->update(['value' => ($content->params->deposit / 100)]);
-        Settings::where('name', 'bigwinner_multi')->update(['value' => $multi]);
-        Settings::where('name', 'bigwinner_game')->update(['value' => $gameslug]);
-        Settings::where('name', 'bigwinner_gamevuid')->update(['value' => $gamevuid]);
+            $minmulti = \App\Settings::where('name', 'bigwinner_min_multi')->first()->value;
+            $getcronstate = \App\Settings::where('name', 'tg_bigwinner_cron')->first()->value;
 
-            \Artisan::call('datagamble:bigwinner');
+            if($multi > $minmulti) {
+                if($getcronstate == '0')
+                Settings::where('name', 'bigwinner_player')->update(['value' => $user->name]);
+                Settings::where('name', 'bigwinner_slot')->update(['value' => $gameguid]);
+                Settings::where('name', 'bigwinner_amount')->update(['value' => ($content->params->deposit / 100)]);
+                Settings::where('name', 'bigwinner_multi')->update(['value' => $multi]);
+                Settings::where('name', 'bigwinner_game')->update(['value' => $gameslug]);
+                Settings::where('name', 'bigwinner_gamevuid')->update(['value' => $gamevuid]);
+
+                Settings::where('name', 'tg_bigwinner_cron')->update(['value' => 1]);
 
             }
 
@@ -589,6 +627,7 @@ class C27Controller extends Controller
                 }
 
             Leaderboard::insert($game);
+            
             if($usd_wager > floatval(0.10)) {
                 if($multi < 0.95 || $multi > 1.25) {
                     Races::insert($game);

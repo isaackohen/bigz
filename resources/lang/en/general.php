@@ -264,7 +264,7 @@ return [
     'yes' => 'Yes',
     'no' => 'No',
 	'verify' => 'Check Provably Fair',
-    'unit' => 'View $/€',
+    'unit' => 'View $',
     'coming_soon' => 'Coming Soon',
     'reload' => 'Cooldown:',
     'spin' => 'Spin',

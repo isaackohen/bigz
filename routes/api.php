@@ -14,7 +14,7 @@ use App\Games\Kernel\Module\ModuleSeeder;
 use App\Games\Kernel\ProvablyFairResult;
 use App\Http\Controllers\Api\WalletController;
 use App\Invoice;
-use App\User;
+use App\User; 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +26,23 @@ use App\Http\Controllers\PokerApi;
 Route::any('WVjRFA5EgS3yXTn', 'C27Controller@seamless')->name('rpc.endpoint');
 Route::any('evoplay77gS3y', 'EvoController@seamless')->name('rpc.endpoint');
 Route::any('callback/upgames', 'LivecasinoController@seamless')->name('rpc.endpoint');
+
+
+Route::any('callback/no9gqYHbIOWmW1Q4PkTEAW7De1z4v/{userid}', function(Request $request, $userid) {
+    Log::warning(json_encode($request->all()));
+    $user = User::where('_id', $userid)->first();
+    $tglink = \App\Settings::where('name', 'telegram_link')->first()->value;
+    $checkcount = \App\User::where('tg_linked', $request->id)->count();
+
+    if($checkcount == 0) {
+        $user->update(['tg_linked' => $request->id]);   
+    }
+    header('Location: '.$tglink);
+    die();
+
+});
+
+
 
 Route::post('callback/nowpayments/withdrawals', function(Request $request) {
     Log::warning(json_encode($request->all()));
@@ -64,7 +81,7 @@ Route::get('blockNotify/{currency}/{blockId}', function($currency, $blockId) {
 
 Route::post('search/games', function(Request $request) {
         $request->validate([
-            'text' => ['required', 'string', 'min:1']
+            'text' => ['required', 'string', 'min:0']
         ]);
         $games = \App\Slotslist::get();
         $items = json_decode(json_encode($games));
@@ -75,8 +92,52 @@ Route::post('search/games', function(Request $request) {
         }
         return false;
         });
-        return success(array_values($result));
+        $showamount = $request->showamount;
+
+
+        return success(array_values(array_slice($result, 0, $showamount)));
     });
+
+
+Route::post('search/provider', function(Request $request) {
+
+        $games = \App\Slotslist::get()->shuffle();
+        $items = json_decode(json_encode($games));
+        $input = $request->provider;
+        $result = array_filter($items, function ($item) use ($input) {
+        if ((stripos($item->n, $input) !== false) || (stripos($item->p, $input) !== false)) {
+        return true;
+        }
+        return false;
+        });
+        $showamount = $request->showamount;
+
+
+        
+        
+        return success(array_values(array_slice($result, 0, $showamount)));
+    });
+
+
+Route::post('search/random', function(Request $request) {
+
+        $games = \App\Slotslist::get()->shuffle();
+        $items = json_decode(json_encode($games));
+        $input = " ";
+        $result = array_filter($items, function ($item) use ($input) {
+        if ((stripos($item->n, $input) !== false) || (stripos($item->p, $input) !== false)) {
+        return true;
+        }
+        return false;
+        });
+                $showamount = $request->showamount;
+
+
+
+        return success(array_values(array_slice($result, 0, $showamount)));
+    });
+
+
 Route::post('chatHistory', function() {
     $history = \App\Chat::latest()->limit(25)->where('deleted', '!=', true)->get()->toArray();
     if(\App\Settings::where('name', 'quiz_active')->first()->value !== 'false')

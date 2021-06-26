@@ -1,5 +1,6 @@
 @import '../variables';
 
+
 .nav {
     width: calc(100% + 55px) !important; 
 }
@@ -8,8 +9,6 @@
     display: none !important;
 }
 
-
-
 .pageContent .heading {
     margin: 15px 0;
     padding-left: 16px;
@@ -17,22 +16,16 @@
     display: flex;
     align-items: center;
     font-size: 1.3em;
-    font-family: IndustryBlack, Open sans-serif;
     position: relative;
 }
 
-.input-transfer {
-    font-size: 11px !important;
-    border-radius: 12px;
-}
-
-.transferblock {
+.contact_us {
     @include themed() {
         border: none;
     }
-    border-radius: 8px;
-    padding: 10px;
-    background: url("/img/misc/carbon.png") repeat, #172327 !important;
+    border-radius: 4px;
+    padding: 15px;
+    background: url(/img/misc/help-contact.svg);
     background-size: cover;
     margin-bottom: 10px;
     display: flex;
@@ -50,12 +43,13 @@
         margin-right: 15px;
     }
     .desc {
+        display: flex;
         flex-direction: column;
     }
 }
 
 @include media-breakpoint-down(md) {
-    .transferblock {
+    .contact_us {
         display: flex !important;
         width: 100%;
     }
@@ -68,24 +62,26 @@
 
     @include themed() {
         .title {
-            background: url("/img/misc/carbon.png") repeat, #172327 !important;
-            color: t('text');
+            background: linear-gradient(#222633, #222532);
+            border: 2px solid #2f97f4;
+            color: #ffffff;
             border-radius: 12px;
-            padding: 10px 20px;
-            font-size: 14px;
-            font-family: 'Proxima Nova Semi Bd';
+            padding: 8px 20px;
+            font-size: 1.1em;
+            font-family: Proxima Nova Med;
             cursor: pointer;
             box-shadow: 0 3px 6px rgb(0 0 0 / 25%);
             transition: all 0.15s ease-in;
 
             &:hover {
-            color: #fffff;
+            color: #2f97f4;
+            background: linear-gradient(#222633, #222532);
             }
         }
 
         .description {
             padding: 0;
-            border: 1px solid rgba(t('link-hover'), 0.3);
+            border: 1px solid rgba(t('link'), 0.3);
             border-top: none;
             height: 0;
             opacity: 0;
@@ -98,8 +94,10 @@
     @include themed() {
         .title {
             font-family: Proxima Nova Semi Bd;
+            background: url(/img/misc/help-contact.svg);
+            background-size: cover;
             color: #ffffff;
-            border: 2px solidt('text');
+            border: 2px solid #124061;
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
         }

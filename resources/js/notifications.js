@@ -11,7 +11,7 @@ const notifications = {
     'App\\Notifications\\VipDiscordNotification': defaultNotificationHandler,
     'App\\Notifications\\TipNotification': defaultNotificationHandler,
     'App\\Notifications\\EmailNotification': defaultNotificationHandler,
-    default_icon: 'fad fa-galaxy'
+    default_icon: 'fak fa-bigz-letter'
 };
 
 const addNotification = function(id, title, message, icon) {

@@ -1,23 +1,11 @@
-<?php
-
-echo '<META HTTP-EQUIV=REFRESH CONTENT="1; '.$url.'">'
-?>
-
-<div class="container-fluid">
 
 
 @if(!auth()->guest())
-    
+    <div class="container-fluid">
 
-
-<div id="slotcontainer" class="container-xl">
-  <div id="card_live" class="card">
-    <div id=parent> 
-      <iframe src="<?php echo $url; ?>" border="0"></iframe>
+          <iframe src="<?php echo $url; ?>" border="0"></iframe>
 
     </div>
-  </div>
-</div>
 
 
 @else
@@ -25,14 +13,25 @@ echo '<META HTTP-EQUIV=REFRESH CONTENT="1; '.$url.'">'
     Please login
 
 @endif
-  </div>
 
 
   <style>
 
+.fixed {
+  min-height: 45px !important;
+}
+
+header {
+  display: none !important;
+}
+
+.wallet {
+  display: none !important;
+}
+
 iframe { 
   width : 100%;
-  height : 75vh;
+  height : 85vh;
 }
 body {
     text-shadow: 0 0 black !important;

@@ -30,7 +30,7 @@
                     @if($slots->p == 'upgames')
 
             @if(auth()->guest())
-            <div class="game_poster" onclick="$.auth()" style="">
+            <div class="game_poster {{ $slots->id }}" onclick="$.auth()" style="">
 
               @else
             <div class="game_poster {{ $slots->id }}" onclick="redirect('/live/{{ $slots->UID }}')">
@@ -89,6 +89,6 @@
 
 
 
-
+</div>
 
 </div>

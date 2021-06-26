@@ -1,0 +1,750 @@
+@import "../variables";
+
+.nav {
+    margin-top: 0 !important;
+    width: calc(100% + 80px) !important;
+}
+
+.live {
+    display: none !important;
+}
+
+
+
+.pageContent {
+    margin-bottom: 80px !important;
+}
+
+
+.bullet-point {
+    position: relative;
+    color: #fff;  
+    .icon{
+    display: inline-block;
+    width: 1.1em;
+    line-height: 0;
+    vertical-align: text-bottom;
+    }
+
+}
+
+.subtitle {
+    font-size: 1.45rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: IndustryBlack, Open Sans;
+    color: #fff;
+}
+
+
+.content-slideinleft {
+    position: relative;
+    flex-direction: column;
+    padding: 1.5rem;
+    grid-gap: 1.5rem;
+    gap: 1.5rem;
+    z-index: 1;
+  -webkit-animation-name: slideInLeft;
+  animation-name: slideInLeft;
+  -webkit-animation-duration: 0.1s;
+  animation-duration: 0.1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+
+    .title {
+    font-weight: 900;
+    font-size: 54px;
+    line-height: 60px;
+    text-transform: uppercase;
+    font-family: IndustryBlack, Open Sans;
+    }
+    .accent {
+        color: #00e258;
+    }
+
+    .text {
+    color: #fff;
+    }
+    
+}
+
+
+  @-webkit-keyframes pulse {
+  0% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  50% {
+  -webkit-transform: scale3d(1.05, 1.05, 1.05);
+  transform: scale3d(1.05, 1.05, 1.05);
+  }
+  100% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  }
+  @keyframes pulse {
+  0% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  50% {
+  -webkit-transform: scale3d(1.05, 1.05, 1.05);
+  transform: scale3d(1.05, 1.05, 1.05);
+  }
+  100% {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  }
+  } 
+
+
+ @-webkit-keyframes slideInLeft {
+  0% {
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+  visibility: visible;
+  }
+  100% {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  }
+  }
+  @keyframes slideInLeft {
+  0% {
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+  visibility: visible;
+  }
+  100% {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  }
+  } 
+
+  @-webkit-keyframes slideInRight {
+  0% {
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+  visibility: visible;
+  }
+  100% {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  }
+  }
+  @keyframes slideInRight {
+  0% {
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+  visibility: visible;
+  }
+  100% {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  }
+  } 
+
+.content-bg-slideright {
+    position: absolute;
+    z-index: -1;
+    height: calc(100vh - 8.375rem);
+    top: 1rem;
+    object-fit: contain;
+    -webkit-animation-name: slideInRight;
+    animation-name: slideInRight;
+   -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+
+
+    img, svg {
+        vertical-align: middle;
+
+    }
+}
+.content-bg-pulse {
+    position: absolute;
+    z-index: -1;
+    height: calc(100vh - 14.375rem);
+    top: 1.1rem;
+    object-fit: contain;
+      animation-delay: 0.2s;
+
+  -webkit-animation-name: pulse;
+  animation-name: pulse;
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+
+
+    img, svg {
+        vertical-align: middle;
+
+    }
+}
+
+
+.bigz_game {
+    display: inline-flex;
+    width: 100%;
+    height: 300px;
+    margin: 10px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    z-index: 1;
+    transition: all 0.15s ease-in;
+    top: 0;
+    position: relative;
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: rgba(black, 0.2) 0 4px 6px -1px, rgba(black, 0.12) 0px 2px 4px -1px;
+    transition: all ease-in 0.2s;
+
+
+    &:hover {
+        top: -5px;
+        @include blur(black, 0.5, 0.8, 5px);
+
+        .name {
+        display: block;
+        }
+    }
+
+    &:after {
+        content: '';
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        opacity: 1 !important;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position-x: center;
+        background-size: cover;
+        pointer-events: none;
+        will-change: transform;
+        transition: all 200ms ease-in 0s;
+    }
+
+    .name {
+        display: none;
+        z-index: 3;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        @include blur(black, 0.5, 0.8, 5px);
+        border-radius: 5px;
+        color: white;     
+    }
+
+
+    .unavailable {
+        z-index: 4;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(black, 0.7);
+        border-radius: 5px;
+        color: white;
+        .slanting {
+            transform: skewY(-5deg) translateY(-50%);
+            padding: 25px;
+            position: absolute;
+            top: 50%;
+            background: rgba(black, 0.8);
+            width: 100%;
+            .content {
+                font-size: 15px;
+                transform: skewY(5deg);
+                text-align: center;
+            }
+        }
+    }
+}
+
+.owl-item {
+    padding: 4px !important;
+}
+
+.casino_thumbnail {
+    display: inline-flex;
+    width: 100%;
+    height: 160px;
+    font-size: 11px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    z-index: 1;
+    transition: all 0.1s ease-in;
+    top: 0;
+    position: relative;
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: rgba(black, 0.2) 0 4px 6px -1px, rgba(black, 0.12) 0px 2px 4px -1px;
+    transition: all ease-in 0.2s;
+    margin-right: 8px !important;
+
+    .btn-primary-small {
+    font-size: 10px;
+    min-height: 17px;
+    }
+
+    &:hover {
+        @include blur(black, 0.5, 0.8, 5px);
+        .name {
+        display: block;
+        }
+    }
+
+    &:after {
+        content: '';
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        opacity: 1 !important;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position-x: center;
+        background-size: cover;
+        pointer-events: none;
+        will-change: transform;
+        transition: all 200ms ease-in 0s;
+    }
+
+    .name {
+        display: none;
+        z-index: 3;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        @include blur(black, 0.5, 0.8, 5px);
+        border-radius: 12px;
+        color: white;     
+
+        .gametitle {
+        font-family: "Proxima Nova Semi Bd";
+        font-size: 14px;
+        }
+    }
+
+}
+
+#gamelist-search {
+    border: 1px solid #152125;
+    background: #19272b;
+    border-radius: 16px;
+    padding: 10px;
+    padding-left: 40px;
+    color: #718e98;
+    width: 100%;
+    cursor: text;
+    transition: background 0.15s ease;
+}
+
+
+.bigz_thumbnail {
+    display: inline-flex;
+    width: 200px;
+    height: 180px;
+    margin-bottom: 10px;
+    font-size: 11px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 1;
+    transition: all 0.1s ease-in;
+    top: 0;
+    position: relative;
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: rgba(black, 0.2) 0 4px 6px -1px, rgba(black, 0.12) 0px 2px 4px -1px;
+    transition: all ease-in 0.2s;
+    margin-right: 10px !important;
+
+    .btn-primary-small {
+    font-size: 10px;
+    min-height: 17px;
+    }
+
+    &:hover {
+        @include blur(black, 0.5, 0.8, 5px);
+
+        .name {
+        display: block;
+        }
+    }
+
+    &:after {
+        content: '';
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        opacity: 1 !important;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position-x: center;
+        background-size: cover;
+        pointer-events: none;
+        will-change: transform;
+        transition: all 200ms ease-in 0s;
+    }
+
+    .name {
+        display: none;
+        z-index: 3;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        @include blur(black, 0.5, 0.8, 5px);
+        border-radius: 12px;
+        color: white;     
+
+        .gametitle {
+        font-family: "Proxima Nova Semi Bd";
+        font-size: 14px;
+        }
+    }
+
+
+}
+
+
+
+
+.owl-next {
+    float: right !important;
+}
+
+.slots_thumbnail {
+    display: inline-flex;
+    width: 100%;
+    height: 190px;
+    font-size: 12px;
+    margin-right: 8px !important;
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    z-index: 1;
+    transition: all 0.15s ease-in;
+    top: 0;
+    position: relative;
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: rgba(black, 0.2) 0 4px 6px -1px, rgba(black, 0.14) 0px 2px 4px -1px;
+    transition: all ease-in 0.1s;
+
+    .btn-primary-small {
+    font-size: 10px;
+    min-height: 20px;
+    }
+
+    &:hover {
+        @include blur(black, 0.5, 0.8, 5px);
+
+        .name {
+        display: block;
+        }
+    }
+
+    &:after {
+        content: '';
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        opacity: 1 !important;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position-x: center;
+        background-size: cover;
+        pointer-events: none;
+        will-change: transform;
+        transition: all 100ms ease-in 0s;
+    }
+
+    .name {
+        display: none;
+        z-index: 3;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        @include blur(black, 0.5, 0.8, 6px);
+        border-radius: 12px;
+        color: white;     
+
+        .gametitle {
+        font-family: "Proxima Nova Semi Bd";
+        font-size: 15.5px;
+        }
+    }
+
+
+    .unavailable {
+        z-index: 4;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(black, 0.7);
+        border-radius: 5px;
+        color: white;
+        .slanting {
+            transform: skewY(-5deg) translateY(-50%);
+            padding: 25px;
+            position: absolute;
+            top: 50%;
+            background: rgba(black, 0.8);
+            width: 100%;
+            .content {
+                font-size: 15px;
+                transform: skewY(5deg);
+                text-align: center;
+            }
+        }
+    }
+}
+
+
+
+/* Float Shadow */
+.hvr-float-shadow {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+.hvr-float-shadow:before {
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+  content: '';
+  top: 100%;
+  left: 5%;
+  height: 10px;
+  width: 90%;
+  opacity: 0;
+  background: -webkit-radial-gradient(center, ellipse, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
+  /* W3C */
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform, opacity;
+  transition-property: transform, opacity;
+}
+.hvr-float-shadow:hover, .hvr-float-shadow:focus, .hvr-float-shadow:active {
+  -webkit-transform: translateY(-5px);
+  transform: translateY(-5px);
+  /* move the element up by 5px */
+}
+.hvr-float-shadow:hover:before, .hvr-float-shadow:focus:before, .hvr-float-shadow:active:before {
+  opacity: 1;
+  -webkit-transform: translateY(5px);
+  transform: translateY(5px);
+  /* move the element down by 5px (it will stay in place because it's attached to the element that also moves up 5px) */
+}
+
+
+
+.game_long_thumbnail {
+    display: inline-flex;
+    width: 100%;
+    height: 190px;
+    font-size: 12px;
+    margin-right: 12px !important;
+    margin-top: 7px !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    z-index: 1;
+    transition: all 0.15s ease-in;
+    top: 0;
+    position: relative;
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: rgba(black, 0.2) 0 4px 6px -1px, rgba(black, 0.14) 0px 2px 4px -1px;
+    transition: all ease-in 0.1s;
+
+    .btn-primary-small {
+    font-size: 10px;
+    min-height: 20px;
+    }
+
+    &:hover {
+        @include blur(black, 0.5, 0.8, 5px);
+
+        .name {
+        display: block;
+        }
+    }
+
+    &:after {
+        content: '';
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        opacity: 1 !important;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position-x: center;
+        background-size: cover;
+        pointer-events: none;
+        will-change: transform;
+        transition: all 100ms ease-in 0s;
+    }
+
+    .name {
+        display: none;
+        z-index: 3;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        @include blur(black, 0.5, 0.8, 6px);
+        border-radius: 12px;
+        color: white;     
+
+        .gametitle {
+        font-family: "Proxima Nova Semi Bd";
+        font-size: 15.5px;
+        }
+    }
+
+
+    .unavailable {
+        z-index: 4;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(black, 0.7);
+        border-radius: 5px;
+        color: white;
+        .slanting {
+            transform: skewY(-5deg) translateY(-50%);
+            padding: 25px;
+            position: absolute;
+            top: 50%;
+            background: rgba(black, 0.8);
+            width: 100%;
+            .content {
+                font-size: 15px;
+                transform: skewY(5deg);
+                text-align: center;
+            }
+        }
+    }
+}
+
+.owl-stage-outer {
+    margin-bottom: -7px !important;
+}
+
+
+
+
+.games {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.games-left {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+@media(max-width: 480px) {
+
+.game_long_thumbnail {
+    height: 230px !important;
+}
+
+
+}
+
+@include media-breakpoint-down(md) {
+
+    .gamedesc {
+        display: none !important;
+    }
+
+
+}
+
+
+
+
+@include media-breakpoint-down(sm) {
+
+    .content-bg-pulse {
+    display: none !important;
+    }
+
+    .content-slideinleft .text {
+    display: none !important;
+    }
+
+    .content-slideinleft {
+    padding: 0.5rem !important;
+    }
+
+    .bullet-point {
+        font-size: 30px !important;
+    }
+
+    .subtitle {
+    font-size: 0.85rem !important;
+    }
+
+    .bullet-point .icon {
+    width: 25px;
+    max-width: 25px;
+    }
+
+    .content-slideinleft .title {
+    font-size: 30px;
+    }
+
+    .image {
+        width: 100%;
+        background-position: center;
+    }
+
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+
+}
+
+}
+

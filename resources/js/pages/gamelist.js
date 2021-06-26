@@ -5,47 +5,86 @@ $.on('/gamelist', function() {
     $('.img-small-slots').lazy({
         visibleOnly: true
         });
-
+   
     
+$('.bigzgames').owlCarousel({
+    autoplay:false,
+    dots: false,
+    loop: false,
+    items:6,
+    nav: false,
+    slideBy: 1,
+    responsiveRefreshRate: 100,
+    checkVisibility: false,
+    responsiveBaseElement: ".pageContent",
+    responsiveClass:true,
+    responsive:{
+        0:{
+            items:1,
+            slideBy: 1
+        },
+        350:{
+            items:2,
+            slideBy: 1
+        },
+        475:{
+            items:3,
+            slideBy: 1
+        },
+        950:{ 
+            items:4,
+            slideBy: 2
+        },
+        1085:{ 
+            items:5,
+            slideBy: 2
+        },
+        1160:{ 
+            items:6,
+            slideBy: 2
+        }
+    }
+})
+
 $('.casinogames').owlCarousel({
     autoplay:true,
     autoplaySpeed: 200,
     dots: false,
     loop: false,
     rewind: true,
-    items:7,
-    slideBy: 1,
-    autoplayTimeout: 5000,
+    items:6,
+    nav: true,
+    slideBy: 2,
+    autoplayTimeout: 20000,
     responsiveRefreshRate: 100,
     checkVisibility: false,
     responsiveBaseElement: ".pageContent",
-    navContainer: '#casinoarrows',
-    navText: ["<i class='fas fa-arrow-alt-from-right'></i>","<i class='fas fa-arrow-alt-from-left'></i>"],
+    navText: ["<i class='fal fa-arrow-left'></i>","<i class='fal fa-arrow-right'></i>"],
     responsiveClass:true,
     responsive:{
         0:{
+            items:1,
+            slideBy: 1
+        },
+        350:{
             items:2,
             slideBy: 1
         },
-        575:{
+        475:{
             items:3,
             slideBy: 1
         },
-        750:{
+        950:{ 
             items:4,
             slideBy: 2
         },
-        950:{ 
+        1085:{ 
             items:5,
             slideBy: 2
         },
-        1100:{ 
+        1160:{ 
             items:6,
             slideBy: 2
-        },
-        1190:{
-            items:7,
-            slideBy: 3
         }
     }
 })
@@ -71,7 +110,7 @@ $('.casinogames').owlCarousel({
 
 $('.o1').owlCarousel({
     autoplay:true,
-    autoplaySpeed: 100,
+    autoplaySpeed: 200,
     dots: false,
     loop: true,
     rewind: false,
@@ -85,23 +124,27 @@ $('.o1').owlCarousel({
     responsiveClass:true,
     responsive:{
         0:{
-            items:2,
+            items:1,
             slideBy: 1
         },
-        275:{
-            items:3,
+        295:{
+            items:2,
             slideBy: 2
         },
-        650:{
+        480:{
             items:4,
-            slideBy: 3
+            slideBy: 2
         },
-        950:{ 
+        610:{
             items:5,
             slideBy: 3
         },
-        1100:{ 
+        850:{ 
             items:6,
+            slideBy: 3
+        },
+        1100:{ 
+            items:7,
             slideBy: 3
         },
         1190:{
@@ -121,30 +164,34 @@ $('.o2').owlCarousel({
     items: 8,
     slideBy: 1,
     autoplayTimeout: 25000,
-    navText: ["<i class='fas fa-arrow-alt-from-right'></i>","<i class='fas fa-arrow-alt-from-left'></i>"],
+    navText: ["<i class='fal fa-arrow-left'></i>","<i class='fal fa-arrow-right'></i>"],
     responsiveRefreshRate: 100,
     checkVisibility: false,
     responsiveBaseElement: ".pageContent",
     responsiveClass:true,
     responsive:{
         0:{
-            items:2,
+            items:1,
             slideBy: 1
         },
-        275:{
-            items:3,
+        295:{
+            items:2,
             slideBy: 2
         },
-        650:{
+        480:{
             items:4,
-            slideBy: 3
+            slideBy: 2
         },
-        950:{ 
+        610:{
             items:5,
             slideBy: 3
         },
-        1100:{ 
+        850:{ 
             items:6,
+            slideBy: 3
+        },
+        1100:{ 
+            items:7,
             slideBy: 3
         },
         1190:{
@@ -153,6 +200,7 @@ $('.o2').owlCarousel({
         }
     }
 })
+
 
 
 }, ['/css/pages/gamelist.css']);

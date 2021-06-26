@@ -12,7 +12,7 @@
         <div class="walletTabs">
             <div class="walletTab active" data-toggle-wallet-tab="deposit">{{ __('wallet.tabs.deposit') }}</div>
             <div class="walletTab" data-toggle-wallet-tab="withdraw">{{ __('wallet.tabs.withdraw') }}</div>
-            <a class="walletTab" style="color: rgba(113, 142, 152, 0.7)" href="/pokertransfer/">{{ __('wallet.tabs.poker') }}</a>
+            <a class="walletTab" style="color: rgba(113, 142, 152, 0.7)" href="/poker/">{{ __('wallet.tabs.poker') }}</a>
             <div class="walletTab" data-toggle-wallet-tab="history">{{ __('wallet.tabs.history') }}</div>
         </div>
         <div class="walletTabContent" data-wallet-tab="deposit">

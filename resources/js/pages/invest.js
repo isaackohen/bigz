@@ -47,7 +47,7 @@ $.on('/invest', function() {
             $.error($.lang('general.chat_commands.modal.tip.invalid_amount'));
         });
     });
-}, ['css/pages/invest.css']);
+}, ['/css/subpage/invest.css']);
 
 setInterval(function() {
     if(!window.location.pathname.includes('/invest')) return;

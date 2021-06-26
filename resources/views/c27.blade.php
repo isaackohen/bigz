@@ -1,5 +1,7 @@
+
 @php
-@endphp    
+use Carbon\Carbon;
+@endphp
 <?php
     $user = auth()->user();
     $explode = explode('?', $url);
@@ -10,6 +12,8 @@
     $slotname = \App\Slotslist::get()->where('id', $freespinslot)->first()->n;
     $evoslotname = \App\Slotslist::get()->where('u_id', $freespinevo)->first()->n;
     $evoslotabsolute = \App\Slotslist::get()->where('u_id', $freespinevo)->first()->id;
+    $slotregname = \App\Slotslist::where('_id', $name)->first()->n;
+
 
     ?>
     @if($name != $freespinslot && $user->freegames > 0)
@@ -22,74 +26,79 @@
 </div>
 <hr>
       @else
-<div id="slotcontainer" class="container">
-  <div class="card p-1" style="background: #111a1e !important; box-shadow: none !important;">
-    <div id=parent>
 
 
-      <iframe src="<?php echo $url; ?>" border="0"></iframe>
-    <div class="container">
-      <button onclick="redirect('/')" title="Return to Home" class="btn btn-info p-1 m-1 ripple-surface" style="min-width: 45px; font-size: 12px;"><i class="fas fa-home"></i></button>
-      <button id="fullscreeniframe" title="Play Full Screen" class="btn btn-secondary p-1 m-1 ripple-surface" style="min-width: 45px; font-size: 12px;"><i class="fas fa-expand"></i></button>
-      <button onclick="toggleClass()" title="Toggle Width" class="btn btn-secondary p-1 m-1 ripple-surface" style="min-width: 45px; font-size: 12px;"><i class="far fa-rectangle-wide"></i></button>
-      <button onclick="$.leaderboard()" title="Leaderboard" class="btn btn-secondary p-1 m-1 ripple-surface" style="min-width: 45px; font-size: 12px;"><i class="fad fa-trophy"></i></button>
+
+<style>
+
+.slotcontainer-name {
+    background:  #263337;
+    margin-top:  20px;
+    margin-bottom:  20px;
+    border-radius:  6px;
+    padding:  6px;
+}
+</style>
+
+
+
+<div id="slotcontainer-toggle" class="container-lg">
+<div id="slotcontainer">
+
+                <div class="gameWrapper">
+                    <iframe src="<?php echo $url; ?>" border="0"></iframe>
+                </div>
+
+
+
+      <button onclick="toggleClass()" title="Return to Home" class="btn btn-primary-small-dark btn-rounded p-1 m-2" style="min-width: 45px; font-size: 13px;"><i class="fas fa-home"></i></button>
+      <button id="fullscreeniframe" title="Play Full Screen" class="btn btn-primary-small-dark btn-rounded p-1 m-2 ripple-surface" style="min-width: 45px; font-size: 13px;"><i class="fas fa-expand"></i></button>
+      <button onclick="toggleClass()" title="Toggle Width" class="btn btn-primary-small-dark btn-rounded p-1 m-2 ripple-surface" style="min-width: 45px; font-size: 12px;"><i class="far fa-rectangle-wide"></i></button>
     </div>
-    </div>
+</div>
+
+<div class="container-lg">
+    <div class="slotcontainer-name">
+    <span class="live-title">{{ $slotregname }}</span>
   </div>
 </div>
-<!-- 
+
 <div class="container-lg">
-  <div class="bonus-box-small mt-3 mb-3" style="z-index: 1;">
-  <button onclick="redirect('/provider/{{ $provider }}')" style="padding-top: 5px; font-size: 10px; padding-left: 10px;" class="btn btn-success m-2 p-1">More {{ $provider }}</a></button>
-  <h5 style="padding-top: 9px; padding-left: 6px; font-weight: 600;">Relevant Games</h5>
-  <div id="customNav71" class="owl-nav d-none d-md-block" style="padding-top: 6px;"></div>
-  <div class="container-flex owl-carousel relevantgames"  style="z-index: 1;">
-    @foreach(\App\Slotslist::all()->where('p', $provider)->random(7) as $slots)
-    <div class="card gamepostercard" style="cursor: pointer; margin-left: 5px; margin-right: 5px;">
-      @if(!auth()->guest())
-      <div onclick="redirect('/slots/{{ $slots->id }}')" class="game_poster" style="background-image:url(/img/slots-wide/{{ $slots->p }}/{{ $slots->id }}.webp)">
-        @else
-        <div onclick="$.auth()" class="game_poster" style="background-image:url(/img/slots-wide/{{ $slots->p }}/{{ $slots->id }}.webp)">
-          @endif
-          <div class="label">
-            {{ $slots->p }}
-          </div>
-        </div>
-        <div class="card-footer">
-        <h7 class="card-title">{{ $slots->n }}</h7></div>
-      </div>
-      @endforeach
-    </div>
-  </div>
-  <div class="bonus-box-small mt-3 mb-3" style="z-index: 1;">
-      <h5 style="padding-top: 9px; padding-left: 10px; font-weight: 600;"><i style="color: #5f3fd0; margin-right: 7px;" class="fad fa-random"></i>  Random Games</h5>
-      <div id="customNav1" class="owl-nav d-none d-md-block" style="padding-top: 6px;"></div>
-    <div class="container-flex owl-carousel randomgames"  style="z-index: 1;">
-      @foreach(\App\Slotslist::all()->random(10) as $slots)
-      <div class="card gamepostercard" style="cursor: pointer; margin-left: 5px; margin-right: 5px;">
-        @if(!auth()->guest())
-        <div onclick="redirect('/slots/{{ $slots->id }}')" class="game_poster" style="background-image:url(/img/slots-wide/{{ $slots->p }}/{{ $slots->id }}.webp)">
-          @else
-          <div onclick="$.auth()" class="game_poster" style="background-image:url(/img/slots-wide/{{ $slots->p }}/{{ $slots->id }}.webp)">
+          <div id="o5" class="container owl-carousel o5" style="z-index: 1;">
+        @foreach(\App\Slotslist::get()->shuffle() as $slots)
+                    @if($slots->f == '1')
+          @if(auth()->guest())
+                    <div onclick="$.auth()" class="game_long_thumbnail" style="background-image:url('/assets/game/preview/{{ $slots->UID }}.webp');">
+                @else
+                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_long_thumbnail" style="background-image:url('https://cdn.static.bet/i/long/jpg/{{ $slots->id }}.jpg');">
             @endif
-            <div class="label">
-              {{ $slots->p }}
-            </div>
-          </div>
-          <div class="card-footer">
-          <h7 class="card-title">{{ $slots->n }}</h7></div>
-        </div>
+                <div class="name">
+                <div class="gamename" style="display: flex; justify-content: center; margin-top: 30px;">
+                    <span><b>{{ $slots->n }}</b></span>
+                </div>
+                <div class="gamename" style="text-transform: uppercase; display: flex; justify-content: center; margin-top: 1px;">
+                    <span style="font-size: 0.65rem">{{ $slots->p }}</span>
+                </div>
+                <div class="gamename" style="display: flex; justify-content: center; margin-top: 10px;">
+                    <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
+                </div>
+                <div class="button" style="display: flex; justify-content: center; margin-top: 25px;">
+                    <div class="btn btn-primary-small m-1">Play</div>
+                </div>
+
+                </div>
+            </div>  
+            @endif
         @endforeach
-      </div>
     </div>
-  </div>
-  !-->
+    </div>
 
         @endif
   <script>
-  const containerElement = document.getElementById("slotcontainer");
+
+  const containerElement = document.getElementById("slotcontainer-toggle");
   function toggleClass() {
-  const newClass = containerElement.className == "container" ? "container-fluid" : "container";
+  const newClass = containerElement.className == "container-lg" ? "container-fluid slotcontainer-big" : "container-lg";
   containerElement.className = newClass;
   }
   (function(window, document){

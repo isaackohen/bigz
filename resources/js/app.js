@@ -1,4 +1,7 @@
+require('velocity-animate');
+
 require('jquery-pjax');
+
 import 'owl.carousel';
 
 import { modal } from 'mdb-ui-kit'; // module
@@ -126,7 +129,7 @@ $.loadCSS = function(urls, callback, unload = true) {
     let loaded = 0;
     const finish = function() {
         if(loadedContents != null) $(container).html(loadedContents);
-        $(container).animate({opacity: 1}, 250, callback);
+        $(container).animate({opacity: 1}, 150, callback);
         NProgress.done();
         $(document).trigger('page:ready');
     };
@@ -236,7 +239,7 @@ $.setCurrency = function(currency) {
 };
 
 if($.getCookie('unit') == null){
-$.setCookie('unit', 'usd');
+$.setCookie('unit', 'disabled');
 };
 
 $.setUnit = function(unit) {
@@ -244,30 +247,39 @@ $.setUnit = function(unit) {
 
 $.getPriceCurrency = function() {
     if($.getCookie('demo') != 'true'){
-    if($.getCookie('unit') == 'usd') {
-    let current = $.getBalanceType();
-    try { 
-    return window.currencies[$.getBalanceType()].dollar;
-    }
-    catch(err) { 
-    console.log('Currency usd for this crypto not stated');
-    }
-    }
-    if($.getCookie('unit') == 'euro') {
-    let current = $.getBalanceType();
-    try { 
-    return window.currencies[$.getBalanceType()].euro;
-    }
-    catch(err) { 
-    console.log('Currency euro for this crypto not stated');
-    }
-    }
+		if($.getCookie('unit') == 'usd') {
+			let current = $.getBalanceType();
+			try { 
+				return window.currencies[$.getBalanceType()].dollar;
+			}
+			catch(err) { 
+				console.log('Currency usd for this crypto not stated');
+			}
+		}
     } else {
-    return '0';
+		return '0';
     }
-    if($.getCookie('unit') == 'disabled')
+	if($.getCookie('unit') == 'disabled')
     {
-    return '0';
+		return '0';
+    }
+};
+
+$.getPriceCurrencyByCrypto = function(name) {
+    if($.getCookie('demo') != 'true'){
+		if($.getCookie('unit') == 'usd') {
+			try { 
+				return window.currencies[name].dollar;
+			}
+			catch(err) { 
+			console.log('Currency usd for this crypto not stated');
+			}
+		}
+    } else {
+		return '0';
+    }
+	if($.getCookie('unit') == 'disabled') {
+		return '0';
     }
 };
 
@@ -276,11 +288,19 @@ $.getBalanceType = function() {
 }
 
 $.getMinBet = function() {
-    return window.Laravel.currency[$.getBalanceType()].min_bet;
+	if($.getCookie('unit') == 'disabled') {
+		return window.Laravel.currency[$.getBalanceType()].min_bet;
+	} else if ($.getCookie('unit') == 'usd') {
+		return (window.Laravel.currency[$.getBalanceType()].min_bet * $.getPriceCurrencyByCrypto($.getBalanceType())).toFixed(2);
+	}
 }
 
 $.getMaxBet = function() {
-    return window.Laravel.currency[$.getBalanceType()].max_bet;
+	if($.getCookie('unit') == 'disabled') {
+		return window.Laravel.currency[$.getBalanceType()].max_bet;
+	} else if ($.getCookie('unit') == 'usd') {	
+		return (window.Laravel.currency[$.getBalanceType()].max_bet  * $.getPriceCurrencyByCrypto($.getBalanceType())).toFixed(2);
+	}
 }
 
 $.unit = function() {
@@ -301,7 +321,7 @@ $.currency = function() {
 };
 
 $.isDemo = function() {
-    if($.isGuest()) return true;
+    if($.isGuest()) return true; 
     return $.getCookie('demo') == null ? false : $.getCookie('demo') === 'true';
 };
 
@@ -315,7 +335,11 @@ $.setDemo = function(demo) {
 };
 
 $.updateCurrencyBalance = function() {
+	if($.getCookie('unit') == 'disabled') {
     $('.wallet .balance').html(parseFloat($(`[data-${$.isDemo() ? 'demo-currency' : 'currency'}-value="${$.currency()}"]`).html()).toFixed(8));
+	} else if ($.getCookie('unit') == 'usd') {
+	$('.wallet .balance').html('$' + parseFloat($(`[data-${$.isDemo() ? 'demo-currency' : 'currency'}-value="${$.currency()}"]`).html()).toFixed(2));	
+	}
 };
 
 let chatState = false;
@@ -355,9 +379,9 @@ $.overview = function(game_id, api_id) {
                     if(response.user.private_bets !== true) $('.overview-player a').attr('href', '/user/'+response.info.user).html(response.user.name);
                     else $('.overview-player a').attr('href', 'javascript:void(0)').html($.lang('general.bets.hidden_name'));
 
-                    $('.overview-bet .option:nth-child(1) span').html(`<img src="/img/currency/svg/${window.Laravel.currency[response.info.currency].icon}.svg" style="width: 16px; height: 16px;"> ${bitcoin(response.info.wager, 'btc').to($.unit()).value().toFixed(8)}`);
+                    $('.overview-bet .option:nth-child(1) span').html(`<img src="/img/currency/svg/${window.Laravel.currency[response.info.currency].icon}.svg" style="width: 16px; height: 16px;"> ${$.getCookie('unit') == 'disabled' ? bitcoin(response.info.wager, 'btc').to($.unit()).value().toFixed(8) : ('$' + bitcoin(response.info.wager * $.getPriceCurrencyByCrypto(response.info.currency), 'btc').to($.unit()).value().toFixed(2))}`);
                     $('.overview-bet .option:nth-child(2) span').html(`${response.info.status === 'lose' ? (0).toFixed(2) : response.info.multiplier.toFixed(2)}x`);
-                    $('.overview-bet .option:nth-child(3) span').html(`<img src="/img/currency/svg/${window.Laravel.currency[response.info.currency].icon}.svg" style="width: 16px; height: 16px;"> ${bitcoin(response.info.profit, 'btc').to($.unit()).value().toFixed(8)}`);
+                    $('.overview-bet .option:nth-child(3) span').html(`<img src="/img/currency/svg/${window.Laravel.currency[response.info.currency].icon}.svg" style="width: 16px; height: 16px;"> ${$.getCookie('unit') == 'disabled' ? bitcoin(response.info.profit, 'btc').to($.unit()).value().toFixed(8) : ('$' + bitcoin(response.info.profit * $.getPriceCurrencyByCrypto(response.info.currency), 'btc').to($.unit()).value().toFixed(2))}`);
 
                     const share_url = `${window.location.origin}?game=${response.info.game}-${response.info._id}`;
                     $('[data-share="link"]').attr('data-link', share_url);
@@ -393,24 +417,7 @@ $.userinfo = function(userid) {
         });
     });
 };
-  $.moveNumbers = function moveNumbers(num) { 
-    $('.card').hide();
-    document.getElementById("gamelist-search").value='';
 
-      var txt=document.getElementById("gamelist-search").value; 
-      txt=txt + num; 
-    document.getElementById("gamelist-search").value=txt;   
-    
-   $('.img-small-slots').lazy({
-          bind: "event"
-        });
-
-    $('.card').each(function(){
-      if($(this).text().toLowerCase().indexOf(""+num+"") != -1 ){
-      $(this).closest('.card').show();
-    }
-    });
-};
 
 let currentLiveTab = 'all';
 $(document).ready(function() {
@@ -418,34 +425,11 @@ $(document).ready(function() {
     $.setCurrency($.currency());
     $.setUnit($.unit());
     $(document).trigger('pjax:start');
-/**
-    window.Echo.connector.socket.on('connect', function() {
-        $('.connectionLostContainer').addClass('recovered');
-        $('.connectionLostContainer span').html($.lang('general.error.connection_recovered'));
-        $('.connectionLostContainer i').attr('class', 'fal fa-check');
-        setTimeout(function() {
-            $('.connectionLostContainer').fadeOut('fast', function() {
-                $('body').css({ 'padding-top': 0 });
-            });
-        }, 3000);
-    });
-
-    const disconnectNotify = function() {
-        $('.connectionLostContainer').removeClass('recovered');
-        $('.connectionLostContainer span').html($.lang('general.error.connection_lost'));
-        $('.connectionLostContainer i').attr('class', 'fal fa-times');
-        $('.connectionLostContainer').fadeIn('fast');
-        $('body').css({ 'padding-top': '53px' });
-    };
-    window.Echo.connector.socket.on('disconnect', disconnectNotify);
-    if(!window.Echo.connector.socket.connected) disconnectNotify();
-**/
 
     $(`[data-chat-toggle]`).on('click', function() {
         $('.chat').toggleClass('hidden');
         $(`.floatingButtons`).toggleClass('chatIsHidden');
         $(document).trigger('win5x:chatToggle');
-
         $.setCookie('chatVisibility', $('.chat').hasClass('hidden'));
     });
 
@@ -458,13 +442,13 @@ $(document).ready(function() {
     });
 
     $('#unitChanger').on('change', function() {
-    $.setCookie('unit', this.value);
-    $(this).addClass('active');
-    try { 
-    $.sidebarData().currency(($.sidebarData().bet() * $.getPriceCurrency()).toFixed(4));
-    }
-    catch(err) {
-    }
+		$.setCookie('unit', this.value);
+		$(this).addClass('active');
+		if(this.value == 'disabled') {
+			location.reload();
+		} else {
+			$.modal('unit');
+		}
     });
 
     $('#liveTableEntries').on('select2:selecting', function(e) {
@@ -525,11 +509,11 @@ $(document).ready(function() {
         const game = liveQueue[0];
         liveQueue.shift();
 
-        const e = $(`<tr>
+        const e = $(`<tr id="live-game-insert">
             <th>
                 <div>
-                    <div class="icon d-none d-md-inline-block" onclick="redirect('/game/${game.metadata.id}')">
-                        <img class="tiny-game" src="/assets/game/tiny/${game.metadata.id}.webp">
+                    <div class="icon d-none d-md-inline-block" onclick="redirect('/game/${(game.metadata.id != 'slotmachine' ? game.metadata.id : game.game.client_seed)}')">
+                        <img class="tiny-game" src="/assets/game/tiny/${(game.metadata.id != 'slotmachine' ? game.metadata.id : game.game.client_seed)}.webp">
                     </div>
                     <div class="name">
                         <div><a href="javascript:void(0)" onclick="$.overview('${game.game._id}', '${game.game.game}')">${(game.metadata.id != 'slotmachine' ? game.metadata.name : game.game.nonce)} </a></div>
@@ -552,7 +536,7 @@ $(document).ready(function() {
             </th>
             <th data-highlight class="d-none d-md-table-cell">
                 <div>
-                    ${bitcoin(game.game.wager, 'btc').to($.unit()).value().toFixed(8)}
+                    ${$.getCookie('unit') == 'disabled' ? bitcoin(game.game.wager, 'btc').to($.unit()).value().toFixed(8) : ('$' + bitcoin(game.game.wager * $.getPriceCurrencyByCrypto(game.game.currency), 'btc').to($.unit()).value().toFixed(2))}
                     <img class="live-currency-icon" src="/img/currency/svg/${window.Laravel.currency[game.game.currency].icon}.svg">
                 </div>
             </th>
@@ -563,7 +547,7 @@ $(document).ready(function() {
             </th>
             <th>
                 <div class="${game.game.status === 'win' ? 'live-win' : ''}">
-                    <span>${bitcoin(game.game.profit, 'btc').to($.unit()).value().toFixed(8)}</span>
+                    <span>${$.getCookie('unit') == 'disabled' ? bitcoin(game.game.profit, 'btc').to($.unit()).value().toFixed(8) : ('$' + bitcoin(game.game.profit * $.getPriceCurrencyByCrypto(game.game.currency), 'btc').to($.unit()).value().toFixed(2))}</span>
                     <img class="live-currency-icon" src="/img/currency/svg/${window.Laravel.currency[game.game.currency].icon}.svg">
                 </div>
             </th>
@@ -583,14 +567,17 @@ $(document).ready(function() {
         else e.show();
     };
 
-    setInterval($.putNextInLiveQueue, 200);
+    setInterval($.putNextInLiveQueue, 150);
+
 
          
     window.Echo.channel(`laravel_database_Everyone`)
         .listen('ChatMessage', (e) => $.addChatMessage(e.message))
             .listen('UserNotification', function(e) {
-                $.playSound('/sounds/open.mp3');
-                $.multiplier(e.message);
+                $.playSound('/sounds/toast1.mp3');
+                $.toastmessage(e.message);
+                $('#searchoverlay_result').html('');
+                $('#toastbar').html(e.message).fadeIn(300);
             })
             .listen('PromoNotification', function(e) {
                 $.playSound('/sounds/open.mp3');
@@ -667,14 +654,24 @@ $(document).ready(function() {
             })  
             .listen('BalanceModification', function(e) {
             const display = function() {
+				if($.getCookie('unit') == 'disabled') {
                 $(`[data-currency-value="${e.currency}"]`).html(bitcoin(e.balance, 'btc').to($.unit()).value().toFixed(8));
+				} else if ($.getCookie('unit') == 'usd') {
+				var balaceUsd = $.getPriceCurrency() * e.balance;
+				$(`[data-currency-value="${e.currency}"]`).html(bitcoin(balaceUsd, 'btc').to($.unit()).value().toFixed(3));
+				}
                 $(`[data-demo-currency-value="${e.currency}"]`).html(bitcoin(e.demo_balance, 'btc').to($.unit()).value().toFixed(8));
                 $.updateCurrencyBalance();
 
                 $('.wallet .balance .animated').remove();
-
-                const animated = $(`<span class="animated text-${e.diff.action === 'subtract' ? 'danger' : 'success'}">${bitcoin(e.diff.value, 'btc').to($.unit()).value().toFixed(8)}</span>`);
-                animated.css({ 'top': '30px', 'opacity': 1 }).animate({ top: 0, opacity: 0 }, 200, function() {
+				var animated = null; 
+				if($.getCookie('unit') == 'disabled') {
+                animated = $(`<span class="animated text-${e.diff.action === 'subtract' ? 'danger' : 'success'}">${bitcoin(e.diff.value, 'btc').to($.unit()).value().toFixed(8)}</span>`);
+                } else if ($.getCookie('unit') == 'usd') {
+				var balaceDiffUsd = $.getPriceCurrency() * e.diff.value;
+				animated = $(`<span class="animated text-${e.diff.action === 'subtract' ? 'danger' : 'success'}">${bitcoin(balaceDiffUsd, 'btc').to($.unit()).value().toFixed(3)}</span>`);
+				}
+				animated.css({ 'top': '30px', 'opacity': 1 }).animate({ top: 0, opacity: 0 }, 200, function() {
                     animated.remove();
                 });
                 $('.wallet .balance').append(animated);
@@ -714,6 +711,9 @@ $(document).ready(function() {
             $.setWagerSelector();
             walletmenu.removeClass('active');
             $('.wallet .balance').html($('#switcher-real').html());
+			if(window.ingame !== undefined && window.ingame == true) {
+			location.reload();
+			}
         });
 
         $('.wallet-open').on('click', function() {

@@ -235,7 +235,7 @@ $.on('/game/hilo', function() {
         }, function() {
 			$.sidebarData().currency(($.sidebarData().bet() * $.getPriceCurrency()).toFixed(4));
     });
-}, ['/css/pages/hilo.css']);
+}, ['/css/subpage/hilo.css']);
 
 const deck = {
     1: {type: 'spades', value: 'A', slot: 1},

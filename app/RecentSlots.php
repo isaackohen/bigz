@@ -15,7 +15,7 @@ class RecentSlots extends Model {
      * @var array
      */
     protected $fillable = [
-        'user_id', 's', 'b'
+        'player', 's', 'b'
     ];
 
     /**

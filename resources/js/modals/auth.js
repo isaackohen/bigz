@@ -65,7 +65,8 @@ $(document).ready(function() {
             }).then(function() {
 				grecaptcha.reset();
                 window.location.reload();
-                window.location.href = '/bonus';
+                window.location.href = '/';
+                //window.location.href = '/bonus';
             }, function(error) {
                 $('.auth').uiBlocker(false);
 				if(error === 4) $.error($.lang('general.error.captcha'));

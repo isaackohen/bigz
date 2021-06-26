@@ -8,6 +8,18 @@
     display: none !important;
 }
 
+
+
+
+
+header {
+    .fixed {
+    box-shadow: none !important;
+    @include themed() {
+         background: t('header') !important; 
+    }
+}
+}
 .pageContent .heading {
     margin: 15px 0;
     padding-left: 16px;
@@ -18,6 +30,47 @@
     font-family: IndustryBlack, Open sans-serif;
     position: relative;
 }
+
+.input-transfer {
+    font-size: 11px !important;
+    border-radius: 12px;
+}
+
+.transferblock {
+    @include themed() {
+        border: none;
+    }
+    border-radius: 8px;
+    padding: 10px;
+    background: url("/img/misc/carbon.png") repeat, #172327 !important;
+    background-size: cover;
+    margin-bottom: 10px;
+    display: flex;
+
+    .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 70px;
+        font-size: 2.5em;
+        padding-right: 10px;
+        @include themed() {
+            border-right: 1px solid rgba(t('link'), 0.1);
+        }
+        margin-right: 15px;
+    }
+    .desc {
+        flex-direction: column;
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .transferblock {
+        display: flex !important;
+        width: 100%;
+    }
+}
+
 
 .contact_us {
     @include themed() {

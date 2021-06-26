@@ -38,7 +38,7 @@ $.game('double', function (container, overviewData) {
 	  if(id == 14) pos+=2;
 	  if(id == 0) pos+=7;
 	  
-      $('.double_container_row').stop().animate({
+      $('.double_container_row').stop().velocity({
         left: "-=".concat(amount * gw + pos * gw - containerCenter + center)
       }, 6000);
     };
@@ -137,7 +137,7 @@ var setRoundTimer = function setRoundTimer(seconds) {
   seconds *= 1000;
   $('.double-time').hide().stop().css({
     'width': '100%'
-  }).fadeIn('fast').animate({
+  }).fadeIn('fast').velocity({
     'width': '0%'
   }, {
     duration: seconds,

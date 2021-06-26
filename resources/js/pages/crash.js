@@ -334,7 +334,7 @@ var setRoundTimer = function setRoundTimer(seconds, callback) {
   seconds *= 1000;
   $('.crash-time').hide().css({
     'width': '100%'
-  }).fadeIn('fast').animate({
+  }).fadeIn('fast').velocity({
     'width': '0%'
   }, {
     duration: seconds,
@@ -366,7 +366,7 @@ $.on('/game/crash', function () {
   }, function() {
 			$.sidebarData().currency(($.sidebarData().bet() * $.getPriceCurrency()).toFixed(4));
     });
-}, ['/css/pages/crash.css']);
+}, ['/css/subpage/crash.css']);
 /**
  * Animates bezier-curve
  *

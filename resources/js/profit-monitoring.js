@@ -17,13 +17,13 @@ const stats = {
             y: 0.00
         });
         this.series.push({
-            x: this.series.length + 1,
-            y: parseFloat(this.profit.toFixed(8))
+            x: this.series.length + 1, 
+            y: $.getCookie('unit') == 'disabled' ? parseFloat(this.profit.toFixed(8)) : parseFloat(this.profit.toFixed(2))
         });
     },
     update: function() {
-        $('#wager').html(this.wager.toFixed(8));
-        $('#profit').html(this.profit.toFixed(8)).attr('class', `text-${this.profit >= 0 ? 'success' : 'danger'}`);
+        $.getCookie('unit') == 'disabled' ? $('#wager').html(this.wager.toFixed(8)) : $('#wager').html('$' + this.wager.toFixed(2));
+        $.getCookie('unit') == 'disabled' ? $('#profit').html(this.profit.toFixed(8)).attr('class', `text-${this.profit >= 0 ? 'success' : 'danger'}`) : $('#profit').html('$' + this.profit.toFixed(2)).attr('class', `text-${this.profit >= 0 ? 'success' : 'danger'}`);
         $('#wins').html(this.wins);
         $('#losses').html(this.losses);
 

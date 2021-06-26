@@ -43,26 +43,36 @@ class Bigwinnerinhouse extends Command {
      * @return mixed
      */
     public function handle() {
-        $bigwinner_player = \App\Settings::where('name', 'bigwinner_player')->first()->value;
-        $bigwinner_game = \App\Settings::where('name', 'bigwinner_game')->first()->value;
-        $bigwinner_amount = \App\Settings::where('name', 'bigwinner_amount')->first()->value;
-        $bigwinner_multi = \App\Settings::where('name', 'bigwinner_multi')->first()->value;
+        $cronenabled = floatval(Settings::where('name', 'tg_bigwinner_inhouse_cron')->first()->value);
+        if($cronenabled == '1') {
+
+        $bigwinner_player = \App\Settings::where('name', 'bigwinner_inhouse_player')->first()->value;
+        $bigwinner_game = \App\Settings::where('name', 'bigwinner_inhouse_game')->first()->value;
+        $bigwinner_amount = \App\Settings::where('name', 'bigwinner_inhouse_amount')->first()->value;
+        $bigwinner_multi = \App\Settings::where('name', 'bigwinner_inhouse_multi')->first()->value;
+
+ 
+        $bot = new TeleBot(env('TELEGRAM_BOT_TOKEN'));
+        $inlinemessage = 'BIG MULTIPLIER WIN!%0A%0A'.$bigwinner_player.' got '.$bigwinner_multi.'x multiplier on '.$bigwinner_game.' with a '.$bigwinner_amount.'$ wager.';
+        $toastmessage = 'Big multiplier win! '.$bigwinner_player.' got '.$bigwinner_multi.'x multiplier on '.$bigwinner_game.' with a '.$bigwinner_amount.'$ wager.';
 
 
-        $bot = new TeleBot('1885265380:AAHK6BO9nfchHQWu5mb6VHvBbHTYu6LlSQ8');
-
-        // See docs for details:  https://core.telegram.org/bots/api#sendmessage
-        $message = $bot->sendMessage([
-            'chat_id' => -535787624,
-            'text' => 'Congratz to '.$bigwinner_player.' on our in-house '.$bigwinner_game.' game, with a whopping '.$bigwinner_multi.'x multiplier with a '.$bigwinner_amount.'$ wager',
-            'reply_markup' => [
+        $message = $bot->sendPhoto([
+            'chat_id' => -1001199743876,
+                'photo' => 'https://bigz.imgix.net/i/tgthumb/inhouse/inhouse'.rand(1, 4).'.jpg?shad=-5&blur=29&chromasub=444&fm=png&auto=enhance&usm=50&exp=-9&mark=https%3A%2F%2Fassets.imgix.net%2F~text%3Ftxtclr%3Dfff%26q%3D100%26fm%3Dpng%26txt%3D'.$inlinemessage.'%2B%26w%3D500%26txtsize%3D23%26txtlead%3D0%26txtpad%3D25%26bg%3D55010a0d%26txtfont%3DAvenir-Heavy&markalign=center%2Cmiddle&txtalign=center&txtclr=d2d9dc&txtsize=18&txtpad=40&markscale=90&q=90&fit=crop&w=410&h=150&ixlib=js-2.0.0&s=dc591beb29755d2228f129c7a6770f17',
+                'reply_markup' => [
                     'inline_keyboard' => [[[
-                    'text' => 'Play '.$bigwinner_game,
-                    'url' => 'https://loff.io/game/'.$bigwinner_game.'/'                
+                    'text' => 'Play '.$bigwinner_game.' @ BIGZ.IO',
+                    'url' => 'https://bigz.io/game/slot/'.$bigwinner_game.'/'
                 ]]]
             ]
         ]);
 
+            Settings::where('name', 'tg_bigwinner_inhouse_cron')->update(['value' => 0]);
+            Settings::where('name', 'toast_message')->update(['value' => $toastmessage]);
+                
+            event(new \App\Events\UserNotification());
+    }
     }
 
 }

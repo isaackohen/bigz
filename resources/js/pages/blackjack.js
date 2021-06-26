@@ -492,7 +492,7 @@ $.game('blackjack', function(container, overviewData) {
                 }
             }
 
-            $(`${ele} .card-${i}`).css({'z-index': i, top: 0, right: 0 }).animate({
+            $(`${ele} .card-${i}`).css({'z-index': i, top: 0, right: 0 }).velocity({
                 'top': posy,
                 'right': posx
             }, speed);

@@ -47,12 +47,12 @@ $.game('stairs', function(container, overviewData) {
                 return;
             }
 
-            $('.character').attr('class', 'character run').animate({left: e.position().left}, e.position().left === $('.character').position().left ? 0 : 1000, function() {
+            $('.character').attr('class', 'character run').velocity({left: e.position().left}, e.position().left === $('.character').position().left ? 0 : 1000, function() {
                 _.forEach(response.data.death, function(deathCell) {
                     dropStone(row, deathCell);
                 });
 
-                $('.character').attr('class', 'character climb').animate({top: $(`[data-row-id="${row}"] [data-cell-id="${cell}"]`).position().top - $(this).height()}, 800, function() {
+                $('.character').attr('class', 'character climb').velocity({top: $(`[data-row-id="${row}"] [data-cell-id="${cell}"]`).position().top - $(this).height()}, 800, function() {
                     if(response.type === 'finish') {
                         $.finishExtended(false);
                         $('.character').attr('class', 'character victory');
@@ -129,7 +129,7 @@ function dropStone(row, cell) {
     $(`[data-row-id="${row}"] [data-cell-id="${cell}"]`).append(e);
     e.hide().css({top: -40});
     setTimeout(function() {
-        $(`[data-transform-id="${transformId}"]`).show().animate({top: -14}, 700);
+        $(`[data-transform-id="${transformId}"]`).show().velocity({top: -14}, 700);
     }, 300);
 }
 

@@ -1,3 +1,8 @@
+import ApexCharts from 'apexcharts';
+
+window.ApexCharts = ApexCharts;
+
+
 const {Howl} = require('howler');
 import bitcoin from 'bitcoin-units';
 let playTimeout = false;
@@ -26,7 +31,7 @@ class SidebarComponentBuilder {
 
         $('.game-sidebar').append(
             `<div class="auto-bet-container" style="display: none;">
-                 <div class="auto-bet-overlay" style="display: none;"></div>
+                 <div class="auto-bet-overlay" style="display: none;"></div> 
                  <div class="game-sidebar-label mt-2">${$.lang('general.bets.games')}</div>
                  <div class="wager-classic input-override">
                     <input data-toggle="tooltip" data-placement="top" title="${$.lang('general.bets.auto_games_blocked')}" class="autoBetGames" readonly type="text" value="&#8734;" placeholder="${$.lang('general.bets.games')}">
@@ -143,9 +148,11 @@ class SidebarComponentBuilder {
     }
 
     bet() {
-        this.label($.lang('general.wager'));
+		var unit = $.getCookie('unit') == 'disabled' ? ('(' + ($.getBalanceType()).toUpperCase() + ')') : '(USD)';
+        this.label($.lang('general.wager') + ' ' + unit);
         $('.game-sidebar').append(`
                            <div class="wager-classic wager-selector">
+				<img style=" position: absolute; left: 15px; top: 10px;" width="19px" height="19px" src="/img/currency/svg/${$.getBalanceType()}.svg">
                 <input type="text" value="${$.getMinBet()}" placeholder="${$.lang('general.wager')}">
                 <div class="wager-input-controls">
                     <div class="control"><i class="fas fa-slash"></i></div>
@@ -185,12 +192,12 @@ class SidebarComponentBuilder {
 
         $('.wager-selector .wager-input-controls .control:nth-child(1)').on('click', function() {
             const input = $(`${$.sidebarSelector()} .wager-selector input`);
-            if(input.val().length === 0 || isNaN(input.val()) || parseFloat(input.val()) < 0) {
+            if (input.val().length === 0 || isNaN(input.val()) || parseFloat(input.val()) < 0 || (parseFloat(input.val()) / 2) < $.getMinBet()) {
                 input.val($.getMinBet());
-                return;
+                return; 
             }
             const value = parseFloat(input.val());
-            input.val((value / 2).toFixed(8));
+			$.getCookie('unit') == 'disabled' ? input.val((value / 2).toFixed(8)) : input.val((value / 2).toFixed(2));
             $.triggerSidebarUpdate();
         });
 
@@ -200,14 +207,18 @@ class SidebarComponentBuilder {
                 input.val($.getMinBet());
                 return;
             }
-            const value = parseFloat(input.val());
-            input.val((value * 2).toFixed(8));
+			let value = $.getCookie('unit') == 'disabled' ? (parseFloat(input.val()) * 2) : (parseFloat(input.val()) * 2).toFixed(2);
+            if (value > $.getMaxBet()) {
+                value = $.getMaxBet();
+            }
+
+            input.val(value);
             $.triggerSidebarUpdate();
         });
 
         $('.wager-selector .wager-input-controls .control:nth-child(3)').on('click', function() {
             const input = $(`${$.sidebarSelector()} .wager-selector input`);
-            input.val($('.wallet .balance').html());
+            input.val($.getMaxBet());
             $.triggerSidebarUpdate();
         });
         return this;
@@ -607,13 +618,23 @@ class SidebarComponentValues {
 
     bet(set = null) {
         if(currentGameInstance.game.customWagerCalculation != null) return currentGameInstance.game.customWagerCalculation();
-        if(set != null) $(`${$.sidebarSelector()} .wager-selector input`).val(parseFloat(set).toFixed(8));
-        return bitcoin(parseFloat($(`${$.sidebarSelector()} .wager-selector input`).val()), $.unit()).to('btc').value();
+		if($.getCookie('unit') == 'disabled') {
+			if(set != null) $(`${$.sidebarSelector()} .wager-selector input`).val(parseFloat(set).toFixed(8));
+			return bitcoin(parseFloat($(`${$.sidebarSelector()} .wager-selector input`).val()), $.unit()).to('btc').value();
+		} else if ($.getCookie('unit') == 'usd') {
+			if(set != null) $(`${$.sidebarSelector()} .wager-selector input`).val((parseFloat(set * $.getPriceCurrencyByCrypto($.getBalanceType()))).toFixed(2));
+			return bitcoin(parseFloat($(`${$.sidebarSelector()} .wager-selector input`).val()  / $.getPriceCurrencyByCrypto($.getBalanceType())), $.unit()).to('btc').value();
+		}
     }
 
     profit(set = null) {
-        if(set != null) $(`${$.sidebarSelector()} .profit`).val(parseFloat(set).toFixed(8));
-        return bitcoin(parseFloat($(`${$.sidebarSelector()} .profit`).val()), $.unit()).to('btc').value();
+		if($.getCookie('unit') == 'disabled') {
+			if(set != null) $(`${$.sidebarSelector()} .profit`).val(parseFloat(set).toFixed(8));
+			return bitcoin(parseFloat($(`${$.sidebarSelector()} .profit`).val()), $.unit()).to('btc').value();
+		} else if ($.getCookie('unit') == 'usd') {
+			if(set != null) $(`${$.sidebarSelector()} .profit`).val((parseFloat(set) * $.getPriceCurrencyByCrypto($.getBalanceType())).toFixed(3));
+			return bitcoin(parseFloat($(`${$.sidebarSelector()} .profit`).val())  / $.getPriceCurrencyByCrypto($.getBalanceType()), 'btc').to($.unit()).value().toFixed(3);
+		}	 
     }
     
     currency(set = null) {
@@ -687,7 +708,7 @@ $.render = function(api_id, container = '.game-content', overviewData = null) {
                 initialBet: 0,
                 timeout: 0,
                 win: {
-                    action: 'reset',
+                    action: 'reset', 
                     value: 0
                 },
                 loss: {
@@ -717,12 +738,8 @@ $.render = function(api_id, container = '.game-content', overviewData = null) {
                 currentGameInstance.game.extendedId = window.restoreGame.game._id;
                 currentGameInstance.game.extendedState = 'in-progress';
                 $.blockPlayButton(false);
-
                 $.sidebarData().bet(window.restoreGame.game.wager);
-                $('.play-button').html(window.restoreGame.history.length === 0 ? $.lang('general.cancel') : $.lang('general.take', {
-                    value: bitcoin(window.restoreGame.game.wager * window.restoreGame.game.multiplier, 'btc').to($.unit()).value().toFixed(8),
-                    icon: window.Laravel.currency[$.currency()].icon
-                }));
+                $('.play-button').html(window.restoreGame.history.length === 0 ? $.lang('general.cancel') : $.lang('general.take', { value: $.getCookie('unit') == 'disabled' ? (window.restoreGame.game.wager * window.restoreGame.game.multiplier).toFixed(8) : (window.restoreGame.game.wager * window.restoreGame.game.multiplier * $.getPriceCurrencyByCrypto(window.restoreGame.game.currency)).toFixed(2) }));
                 currentGameInstance.game.restore(window.restoreGame);
             }
         }
@@ -743,7 +760,7 @@ $.turn = function(data, callback, finishedCallback = null) {
             return;
         }
 
-        if($.currentBettingType() === 'manual' && response.type === 'continue') $('.play-button').html($.lang('general.take', { value: ($.sidebarData().bet() * response.game.multiplier).toFixed(8), icon: window.Laravel.currency[$.currency()].icon }));
+        if($.currentBettingType() === 'manual' && response.type === 'continue') $('.play-button').html($.lang('general.take', { value: $.getCookie('unit') == 'disabled' ? (($.sidebarData().bet() * response.game.multiplier).toFixed(8)) : ((($.sidebarData().bet() * response.game.multiplier) * $.getPriceCurrencyByCrypto(response.game.currency)).toFixed(2)), icon: window.Laravel.currency[$.currency()].icon }));
         if(response.type === 'lose' || response.type === 'finish') $.pushStats(response.game);
     }, function(error) {
         switch (error) {
@@ -796,13 +813,25 @@ $.autoBetNext = function() {
 }
 
 $.pushStats = function(gameInstance) {
-    $.stats().wager += $.sidebarData().bet();
+	if($.getCookie('unit') == 'disabled') {
+		$.stats().wager += $.sidebarData().bet();
+	} else if ($.getCookie('unit') == 'usd') {
+		$.stats().wager += $.sidebarData().bet() * $.getPriceCurrencyByCrypto($.getBalanceType());
+	}
     if ((gameInstance.win !== undefined && gameInstance.win) || ($.isExtendedGameStarted() && gameInstance.status === 'win')) {
         $.stats().wins += 1;
-        $.stats().profit += gameInstance.profit - $.sidebarData().bet();
+		if($.getCookie('unit') == 'disabled') {
+			$.stats().profit += gameInstance.profit - $.sidebarData().bet();
+		} else if ($.getCookie('unit') == 'usd') {
+			$.stats().profit += (gameInstance.profit * $.getPriceCurrencyByCrypto($.getBalanceType())) - ($.sidebarData().bet() * $.getPriceCurrencyByCrypto($.getBalanceType()));
+		}
     } else {
         $.stats().losses += 1;
-        $.stats().profit -= $.sidebarData().bet();
+		if($.getCookie('unit') == 'disabled') {
+			$.stats().profit -= $.sidebarData().bet();
+		} else if ($.getCookie('unit') == 'usd') {
+			$.stats().profit -= $.sidebarData().bet() * $.getPriceCurrencyByCrypto($.getBalanceType());
+		}
     }
     $.stats().pushToSeries();
     $.stats().update();
@@ -816,7 +845,7 @@ $.resultPopup = function(game) {
             ${$.isDemo() ? `<div class="demoHeader">${$.lang('general.head.wallet_demo')}</div>` : ''}
             <div class="multiplier">${status === 'lose' && game.multiplier >= 1 ? (0).toFixed(2) : game.multiplier.toFixed(2)}x</div>
             <div class="divider"></div>
-            <div class="profit">${game.profit.toFixed(8)} <i class="${window.Laravel.currency[game.currency].icon}" style="color: ${window.Laravel.currency[game.currency].style}"></i></div>
+            <div class="profit">${$.getCookie('unit') == 'disabled' ? game.profit.toFixed(8) : ('$' + (game.profit * $.getPriceCurrencyByCrypto(game.currency)).toFixed(2))} <i class="${window.Laravel.currency[game.currency].icon}" style="color: ${window.Laravel.currency[game.currency].style}"></i></div>
             ${$.isDemo() ? `<a href="javascript:void(0)" onclick="${$.isGuest() ? '$.auth()' : `$.setDemo(false); $('.resultPopup .demoHeader').fadeOut('fast'); $('.resultPopup').css({'padding-top': '10px'})`}; ${$.isGuest() ? '' : '$(this).slideUp(\'fast\');'}">${$.lang('general.demo_popup_link')}</a>` : ''}
         </div>
     `);
@@ -828,84 +857,6 @@ $.resultPopup = function(game) {
             $(this).remove();
         });
     }, 3000);
-};
-
-
-
-$.setWagerSelector = function() {
-            $('.wager-classic.wager-selector').replaceWith(`
-                <div class="wager-classic wager-selector">
-                <input type="text" value="${$.getMinBet()}" placeholder="${$.lang('general.wager')}">
-                <div class="wager-input-controls">
-                    <div class="control"><i class="fas fa-slash"></i></div>
-                    <div class="control"><i class="fas fa-asterisk"></i></div>
-                    ${$.isGuest() ? '' : `<div class="control" style="padding-top: 4px;">MAX</div>`}
-                </div>
-            </div>
-        `);
-
-        $('.wager-selector').keypress(function(event) {
-            if ((event.which !== 46 || $(this).val().indexOf('.') !== -1) && (event.which < 48 || event.which > 57)) event.preventDefault();
-        });
-
-        $('.wager-selector').on('input', function() {
-            $.triggerSidebarUpdate();
-        });
-        
-        /*
-                $('.wager-controls .control').on('click', function() {
-            const input = $(`${$.sidebarSelector()} .wager-selector input`);
-            if(input.val().length === 0 || isNaN(input.val()) || parseFloat(input.val()) < 0) input.val('0.00');
-            const value = parseFloat(input.val());
-            var thisId = $(this).attr("id");
-              switch (thisId) {
-                case ('01'): input.val((value + 0.1).toFixed(2)); break;
-                case ('05'): input.val((value + 0.5).toFixed(2)); break;
-                case ('1'): input.val((value + 1.0).toFixed(2)); break;
-                case ('2'): input.val((value + 2.0).toFixed(2)); break;
-                case ('5'): input.val((value + 5.0).toFixed(2)); break;
-                case ('10'): input.val((value + 10.0).toFixed(2)); break;
-                case ('055'): input.val((value + 0.005).toFixed(7)); break;
-                case ('011'): input.val((value + 0.001).toFixed(7)); break;
-                case ('050'): input.val((value + 0.0005).toFixed(7)); break;
-                case ('010'): input.val((value + 0.0001).toFixed(7)); break;
-            }
-            $.triggerSidebarUpdate();
-        });
-        
-        */
-        $('.wager-selector .wager-input-controls .control:first-child').on('click', function() {
-            const input = $(`${$.sidebarSelector()} .wager-selector input`);
-            if (input.val().length === 0 || isNaN(input.val()) || parseFloat(input.val()) < 0 || (parseFloat(input.val()) / 2) < $.getMinBet()) {
-                input.val($.getMinBet());
-                return;
-            }
-
-            const value = parseFloat(input.val());
-            input.val((value / 2));
-            $.triggerSidebarUpdate();
-        });
-
-        $('.wager-selector .wager-input-controls .control:last-child').on('click', function() {
-            const input = $(`${$.sidebarSelector()} .wager-selector input`);
-            if (input.val().length === 0 || isNaN(input.val()) || parseFloat(input.val()) < 0) {
-                input.val($.getMinBet());
-                return;
-            }
-
-            let value = (parseFloat(input.val()) * 2);
-            if (value > $.getMaxBet()) {
-                value = $.getMaxBet();
-            }
-
-            input.val(value);
-
-            $.triggerSidebarUpdate();
-        });
-        try {
-        $.sidebarData().currency(($.sidebarData().bet() * $.getPriceCurrency()).toFixed(4));
-        } catch(err) { }
-        return this;
 };
 
 $.finishExtended = function(sendServerRequest = true, requestCallback = null) {
