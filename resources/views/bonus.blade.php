@@ -12,6 +12,7 @@
 }
 </style>
 
+
       <div class="container-lg " style="max-width: 1300px;">
           <h5 style="font-weight: 600;"><i style="color: #2367ff; margin-right: 7px;" class="fad fa-layer-plus"></i> Deposit Offers</h5>
 

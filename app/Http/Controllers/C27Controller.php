@@ -574,7 +574,7 @@ class C27Controller extends Controller
             'status' => $status,
             'profit' => $profit,
             'server_seed' => $content->params->transactionRef,
-            'client_seed' => $content->params->transactionRef,
+            'client_seed' => $gameslug,
             'nonce' => $gameguid,
             'data' => json_decode($request->getContent(), true),
             'type' => 'quick',

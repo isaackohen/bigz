@@ -104,7 +104,7 @@
                     <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
                 </div>
                 <div class="button" style="display: flex; justify-content: center; margin-top: 10px;">
-                    <div class="btn btn-play"><i class="fad fa-play"></i></div>
+                    <div class="btn btn-primary-small-dark"><i style="color: #3db96d;" class="fad fa-play"></i> Play</div>
                 </div>
                 </div>
             </div>  
@@ -138,7 +138,7 @@
                     <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
                 </div>
                 <div class="button" style="display: flex; justify-content: center; margin-top: 10px;">
-                    <div class="btn btn-play m-1"><i class="fad fa-play"></i></div>
+                    <div class="btn btn-primary-small-dark"><i style="color: #3db96d;" class="fad fa-play"></i> Play</div>
                 </div>
                 </div>
             </div>  
@@ -192,7 +192,7 @@
                     <option style="color: black;" value="40">Show 40</option>
                     <option style="color: black;" value="100">Show 100</option>
             </select> 
-            </div>
+            </div> 
             <div class="line"></div>
     </div>
 </div>
@@ -223,7 +223,7 @@
                     <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
                 </div>
                 <div class="button" style="display: flex; justify-content: center; margin-top: 25px;">
-                    <div class="btn btn-primary-small m-1">Play</div>
+                    <div class="btn btn-primary-small-dark"><i style="color: #3db96d;" class="fad fa-play"></i> Play</div>
                 </div>
 
                 </div>
@@ -250,7 +250,7 @@
                     <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
                 </div>
                 <div class="button" style="display: flex; justify-content: center; margin-top: 25px;">
-                    <div class="btn btn-primary-small m-1">Play</div>
+                    <div class="btn btn-primary-small-dark"><i style="color: #3db96d;" class="fad fa-play"></i> Play</div>
                 </div>
 
                 </div>
@@ -277,7 +277,7 @@
                     <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
                 </div>
                 <div class="button" style="display: flex; justify-content: center; margin-top: 25px;">
-                    <div class="btn btn-primary-small m-1">Play</div>
+                    <div class="btn btn-primary-small-dark"><i style="color: #3db96d;" class="fad fa-play"></i> Play</div>
                 </div>
 
                 </div>

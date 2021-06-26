@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="theme--{{ $_COOKIE['theme'] ?? 'dark' }}">
     <head>
+
         <title>{{ \App\Settings::where('name', 'platform_name')->first()->value }}</title>
         <link rel="manifest" href="/manifest.json">
 
@@ -133,11 +134,7 @@
                                         @endforeach
                                     </div>
                                     <div class="col-12">
-                                        <div class="divider">
-                                            <div class="line"></div>
-                                            <div class="menu-title">Recent Games</div>
-                                            <div class="line"></div>
-                                        </div>
+
                                                 @php
         $user = auth()->user()->id;
         $recent = \App\RecentSlots::where('player', $user)->get();
@@ -150,12 +147,17 @@
 
         @endphp
 
-        @if($recentcount > 0)
+        @if($recentcount > 1)
+                                        <div class="divider">
+                                            <div class="line"></div>
+                                            <div class="menu-title">Recent Games</div>
+                                            <div class="line"></div>
+                                        </div>
 
         @foreach(\App\Slotslist::get()->shuffle() as $slots)
 
 
-        @if($recentcount > 0 && $slots->UID == $recent[0] || $recentcount > 1 && $slots->UID == $recent[1] || $recentcount > 2 && $slots->UID == $recent[2] || $recentcount > 3 && $slots->UID == $recent[3] || $recentcount > 4 && $slots->UID == $recent[4] || $recentcount > 5 && $slots->UID == $recent[5])
+        @if($recentcount > 0 && $slots->UID == $recent[0] || $recentcount > 1 && $slots->UID == $recent[1] || $recentcount > 2 && $slots->UID == $recent[2] || $recentcount > 3 && $slots->UID == $recent[3] || $recentcount > 4 && $slots->UID == $recent[4])
           @if(auth()->guest())          
                     @if($slots->p == 'upgames')
                     <div onclick="redirect('/live/{{ $slots->UID }}')" class="game_thumbnail" style="background-image:url('/assets/game/livecasino/wide/{{ $slots->id }}.jpg');">
@@ -176,11 +178,8 @@
                 <div class="gamename" style="text-transform: uppercase; display: flex; justify-content: center; margin-top: 1px;">
                     <span style="font-size: 0.65rem">{{ $slots->p }}</span>
                 </div>
-                <div class="gamename" style="display: flex; justify-content: center; margin-top: 5px;">
-                    <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
-                </div>
                 <div class="button" style="display: flex; justify-content: center; margin-top: 10px;">
-                    <div class="btn btn-primary-small m-1">Play</div>
+                    <div class="btn btn-primary-small-dark ripple-surface" style="min-width: 90px;"><i style="color: #3db96d;" class="fad fa-play" aria-hidden="true"></i> Play</div>
                 </div>
                 </div>
             </div>  
@@ -190,7 +189,11 @@
         
 
          @else
-
+                                        <div class="divider">
+                                            <div class="line"></div>
+                                            <div class="menu-title">Popular Slots</div>
+                                            <div class="line"></div>
+                                        </div>
                                         @foreach(\App\Slotslist::where('f','1')->take(5)->get() as $slots)
                                         @if(auth()->guest())
                                         <div onclick="$.auth()" class="game_thumbnail" style="background-image:url(https://cdn.static.bet/i/wide/{{ $slots->p }}/{{ $slots->id }}.webp);">
@@ -205,7 +208,7 @@
                                                         <span style="font-size: 0.65rem">{{ $slots->p }}</span>
                                                     </div>
                                                     <div class="button" style="display: flex; justify-content: center; margin-top: 10px;">
-                                                        <div class="btn btn-primary m-2">Play</div>
+                                                            <div class="btn btn-primary-small m-1">Play</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -215,7 +218,7 @@
                                             <div class="container-fluid" style="background: #28373D; padding: 8px;">
                                                 <div class="divider">
                                                     <div class="line" style="background: transparent;"></div>
-                                                    <div class="btn btn-menu-footer"><i data-feather="arrow-up-circle" style="margin-bottom: 2px; margin-right: 2px; height: 20px; width: 20px;"></i> All Games</div> - <div class="btn btn-menu-footer action" onclick="$.displaySearchBar()"><i data-feather="search" style="margin-bottom: 2px; margin-right: 2px; height: 20px; width: 20px;"></i> Search</div>
+                                                    <div class="btn btn-menu-footer" onclick="redirect('/')"><i data-feather="arrow-up-circle" style="margin-bottom: 2px; margin-right: 2px; height: 15px; width: 20px;"></i> All Games</div> - <div class="btn btn-menu-footer action" onclick="$.displaySearchBar()"><i data-feather="search" style="margin-bottom: 2px; margin-right: 2px; height: 15px; width: 20px;"></i> Search</div>
                                                     <div class="line" style="background: transparent;"></div>
                                                 </div>
                                             </div>
@@ -239,7 +242,28 @@
                                     <img src="/img/currency/svg/{{ $currency->id() }}.svg" style="width: 16px; height: 16px;">
                                 </div>
                                 <div class="wallet-switcher-content">
-                                    <div data-currency-value="{{ $currency->id() }}">{{ number_format(auth()->user()->balance($currency)->get(), 8, '.', '') }}</div>
+								@php
+								if($currency->id() == 'btc') {
+								$balance = ($_COOKIE['unit'] ?? 'none') == 'disabled' ? number_format(auth()->user()->balance($currency)->get(), 8, '.', '') : number_format((auth()->user()->balance($currency)->get() * \App\Http\Controllers\Api\WalletController::rateDollarBtc()), 2, '.', '');
+								} else if($currency->id() == 'eth') {
+								$balance = ($_COOKIE['unit'] ?? 'none') == 'disabled' ? number_format(auth()->user()->balance($currency)->get(), 8, '.', '') : number_format((auth()->user()->balance($currency)->get() * \App\Http\Controllers\Api\WalletController::rateDollarEth()), 2, '.', '');
+								} else if($currency->id() == 'ltc') {
+								$balance = ($_COOKIE['unit'] ?? 'none') == 'disabled' ? number_format(auth()->user()->balance($currency)->get(), 8, '.', '') : number_format((auth()->user()->balance($currency)->get() * \App\Http\Controllers\Api\WalletController::rateDollarLtc()), 2, '.', '');
+								} else if($currency->id() == 'matic') {
+								$balance = ($_COOKIE['unit'] ?? 'none') == 'disabled' ? number_format(auth()->user()->balance($currency)->get(), 8, '.', '') : number_format((auth()->user()->balance($currency)->get() * \App\Http\Controllers\Api\WalletController::rateDollarMatic()), 2, '.', '');
+								} else if($currency->id() == 'usdt') {
+								$balance = ($_COOKIE['unit'] ?? 'none') == 'disabled' ? number_format(auth()->user()->balance($currency)->get(), 8, '.', '') : number_format((auth()->user()->balance($currency)->get() * \App\Http\Controllers\Api\WalletController::rateDollarUsdt()), 2, '.', '');
+								} else if($currency->id() == 'bch') {
+								$balance = ($_COOKIE['unit'] ?? 'none') == 'disabled' ? number_format(auth()->user()->balance($currency)->get(), 8, '.', '') : number_format((auth()->user()->balance($currency)->get() * \App\Http\Controllers\Api\WalletController::rateDollarBtcCash()), 2, '.', '');
+								} else if($currency->id() == 'trx') {
+								$balance = ($_COOKIE['unit'] ?? 'none') == 'disabled' ? number_format(auth()->user()->balance($currency)->get(), 8, '.', '') : number_format((auth()->user()->balance($currency)->get() * \App\Http\Controllers\Api\WalletController::rateDollarTron()), 2, '.', '');
+								} else if($currency->id() == 'xrp') {
+								$balance = ($_COOKIE['unit'] ?? 'none') == 'disabled' ? number_format(auth()->user()->balance($currency)->get(), 8, '.', '') : number_format((auth()->user()->balance($currency)->get() * \App\Http\Controllers\Api\WalletController::rateDollarXrp()), 2, '.', '');
+								} else if($currency->id() == 'doge') {
+								$balance = ($_COOKIE['unit'] ?? 'none') == 'disabled' ? number_format(auth()->user()->balance($currency)->get(), 8, '.', '') : number_format((auth()->user()->balance($currency)->get() * \App\Http\Controllers\Api\WalletController::rateDollarDoge()), 2, '.', '');
+								}
+								@endphp
+                                    @if($_COOKIE['unit'] == 'usd')<div style="margin-right: 1px;">$</div>@endif <div data-currency-value="{{ $currency->id() }}">{{ $balance }}</div>
                                 </div>
                             </div>
                             @endif
@@ -252,6 +276,18 @@
                                     <div>Exchange Poker Balance</div>
                                 </div>
                             </div>
+							<div class="option select-option">
+                            <div class="wallet-switcher-icon">
+                                <i class="fas fa-btc-icon"></i>
+                            </div>
+                            <div class="wallet-switcher-content">
+                                {{ __('general.unit') }}:
+                                <select id="unitChanger">
+                                    <option value="disabled" {{ ($_COOKIE['unit'] ?? 'none') == 'disabled' ? 'selected' : '' }}>Disabled</option>
+                                    <option value="usd" {{ ($_COOKIE['unit'] ?? 'usd') == 'usd' ? 'selected' : '' }}>USD</option>
+                                </select>
+                            </div>
+                        </div>
                         </div>
                         <div class="btn btn-primary btn-rounded wallet-open p-2" style="z-index: 5;margin-top: 1px; margin-bottom: 1px; text-shadow: 0.9px 0.9px #363d42; border-top-right-radius: 0px; border-bottom-right-radius: 0px;"></div>
                         <div class="btn balance-icon"><img class="" data-selected-currency width="17px" height="17px"><div class="balance"></div></div>
@@ -571,3 +607,4 @@
 <div class="searchbar-overlay"></div>
 </body>
 </html>
+
