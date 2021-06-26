@@ -282,11 +282,11 @@ class C27Controller extends Controller
         }
         }
             if($user->freegames > 0 && $slugsanitize == $freespinslot) {
-                $url = 'https://' . $game['SessionId'] . '.spins.sh/?' . $slugsanitize;
+                $url = 'https://' . $game['SessionId'] . '.x10.gg/?' . $slugsanitize;
         }
 
         else {
-                $url = 'https://' . $game['SessionId'] . '.spins.sh/?' . $slugsanitize;
+                $url = 'https://' . $game['SessionId'] . '.x10.gg/?' . $slugsanitize;
             }
                 $view = view('c27')->with('data', $game)->with('url', $url);
                 usleep(150000);
@@ -574,7 +574,7 @@ class C27Controller extends Controller
             'status' => $status,
             'profit' => $profit,
             'server_seed' => $content->params->transactionRef,
-            'client_seed' => $content->params->transactionRef,
+            'client_seed' => $gameslug,
             'nonce' => $gameguid,
             'data' => json_decode($request->getContent(), true),
             'type' => 'quick',

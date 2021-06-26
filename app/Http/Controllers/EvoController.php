@@ -457,8 +457,8 @@ class EvoController extends Controller
                     $game, 
                     [
                         $user->_id, 
-                        'https://bitsarcade.com', //exit_url 
-                        'https://bitsarcade.com', //cash_url
+                        'https://bigz.io', //exit_url 
+                        'https://bigz.io', //cash_url
                         '1' //https
                     ], 
                     '1', //denomination
@@ -477,8 +477,8 @@ class EvoController extends Controller
                         $user->freegames,
                         $evofreespinusd,
                         $user->_id, 
-                        'https://bitsarcade.com', //exit_url 
-                        'https://bitsarcade.com', //cash_url
+                        'https://bigz.io', //exit_url 
+                        'https://bigz.io', //cash_url
                         '1' ////https
                     ], 
                     '1', //denomination
@@ -491,13 +491,13 @@ class EvoController extends Controller
         $bonussignature = self::getSignature($this->system_id, $this->version, $bonusarg, $this->secret_key);
 
         if($user->freegames > 0 && $game == $evofreespinslot) {
-        $response = json_decode(file_get_contents('http://api.production.games/Game/getURL?project='.$this->system_id.'&version=1&signature='.$bonussignature.'&token='.$bonustoken.'&game='.$evofreespinslot.'&settings[extra_bonuses][bonus_spins][spins_count]='.$user->freegames.'&settings[extra_bonuses][bonus_spins][bet_in_money]='.$evofreespinusd.'&settings[user_id]='.$user->_id.'&settings[exit_url]=https://bitsarcade.com&settings[cash_url]=https://bitsarcade.com&settings[https]=1&denomination=1&currency=USD&return_url_info=1&callback_version=2'), true);
+        $response = json_decode(file_get_contents('http://api.production.games/Game/getURL?project='.$this->system_id.'&version=1&signature='.$bonussignature.'&token='.$bonustoken.'&game='.$evofreespinslot.'&settings[extra_bonuses][bonus_spins][spins_count]='.$user->freegames.'&settings[extra_bonuses][bonus_spins][bet_in_money]='.$evofreespinusd.'&settings[user_id]='.$user->_id.'&settings[exit_url]=https://bigz.io&settings[cash_url]=https://bigz.io&settings[https]=1&denomination=1&currency=USD&return_url_info=1&callback_version=2'), true);
         $user->update([
             'freegames' => 0
         ]);
     }   
     else {
-        $response = json_decode(file_get_contents('http://api.production.games/Game/getURL?project='.$this->system_id.'&version=1&signature='.$signature.'&token='.$token.'&game='.$game.'&settings[user_id]='.$user->_id.'&settings[exit_url]=https://bitsarcade.com&settings[cash_url]=https://bitsarcade.com&settings[https]=1&denomination=1&currency=USD&return_url_info=1&callback_version=2'), true);
+        $response = json_decode(file_get_contents('http://api.production.games/Game/getURL?project='.$this->system_id.'&version=1&signature='.$signature.'&token='.$token.'&game='.$game.'&settings[user_id]='.$user->_id.'&settings[exit_url]=https://bigz.io&settings[cash_url]=https://bigz.io&settings[https]=1&denomination=1&currency=USD&return_url_info=1&callback_version=2'), true);
 
     }
 

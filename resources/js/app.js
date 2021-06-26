@@ -404,28 +404,6 @@ $(document).ready(function() {
     $.setCurrency($.currency());
     $.setUnit($.unit());
     $(document).trigger('pjax:start');
-/**
-    window.Echo.connector.socket.on('connect', function() {
-        $('.connectionLostContainer').addClass('recovered');
-        $('.connectionLostContainer span').html($.lang('general.error.connection_recovered'));
-        $('.connectionLostContainer i').attr('class', 'fal fa-check');
-        setTimeout(function() {
-            $('.connectionLostContainer').fadeOut('fast', function() {
-                $('body').css({ 'padding-top': 0 });
-            });
-        }, 3000);
-    });
-
-    const disconnectNotify = function() {
-        $('.connectionLostContainer').removeClass('recovered');
-        $('.connectionLostContainer span').html($.lang('general.error.connection_lost'));
-        $('.connectionLostContainer i').attr('class', 'fal fa-times');
-        $('.connectionLostContainer').fadeIn('fast');
-        $('body').css({ 'padding-top': '53px' });
-    };
-    window.Echo.connector.socket.on('disconnect', disconnectNotify);
-    if(!window.Echo.connector.socket.connected) disconnectNotify();
-**/
 
     $(`[data-chat-toggle]`).on('click', function() {
         $('.chat').toggleClass('hidden');
@@ -510,11 +488,11 @@ $(document).ready(function() {
         const game = liveQueue[0];
         liveQueue.shift();
 
-        const e = $(`<tr>
+        const e = $(`<tr id="live-game-insert">
             <th>
                 <div>
-                    <div class="icon d-none d-md-inline-block" onclick="redirect('/game/${(game.metadata.id != 'slotmachine' ? game.metadata.id : game.game.nonce)}')">
-                        <img class="tiny-game" src="/assets/game/tiny/${(game.metadata.id != 'slotmachine' ? game.metadata.id : game.game.nonce)}.webp">
+                    <div class="icon d-none d-md-inline-block" onclick="redirect('/game/${(game.metadata.id != 'slotmachine' ? game.metadata.id : game.game.client_seed)}')">
+                        <img class="tiny-game" src="/assets/game/tiny/${(game.metadata.id != 'slotmachine' ? game.metadata.id : game.game.client_seed)}.webp">
                     </div>
                     <div class="name">
                         <div><a href="javascript:void(0)" onclick="$.overview('${game.game._id}', '${game.game.game}')">${(game.metadata.id != 'slotmachine' ? game.metadata.name : game.game.nonce)} </a></div>

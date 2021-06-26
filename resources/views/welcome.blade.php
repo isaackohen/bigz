@@ -90,7 +90,7 @@
                         @if($slots->p == 'upgames')
                     <div onclick="redirect('/live/{{ $slots->UID }}')" class="casino_thumbnail" style="background-image:url('/assets/game/livecasino/wide/{{ $slots->id }}.jpg');">
                         @else
-                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="casino_thumbnail" style="background-image:url('https://cdn.static.bet/i/wide/{{ $slots->p }}/{{ $slots->id }}.jpg');">
+                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="casino_thumbnail" style="background-image:url('/assets/i/wide/{{ $slots->p }}/{{ $slots->id }}.jpg');">
                         @endif
             @endif
                 <div class="name">
@@ -104,7 +104,7 @@
                     <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
                 </div>
                 <div class="button" style="display: flex; justify-content: center; margin-top: 10px;">
-                    <div class="btn btn-play"><i class="fad fa-play"></i></div>
+                    <div class="btn btn-primary-small-dark"><i style="color: #3db96d;" class="fad fa-play"></i> Play</div>
                 </div>
                 </div>
             </div>  
@@ -124,7 +124,7 @@
                         @if($slots->p == 'upgames')
                     <div onclick="redirect('/live/{{ $slots->UID }}')" class="casino_thumbnail" style="background-image:url('/assets/game/livecasino/wide/{{ $slots->id }}.jpg');">
                         @else
-                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="casino_thumbnail" style="background-image:url('https://cdn.static.bet/i/wide/{{ $slots->p }}/{{ $slots->id }}.jpg');">
+                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="casino_thumbnail" style="background-image:url('/assets/i/wide/{{ $slots->p }}/{{ $slots->id }}.jpg');">
                         @endif
             @endif
                 <div class="name">
@@ -138,7 +138,7 @@
                     <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
                 </div>
                 <div class="button" style="display: flex; justify-content: center; margin-top: 10px;">
-                    <div class="btn btn-play m-1"><i class="fad fa-play"></i></div>
+                    <div class="btn btn-primary-small-dark"><i style="color: #3db96d;" class="fad fa-play"></i> Play</div>
                 </div>
                 </div>
             </div>  
@@ -192,7 +192,7 @@
                     <option style="color: black;" value="40">Show 40</option>
                     <option style="color: black;" value="100">Show 100</option>
             </select> 
-            </div>
+            </div> 
             <div class="line"></div>
     </div>
 </div>
@@ -210,7 +210,7 @@
           @if(auth()->guest())
                     <div onclick="$.auth()" class="game_long_thumbnail" style="background-image:url('/assets/game/preview/{{ $slots->UID }}.webp');">
                 @else
-                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_long_thumbnail" style="background-image:url('https://cdn.static.bet/i/long/jpg/{{ $slots->id }}.jpg');">
+                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_long_thumbnail" style="background-image:url('/assets/i/long/jpg/{{ $slots->id }}.jpg');">
             @endif
                 <div class="name">
                 <div class="gamename" style="display: flex; justify-content: center; margin-top: 30px;">
@@ -223,7 +223,7 @@
                     <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
                 </div>
                 <div class="button" style="display: flex; justify-content: center; margin-top: 25px;">
-                    <div class="btn btn-primary-small m-1">Play</div>
+                    <div class="btn btn-primary-small-dark"><i style="color: #3db96d;" class="fad fa-play"></i> Play</div>
                 </div>
 
                 </div>
@@ -237,7 +237,7 @@
           @if(auth()->guest())
                     <div onclick="$.auth()" class="game_long_thumbnail" style="background-image:url('/assets/game/preview/{{ $slots->UID }}.webp');">
                 @else
-                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_long_thumbnail" style="background-image:url('https://cdn.static.bet/i/long/jpg/{{ $slots->id }}.jpg');">
+                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_long_thumbnail" style="background-image:url('/assets/i/long/jpg/{{ $slots->id }}.jpg');">
             @endif
                 <div class="name">
                 <div class="gamename" style="display: flex; justify-content: center; margin-top: 30px;">
@@ -250,7 +250,7 @@
                     <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
                 </div>
                 <div class="button" style="display: flex; justify-content: center; margin-top: 25px;">
-                    <div class="btn btn-primary-small m-1">Play</div>
+                    <div class="btn btn-primary-small-dark"><i style="color: #3db96d;" class="fad fa-play"></i> Play</div>
                 </div>
 
                 </div>
@@ -264,7 +264,7 @@
           @if(auth()->guest())
                     <div onclick="$.auth()" class="game_long_thumbnail" style="background-image:url('/assets/game/preview/{{ $slots->UID }}.webp');">
                 @else
-                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_long_thumbnail" style="background-image:url('https://cdn.static.bet/i/long/jpg/{{ $slots->id }}.jpg');">
+                    <div onclick="redirect('/game/{{ $slots->UID }}')" class="game_long_thumbnail" style="background-image:url('/assets/i/long/jpg/{{ $slots->id }}.jpg');">
             @endif
                 <div class="name">
                 <div class="gamename" style="display: flex; justify-content: center; margin-top: 30px;">
@@ -277,7 +277,7 @@
                     <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
                 </div>
                 <div class="button" style="display: flex; justify-content: center; margin-top: 25px;">
-                    <div class="btn btn-primary-small m-1">Play</div>
+                    <div class="btn btn-primary-small-dark"><i style="color: #3db96d;" class="fad fa-play"></i> Play</div>
                 </div>
 
                 </div>

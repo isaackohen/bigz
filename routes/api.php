@@ -14,7 +14,7 @@ use App\Games\Kernel\Module\ModuleSeeder;
 use App\Games\Kernel\ProvablyFairResult;
 use App\Http\Controllers\Api\WalletController;
 use App\Invoice;
-use App\User;
+use App\User; 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +26,23 @@ use App\Http\Controllers\PokerApi;
 Route::any('WVjRFA5EgS3yXTn', 'C27Controller@seamless')->name('rpc.endpoint');
 Route::any('evoplay77gS3y', 'EvoController@seamless')->name('rpc.endpoint');
 Route::any('callback/upgames', 'LivecasinoController@seamless')->name('rpc.endpoint');
+
+
+Route::any('callback/no9gqYHbIOWmW1Q4PkTEAW7De1z4v/{userid}', function(Request $request, $userid) {
+    Log::warning(json_encode($request->all()));
+    $user = User::where('_id', $userid)->first();
+    $tglink = \App\Settings::where('name', 'telegram_link')->first()->value;
+    $checkcount = \App\User::where('tg_linked', $request->id)->count();
+
+    if($checkcount == 0) {
+        $user->update(['tg_linked' => $request->id]);   
+    }
+    header('Location: '.$tglink);
+    die();
+
+});
+
+
 
 Route::post('callback/nowpayments/withdrawals', function(Request $request) {
     Log::warning(json_encode($request->all()));

@@ -2,8 +2,15 @@
     $game = \App\Games\Kernel\Game::find($data);
     if($game == null || $game->isDisabled()) {
 
-        
+    if($get = \App\Slotslist::get()->where('id', $data)->first()) {
+    $slotuid = ($get->UID);
+    header("Location:/game/slot/".$slotuid);
+    }
+    else {
+    
     header("Location:/game/slot/".$data);
+       
+    }
 
         die();
     }
@@ -39,3 +46,4 @@
     @endif
 @endif
 
+ 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="theme--{{ $_COOKIE['theme'] ?? 'dark' }}">
     <head>
+
         <title>{{ \App\Settings::where('name', 'platform_name')->first()->value }}</title>
         <link rel="manifest" href="/manifest.json">
 
@@ -24,7 +25,7 @@
         <script src="https://kit.fontawesome.com/2dba14c7e6.js" crossorigin="anonymous"></script>
         <link rel="preconnect" href="https://fonts.gstatic.com">
 
-        <link rel="icon" type="image/png" href="/img/logo/ico.png"/>
+        <link rel="icon" type="image/png" href="/img/logo/bigz-full-darker.svg"/>
         <meta charset="utf-8">
 
         <noscript><meta http-equiv="refresh" content="0; /no_js"></noscript>
@@ -133,11 +134,7 @@
                                         @endforeach
                                     </div>
                                     <div class="col-12">
-                                        <div class="divider">
-                                            <div class="line"></div>
-                                            <div class="menu-title">Recent Games</div>
-                                            <div class="line"></div>
-                                        </div>
+
                                                 @php
         $user = auth()->user()->id;
         $recent = \App\RecentSlots::where('player', $user)->get();
@@ -145,17 +142,20 @@
         $recent = array_column($recent, 's');
         $recentcount = count($recent);
 
-        Log::notice($recent); 
-        Log::notice($recentcount); 
 
         @endphp
 
-        @if($recentcount > 0)
+        @if($recentcount > 1)
+                                        <div class="divider">
+                                            <div class="line"></div>
+                                            <div class="menu-title">Recent Games</div>
+                                            <div class="line"></div>
+                                        </div>
 
         @foreach(\App\Slotslist::get()->shuffle() as $slots)
 
 
-        @if($recentcount > 0 && $slots->UID == $recent[0] || $recentcount > 1 && $slots->UID == $recent[1] || $recentcount > 2 && $slots->UID == $recent[2] || $recentcount > 3 && $slots->UID == $recent[3] || $recentcount > 4 && $slots->UID == $recent[4] || $recentcount > 5 && $slots->UID == $recent[5])
+        @if($recentcount > 0 && $slots->UID == $recent[0] || $recentcount > 1 && $slots->UID == $recent[1] || $recentcount > 2 && $slots->UID == $recent[2] || $recentcount > 3 && $slots->UID == $recent[3] || $recentcount > 4 && $slots->UID == $recent[4])
           @if(auth()->guest())          
                     @if($slots->p == 'upgames')
                     <div onclick="redirect('/live/{{ $slots->UID }}')" class="game_thumbnail" style="background-image:url('/assets/game/livecasino/wide/{{ $slots->id }}.jpg');">
@@ -176,11 +176,8 @@
                 <div class="gamename" style="text-transform: uppercase; display: flex; justify-content: center; margin-top: 1px;">
                     <span style="font-size: 0.65rem">{{ $slots->p }}</span>
                 </div>
-                <div class="gamename" style="display: flex; justify-content: center; margin-top: 5px;">
-                    <span style="font-size: 0.80rem">{{ $slots->desc }}</span>
-                </div>
                 <div class="button" style="display: flex; justify-content: center; margin-top: 10px;">
-                    <div class="btn btn-primary-small m-1">Play</div>
+                    <div class="btn btn-primary-small-dark ripple-surface" style="min-width: 90px;"><i style="color: #3db96d;" class="fad fa-play" aria-hidden="true"></i> Play</div>
                 </div>
                 </div>
             </div>  
@@ -190,7 +187,11 @@
         
 
          @else
-
+                                        <div class="divider">
+                                            <div class="line"></div>
+                                            <div class="menu-title">Popular Slots</div>
+                                            <div class="line"></div>
+                                        </div>
                                         @foreach(\App\Slotslist::where('f','1')->take(5)->get() as $slots)
                                         @if(auth()->guest())
                                         <div onclick="$.auth()" class="game_thumbnail" style="background-image:url(https://cdn.static.bet/i/wide/{{ $slots->p }}/{{ $slots->id }}.webp);">
@@ -205,7 +206,7 @@
                                                         <span style="font-size: 0.65rem">{{ $slots->p }}</span>
                                                     </div>
                                                     <div class="button" style="display: flex; justify-content: center; margin-top: 10px;">
-                                                        <div class="btn btn-primary m-2">Play</div>
+                                                            <div class="btn btn-primary-small m-1">Play</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -215,7 +216,7 @@
                                             <div class="container-fluid" style="background: #28373D; padding: 8px;">
                                                 <div class="divider">
                                                     <div class="line" style="background: transparent;"></div>
-                                                    <div class="btn btn-menu-footer"><i data-feather="arrow-up-circle" style="margin-bottom: 2px; margin-right: 2px; height: 20px; width: 20px;"></i> All Games</div> - <div class="btn btn-menu-footer action" onclick="$.displaySearchBar()"><i data-feather="search" style="margin-bottom: 2px; margin-right: 2px; height: 20px; width: 20px;"></i> Search</div>
+                                                    <div class="btn btn-menu-footer" onclick="redirect('/')"><i data-feather="arrow-up-circle" style="margin-bottom: 2px; margin-right: 2px; height: 15px; width: 20px;"></i> All Games</div> - <div class="btn btn-menu-footer action" onclick="$.displaySearchBar()"><i data-feather="search" style="margin-bottom: 2px; margin-right: 2px; height: 15px; width: 20px;"></i> Search</div>
                                                     <div class="line" style="background: transparent;"></div>
                                                 </div>
                                             </div>
@@ -227,7 +228,7 @@
                         </div>
                         <a href="/poker" data-page-trigger="'/poker'" data-toggle-class="active">Poker</a>
                         <a href="/live" data-page-trigger="'/live'" data-toggle-class="active">Live</a>
-                        <a href="/bonus" data-page-trigger="'/bonus'" data-toggle-class="active">Bonus</a>
+                        <a onclick="redirect('/bonus/')" data-page-trigger="'/bonus'" data-toggle-class="active">Bonus</a>
                     </div>
                     <div class="wallet" style="margin-left: 25px;">
                         <div class="wallet-switcher">
@@ -242,7 +243,7 @@
                                     <div data-currency-value="{{ $currency->id() }}">{{ number_format(auth()->user()->balance($currency)->get(), 8, '.', '') }}</div>
                                 </div>
                             </div>
-                            @endif
+                            @endif 
                             @endforeach
                             <div class="option" onclick="redirect('/poker/')" style="font-family: Proxima Nova Semi Bd;text-shadow: 1px 1px black;border-top: 1px solid #354144;background: #212e34;">
                                 <div class="wallet-switcher-icon">
@@ -264,15 +265,7 @@
                             <span><small class="subtitle-profile">Hi, </small></span>
                             <span><small class="subtitle-profile">{{ auth()->user()->name }}</small></span>
                         </span>
-                        <i data-feather="chevrons-down" style="margin-bottom: 9px;
-                        margin-left: 2px;
-                        border-radius: 7px;
-                        height: 20px;
-                        width: 20px;
-                        color: #04b953;
-                        padding: 2px;
-                        background: #263337;
-                        box-shadow: 1px 1px 2px rgb(0 0 0 / 25%);"></i>
+                        <i data-feather="chevrons-down" class="nav-chevrons" style=""></i>
                     </span>
                     <div class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-divider"></div>
@@ -291,7 +284,7 @@
                         <div class="dropdown-divider"></div>
                     </div>
                     @else
-                    <a onclick="redirect('/')"><div class="headermiddle"><div class="logo"></div></div></a>
+                    <div class="headermiddle"><a onclick="redirect('/')"><div class="logo" style="margin-bottom: 5px;"></div></a></div>
                     @endif
                     <div class="right">
                         @if(auth()->guest())
@@ -302,9 +295,9 @@
                     </div>
                 </div>
                 @if(auth()->guest())
-                <div class="fixed" style="z-index: 2; top: 70px; min-height: 35px;">
-                    <div class="menu-guest">
-                        <a href="/bonus" data-page-trigger="'/slots'" data-toggle-class="active">Slots</a>
+                <div class="fixed" style="z-index: 27; top: 70px; min-height: 41px;">
+                    <div class="menu-guest" style="margin-top: 7px;">
+                        <a href="/welcome" data-page-trigger="'/welcome'" data-toggle-class="active">Casino</a>
                         <a href="/poker" data-page-trigger="'/poker'" data-toggle-class="active">Poker</a>
                         <a href="/live" data-page-trigger="'/live'" data-toggle-class="active">Live</a>
                     </div>
@@ -342,64 +335,67 @@
            <span class="navbar-bottom-icon"><i class="fad fa-megaphone"></i></span>  <span class="navbar-bottom-toastbar" id="toastbar">{{ \App\Settings::where('name', 'toast_message')->first()->value }}</span>
         </div>
     </div>
-    <!--
-    <div class="chat">
-        <div class="fixed">
-            <div class="chat-input-hint chatCommands" style="display: none"></div>
-            <div data-user-tag class="chat-input-hint" style="display: none">
-                <div class="hint-content"></div>
-                <div class="hint-footer">
-                    {!! __('general.chat_at') !!}
-                </div>
-            </div>
-            <div class="messages"></div>
-            <div class="message-send">
-                @if(auth()->guest())
-                <div class="message-auth-overlay">
-                    <button class="btn btn-block btn-secondary" onclick="$.auth()">{{ __('general.auth.login') }}</button>
-                </div>
-                @elseif(auth()->user()->mute != null && !auth()->user()->mute->isPast())
-                <div class="message-auth-overlay" style="opacity: 1 !important; text-align: center; font-size: 0.8em;">
-                    {{ __('general.error.muted', [ 'time' => auth()->user()->mute ]) }}
-                </div>
-                @endif
-                <div class="d-flex w-100">
-                    <div class="column">
-                        @if(!auth()->guest())
-                        <div class="column-icon" data-notification-view onclick="$.displayNotifications()">
-                            <i class="fas fa-bell"></i>
+
+                                @if(!auth()->guest())
+
+                <div class="chat">
+                    <div class="fixed">
+                        <div class="chat-input-hint chatCommands" style="display: none"></div>
+                        <div data-user-tag class="chat-input-hint" style="display: none">
+                            <div class="hint-content"></div>
+                            <div class="hint-footer">
+                                {!! __('general.chat_at') !!}
+                            </div>
                         </div>
-                        @endif
-                        @if(!auth()->guest() && auth()->user()->access == 'admin')
-                        <div class="column-icon" id="chatCommandsToggle">
-                            <i class="fal fa-slash fa-rotate-90"></i>
-                        </div>
-                        @endif
-                        <textarea onkeydown="if(event.keyCode === 13) { $.sendChatMessage('.text-message'); return false; }" class="text-message" placeholder="{{ __('general.chat.enter_message') }}"></textarea>
-                    </div>
-                    <div class="column">
-                        <div class="column-icon">
-                            @if(!auth()->guest())
-                            <div class="emoji-container">
-                                <div class="content" data-fill-emoji-target></div>
-                                <div class="emoji-footer">
-                                    <div class="content">
-                                        <div class="emoji-category" onclick="$.unicodeEmojiInit()">
-                                            <i class="fad fa-smile"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="messages"></div>
+                        <div class="message-send">
+                            @if(auth()->guest())
+                            <div class="message-auth-overlay">
+                                <button class="btn btn-block btn-secondary" onclick="$.auth()">{{ __('general.auth.login') }}</button>
+                            </div>
+                            @elseif(auth()->user()->mute != null && !auth()->user()->mute->isPast())
+                            <div class="message-auth-overlay" style="opacity: 1 !important; text-align: center; font-size: 0.8em;">
+                                {{ __('general.error.muted', [ 'time' => auth()->user()->mute ]) }}
                             </div>
                             @endif
-                            <i class="fad fa-smile" id="emoji-container-toggle" onclick="$.unicodeEmojiInit(); $('.emoji-container').toggleClass('active')"></i>
+                            <div class="d-flex w-100">
+                                <div class="column">
+                                    @if(!auth()->guest())
+                                    <div class="column-icon" data-notification-view onclick="$.displayNotifications()">
+                                        <i class="fas fa-bell"></i>
+                                    </div>
+                                    @endif
+                                    @if(!auth()->guest() && auth()->user()->access == 'admin')
+                                    <div class="column-icon" id="chatCommandsToggle">
+                                        <i class="fal fa-slash fa-rotate-90"></i>
+                                    </div>
+                                    @endif
+                                    <textarea onkeydown="if(event.keyCode === 13) { $.sendChatMessage('.text-message'); return false; }" class="text-message" placeholder="{{ __('general.chat.enter_message') }}"></textarea>
+                                </div>
+                                <div class="column">
+                                    <div class="column-icon">
+                                        @if(!auth()->guest())
+                                        <div class="emoji-container">
+                                            <div class="content" data-fill-emoji-target></div>
+                                            <div class="emoji-footer">
+                                                <div class="content">
+                                                    <div class="emoji-category" onclick="$.unicodeEmojiInit()">
+                                                        <i class="fad fa-smile"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endif
+                                        <i class="fad fa-smile" id="emoji-container-toggle" onclick="$.unicodeEmojiInit(); $('.emoji-container').toggleClass('active')"></i>
+                                    </div>
+                                    <div class="column-icon" onclick="$.sendChatMessage('.text-message')" id="sendChatMessage"><i class="fad fa-external-link-square"></i></div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="column-icon" onclick="$.sendChatMessage('.text-message')" id="sendChatMessage"><i class="fad fa-external-link-square"></i></div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    !-->
+                                                        @endif
+
     <div class="draggableWindow">
         <div class="head">
             {{ __('general.profit_monitoring.title') }}
@@ -469,16 +465,16 @@
     </div>
     <div class="floatingButtons">
         @if(!auth()->guest())
-        <div class="floatingButton" style="color: #475d65;" onclick="redirect('/user/{{ auth()->user()->_id }}')">
-        <i class="fad fa-user-circle" style="font-size: 23px;margin-right: -1px;margin-top: 5.3px;"></i></div>
-        <div class="floatingButton" style="color: #475d65;" onclick="$.displaySearchBar()">
-        <i class="fas fa-search" style="font-size: 17px;margin-right: 1px;margin-top: 6.2px;"></i></div>
-        <div class="floatingButton" style="color: #475d65;" data-notification-view="" onclick="$.displayNotifications()"><span class="notification pulsating-circle" data-notification-attention="" style="top: 3px;"></span>
-        <i class="fas fa-bell" style="font-size: 18px;margin-right: 8px;margin-top: 5px;"></i>
+        <div class="floatingButton" style="color: #647c84;" onclick="redirect('/user/{{ auth()->user()->_id }}')">
+        <i class="fad fa-head-side" style="font-size: 17px;margin-right: -1px;margin-top: 9px;"></i></div>
+        <div class="floatingButton" style="color: #647c84;" onclick="$.displaySearchBar()">
+        <i class="fas fa-search" style="font-size: 15px;margin-right: 1px;margin-top: 10.4px;"></i></div>
+        <div class="floatingButton" style="color: #647c84;" data-notification-view="" onclick="$.displayNotifications()"><span class="notification pulsating-circle" data-notification-attention="" style="top: 3px; width:10px; height: 10px;"></span>
+        <i class="fad fa-envelope" style="font-size: 17px;margin-right: 9px;margin-top: 9px;"></i>
     </div>
     @endif
     <div class="floatingButton" data-chat-toggle>
-    <svg><use href="#chat"></use></svg>
+        <i class="fad fa-comment-alt-lines" style="font-size: 15px;margin-right: 0px;margin-top: 10.5px;"></i>
 </div>
 </div>
 <div class="mobile-menu">
@@ -571,3 +567,4 @@
 <div class="searchbar-overlay"></div>
 </body>
 </html>
+

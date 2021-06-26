@@ -6,7 +6,7 @@
 @import '~owl.carousel/dist/assets/owl.carousel.css';
 
 @import '~izitoast/dist/css/iziToast.min.css';
-@import '~overlayscrollbars/css/OverlayScrollbars.min.css';
+@import '~overlayscrollbars/css/OverlayScrollbars.min.css'; 
 @import '~bootstrap4-toggle/css/bootstrap4-toggle.min.css';
 @import '~jquery-contextmenu/dist/jquery.contextMenu.min.css';
 @import '~nprogress/nprogress.css';
@@ -17,7 +17,7 @@
 @import 'modals/modal';
 
 $sidebar-width: 50px;
-$header-height: 50px;
+$header-height: 60px;
 $chat-width: 312px;
 
 $card: 0 0 10px rgba(28, 39, 60, .05);
@@ -110,21 +110,20 @@ $card: 0 0 10px rgba(28, 39, 60, .05);
 
 .game_thumbnail {
     display: inline-flex;
-    width: 150px;
-    height: 110px;
-    margin: 5px;
+    width: 140px;
+    height: 95px;
+    margin: 3px;
 
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     z-index: 1;
-    transition: all 0.15s ease-in;
     top: 0;
     position: relative;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: rgba(black, 0.2) 0 4px 6px -1px, rgba(black, 0.12) 0px 2px 4px -1px;
-    transition: all ease-in 0.2s;
+    transition: all 0.2s ease;
 
 
     &:hover {
@@ -150,7 +149,7 @@ $card: 0 0 10px rgba(28, 39, 60, .05);
         background-size: cover;
         pointer-events: none;
         will-change: transform;
-        transition: all 200ms ease-in 0s;
+        transition: all 200ms ease 0s;
     }
 
     .name {
@@ -160,7 +159,7 @@ $card: 0 0 10px rgba(28, 39, 60, .05);
         height: 100%;
         width: 100%;
         @include blur(black, 0.5, 0.8, 5px);
-        border-radius: 12px;
+        border-radius: 11px;
         color: white;     
 
         .gametitle {
@@ -681,7 +680,7 @@ input {
         background: transparent;
         margin-bottom: 5px;
         max-height: 20px;
-         min-width: 150px;
+        min-width: 150px;
         color: t('text');
         border: 1px solid t('text');
         &:hover, &:active, &:focus {
@@ -775,11 +774,30 @@ hr {
     position: relative;
 }
 
+.nav-chevrons {
+    margin-bottom: 7px;
+    margin-left: 2px;
+    border-radius: 8px;
+    height: 25px;
+    width: 25px;
+    color: #04b953;
+    padding: 2px;
+    background: #263337;
+    box-shadow: 1px 1px 2px rgb(0 0 0 / 25%);
+    transition: all 0.2 ease-in;
+    
+    &:hover {
+    background: #213237;
+    color: white;
+
+    }
+}
+
 header {
     height: $header-height;
     display: block;
     flex-shrink: 0;
-    z-index: 24;
+    z-index: 500;
 
     button {
         padding: 5px 20px !important;
@@ -795,10 +813,10 @@ header {
         display: flex;
         align-items: center;
         padding: 2px;
-        z-index: 25;
+        z-index: 500;
 
     @include themed() {
-                background: url("/img/misc/carbon.png") repeat, t('header');
+                background: t('header');
     }
 
     .logo {
@@ -1182,9 +1200,9 @@ padding: 0.5rem 0.8rem;
 .chat {
     width: $chat-width;
     flex-shrink: 0;
-    z-index: 38000;
+    z-index: 497;
     position: relative;
-    transition: width 0.2s ease;
+    transition: width 0.15s ease-in;
 
     @include themed() {
         .emoji-container {
@@ -1313,11 +1331,11 @@ padding: 0.5rem 0.8rem;
 
         top: $header-height;
         @include themed() {
-        $linearchat: darken(t('sidebar'), 1.0%);
-        $linearchat2: darken(t('sidebar'), 1.35%);
+        $linearchat: lighten(t('sidebar'), 2.0%);
+        $linearchat2: lighten(t('sidebar'), 1.5%);
         background: url('/img/misc/carbon.png') repeat, linear-gradient($linearchat, $linearchat2);
 
-            $send-height: 90px;
+            $send-height: 100px;
 
             .chat-input-hint {
                 position: absolute;
@@ -1636,7 +1654,7 @@ padding: 0.5rem 0.8rem;
                 padding: 10px;
                 display: flex;
                 $sidebarone: t('sidebar');
-                $sidebartwo: t('sidebartwo');
+                $sidebartwo: t('header');
                 background: url(/img/misc/carbon.png) repeat, linear-gradient($sidebarone, $sidebartwo);
                 margin-top: 3px;
                 position: relative;
@@ -3054,21 +3072,21 @@ footer {
 }
 
 .floatingButtons.chatIsHidden {
-    right: 20px;
+    right: 25px;
 
 }
 
 .floatingButtons {
-    $width: 32px;
-    $height: 32px;
-    right: 300px !important; 
+    $width: 34px;
+    $height: 34px;
+    right: 325px !important; 
 
     display: flex;
     flex-direction: row;
     position: fixed;
     bottom: 20px;
     z-index: 7000;
-    transition: right 0.2s ease-in;
+    transition: right 0.15s ease-in;
 
     @include themed() {
         .floatingButton {
@@ -3787,6 +3805,10 @@ border-top-right-radius: 16px;
 
     .sidebar, .menu, .logo {
         display: none;
+    }
+
+    .smalllogo {
+        display: block;
     }
 
     .mobile-menu {
