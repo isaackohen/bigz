@@ -1,0 +1,119 @@
+@import '../variables';
+
+$side-menu-width: 800px;
+
+.nav {
+    width: calc(100% + 55px) !important; 
+}
+
+
+    .progress {
+        height: 25px;
+        border-radius: 3px;
+        text-shadow: 1px 1px black;
+        margin: 2px;
+
+        @include themed() {
+            background: darken(t('sidebar'), 3%);
+
+            .progress-bar {
+                height: 25px;
+                background: url(/img/misc/load-2.svg);
+            }
+        }
+    }
+
+.vip {
+    .vip-logo {
+        width: 15%;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .vipDesc {
+        @include themed() {
+            color: rgba(t('text'), 0.8);
+            text-shadow: 1px 1px black;
+        }
+    }
+
+    .progress {
+        height: 25px;
+        border-radius: 3px;
+        text-shadow: 1px 1px black;
+        margin: 2px;
+
+        @include themed() {
+            background: lighten(t('sidebar'), 3%);
+
+            .progress-bar {
+                height: 25px;
+                background: url(/img/misc/load-2.svg);
+            }
+        }
+    }
+
+    .vipProgress {
+        display: flex;
+        flex-direction: row;
+        margin-top: 10px;
+        margin-bottom: 2.5em;
+
+        div {
+            display: inline-flex;
+            position: relative;
+            svg {
+                width: 17px;
+                height: 17px;
+                position: absolute;
+                margin-left: -20px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+
+        div:last-child {
+            margin-left: auto;
+        }
+    }
+
+    .expandableBlock {
+        margin-top: 15px;
+
+        @include themed() {
+            .expandableBlockHeader {
+                background: #272c3a;
+                border-radius: 0.25rem;
+                padding: 0.75rem 1.5rem;
+                display: flex;
+                align-content: center;
+                cursor: pointer;
+
+                svg {
+                    width: 16px;
+                    height: 16px;
+                    margin-right: 10px;
+                }
+
+                i {
+                    position: absolute;
+                    right: 20px;
+                    margin-top: 3px;
+                }
+            }
+
+            .expandableBlockContent {
+                border: 1px solid darken(t('sidebar'), 3%);
+                border-top: none;
+                padding: 15px 23px;
+
+                ul {
+                    margin-bottom: 0;
+                    list-style: none;
+                    padding-left: 0;
+                }
+            }
+        }
+    }
+}
