@@ -9,6 +9,7 @@ use App\Games\Kernel\ProvablyFairResult;
 use App\Leaderboard;
 use App\Transaction;
 use App\User;
+use App\Settings;
 use Illuminate\Support\Facades\DB;
 
 abstract class ExtendedGame extends Game {
@@ -182,6 +183,28 @@ abstract class ExtendedGame extends Game {
                     auth()->user()->balance($currency)->demo($game->demo)->quiet()->add($game->profit, Transaction::builder()->game($game->game)->message('Win')->get());
                     event(new BalanceModification(auth()->user(), $currency, 'add', $game->demo, $game->profit, 0));
                 }
+				
+				$settingGameProfit = 'bigprofit_inhouse_game_'.$game->game;
+				$bigProfit = [$game->profit, $user->name, $game->currency, $game->_id];
+				$settingGameMul = 'bigmul_inhouse_game_'.$game->game;
+				$bigMul = [$game->multiplier, $user->name, $game->_id];
+				
+				if(Settings::where('name', $settingGameProfit)->first() === null){
+					Settings::create(['name' => $settingGameProfit, 'value' => json_encode($bigProfit)]);
+				} 
+				$settingGameInfo = json_decode(Settings::where('name', $settingGameProfit)->first()->value);
+				if($game->profit > $settingGameInfo[0]) {
+					Settings::where('name', $settingGameProfit)->update(['value' => json_encode($bigProfit)]);
+				}
+				
+				if(Settings::where('name', $settingGameMul)->first() === null){
+					Settings::create(['name' => $settingGameMul, 'value' => json_encode($bigMul)]);
+				} 
+				$settingGameInfo = json_decode(Settings::where('name', $settingGameMul)->first()->value);
+				if($game->multiplier > $settingGameInfo[0]) {
+					Settings::where('name', $settingGameMul)->update(['value' => json_encode($bigMul)]);
+				}
+				
                 if (!$game->demo) event(new \App\Events\LiveFeedGame($game, 0));
 
                 if(!$game->demo && auth()->user()->vipLevel() > 0 && (auth()->user()->weekly_bonus ?? 0) < 100)

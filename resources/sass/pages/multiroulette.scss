@@ -1,5 +1,11 @@
 @import "../variables";
 
+
+.theme--dark .game-container .game-history {
+	position: absolute;
+    background: none !important;
+}
+
 .theme--dark .game-sidebar .game-sidebar-buttons-container .game-sidebar-buttons-container-button.active {
     background: #212735;
     border-radius: 3px;

@@ -176,7 +176,7 @@ $.on('/game/dice', function() {
         component.play();
 
         component.footer().help().sound().quick().stats();
-        component.history('dice');
+        component.historyFooter('dice');
     }, function() {
         const value = $('.game-container .dice-slider').slider('value');
         $.sidebarData().profit(diceProfit(currentTarget === 'lower' ? 0 : value, currentTarget === 'higher' ? 100 : value));

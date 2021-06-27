@@ -66,7 +66,7 @@ $.game('multiroulette', function (container, overviewData) {
     }
 	container.append(`<div class="multiroulette-bets"><div class="multirouletteMultiplayerTable red"><li class="multiroulette-info">ALL BETS 2X</li></div><div class="multirouletteMultiplayerTable green"><li class="multiroulette-info">ALL BETS 14X</li></div><div class="multirouletteMultiplayerTable black"><li class="multiroulette-info">ALL BET 2X</li></div><div></div></div>`);
 	_.forEach($.multipliers().players, function (data) {
-      $(`.multirouletteMultiplayerTable.${data.data.target}`).append(`<div class="user" onclick="window.open('/user/${data.user._id}', '_blank')" style=""><div class="avatar"><img src="${data.user.avatar}" alt=""></div><div class="name">${data.user.name}</div><div class="bet">${$.getCookie('unit') == 'disabled' ? (data.game.wager).toFixed(8) : ('$' + (data.game.wager *  $.getPriceCurrencyByCrypto(data.game.currency)).toFixed(2))}<i class="${window.Laravel.currency[data.game.currency].icon}" style="color: ${window.Laravel.currency[data.game.currency].style}"></i></div></div>`);
+      $(`.multirouletteMultiplayerTable.${data.data.target}`).append(`<div class="user" onclick="window.open('/user/${data.user._id}', '_blank')" style=""><div class="avatar"><img src="${data.user.avatar}" alt=""></div><div class="name">${data.user.name}</div><div class="bet">${$.getCookie('unit') == 'disabled' ? (data.game.wager).toFixed(8) : ('$' + (data.game.wager *  $.getPriceCurrencyByCrypto(data.game.currency)).toFixed(2))}<img style="margin-left:3px;" width="16px" height="16px" src="/img/currency/svg/${data.game.currency}.svg"></div></div>`);
 	});
 
     clone();
@@ -82,7 +82,7 @@ $.game('multiroulette', function (container, overviewData) {
           break;
 
         case 'MultiplayerGameBet':
-          $(`.multirouletteMultiplayerTable.${data.data.target}`).append(`<div class="user" onclick="window.open('/user/${data.user._id}', '_blank')" style=""><div class="avatar"><img src="${data.user.avatar}" alt=""></div><div class="name">${data.user.name}</div><div class="bet">${$.getCookie('unit') == 'disabled' ? (data.game.wager).toFixed(8) : ('$' + (data.game.wager *  $.getPriceCurrencyByCrypto(data.game.currency)).toFixed(2))}<i class="${window.Laravel.currency[data.game.currency].icon}" style="color: ${window.Laravel.currency[data.game.currency].style}"></i></div></div>`);
+          $(`.multirouletteMultiplayerTable.${data.data.target}`).append(`<div class="user" onclick="window.open('/user/${data.user._id}', '_blank')" style=""><div class="avatar"><img src="${data.user.avatar}" alt=""></div><div class="name">${data.user.name}</div><div class="bet">${$.getCookie('unit') == 'disabled' ? (data.game.wager).toFixed(8) : ('$' + (data.game.wager *  $.getPriceCurrencyByCrypto(data.game.currency)).toFixed(2))}<img style="margin-left:3px;" width="16px" height="16px" src="/img/currency/svg/${data.game.currency}.svg"></div></div>`);
           break;
 
         case 'MultiplayerGameFinished':

@@ -1,6 +1,10 @@
 @import "../variables";
 @import "~jquery-ui/themes/base/slider.css";
 
+.theme--dark .game-container .game-history {
+    position: unset !important;
+}
+
 .dice-wrapper {
     position: absolute;
     top: 50%;

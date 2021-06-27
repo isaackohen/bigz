@@ -10,8 +10,13 @@ let playTimeout = false;
 class SidebarComponentBuilder {
 
     constructor() {
-        $('.game-sidebar').append(`<div class="game-sidebar-tabs"><div class="game-sidebar-tab active">${$.lang('general.bets.manual')}</div></div>`);
-        $('.game-sidebar-tab:first-child').on('tab:selected', function() {
+		$('.game-container-options').append(`<div class="options-buttons">
+            <div class="options-game-name">${window.location.pathname.substr(window.location.pathname.lastIndexOf('/') + 1)}</div>
+            <div class="game-mode"><div class="options-gamemode active">Manual Bets</div><div>
+			</div>`);
+        $('.options-gamemode:first-child').on('click', function() {
+			$('.options-gamemode:last-child').removeClass('active');
+            $('.options-gamemode:first-child').addClass('active');
             if(currentGameInstance.game.autoBetSettings.state || currentGameInstance.game.extendedState === 'in-progress') return;
             $('.auto-bet-container').fadeOut('fast');
             currentGameInstance.game.bettingType = 'manual';
@@ -21,8 +26,10 @@ class SidebarComponentBuilder {
     }
 
     autoBets() {
-        $('.game-sidebar-tabs').append(`<div class="game-sidebar-tab">${$.lang('general.bets.auto')}</div>`);
-        $('.game-sidebar-tab:last-child').on('tab:selected', function() {
+		$('.game-mode').append(`<div class="options-gamemode">Auto Bets</div>`);
+        $('.options-gamemode:last-child').on('click', function() {
+			$('.options-gamemode:first-child').removeClass('active');
+            $('.options-gamemode:last-child').addClass('active');
             if(currentGameInstance.game.autoBetSettings.state || currentGameInstance.game.extendedState === 'in-progress') return;
             $('.auto-bet-container').fadeIn('fast');
             currentGameInstance.game.bettingType = 'auto';
@@ -433,6 +440,10 @@ class SidebarComponentBuilder {
     history(api_id, scrollable = false) {
         return new GameHistoryComponent(api_id, scrollable);
     }
+	
+	historyFooter(api_id, scrollable = false) {
+        return new GameHistoryComponentFooter(api_id, scrollable);
+    }
 
     footer() {
         return new SidebarFooterComponent();
@@ -519,10 +530,37 @@ class GameHistoryComponent {
 
 }
 
+class GameHistoryComponentFooter {
+
+    constructor(api_id, scrollable) {
+        this.api_id = api_id;
+        currentGameInstance.history = this;
+        if($('.game-history').length === 0) $('.game-container').append(`<div class="game-history"></div>`);
+
+        this.isScrollable = scrollable;
+        if(scrollable) $('.game-history').addClass('os-host-flexbox').overlayScrollbars({
+            scrollbars: {
+                autoHide: 'leave'
+            }
+        });
+		
+		$('.best-container').appendTo($('.game-container'));
+    }
+
+    add(callback, type = 'prepend') {
+        const e = $(`<div class="history history-${this.api_id}"></div>`), s = `.game-history ${this.isScrollable ? '.os-content' : ''}`;
+        type === 'prepend' ? $(s).prepend(e) : $(s).append(e);
+        callback(e);
+        return this;
+    }
+
+}
+
 class SidebarFooterComponent {
 
     constructor() {
         $('.game-sidebar').append(`<div class="game-sidebar-footer"></div>`);
+		$('.game-container-options').append(`<div class="options-right"></div>`);
         if(!$.isGuest()) this.clientSeed();
     }
 
@@ -530,7 +568,10 @@ class SidebarFooterComponent {
         const id = $.randomId();
         $(`.game-sidebar-footer`).append($(`<div class="action ${id}" data-toggle="tooltip" data-placement="top" title="${tooltip}"><i class="${icon}"></i></div>`));
         $(`.game-sidebar-footer .action.${id}`).tooltip();
+		$(`.options-right`).append($(`<div class="action ${id}" data-toggle="tooltip" data-placement="top" title="${tooltip}"><i class="${icon}"></i></div>`));
+        $(`.options-right .action.${id}`).tooltip();
         $(document).on('click', `.game-sidebar-footer .action.${id}`, callback);
+		$(document).on('click', `.options-right .action.${id}`, callback);
         return this;
     }
 
@@ -845,7 +886,7 @@ $.resultPopup = function(game) {
             ${$.isDemo() ? `<div class="demoHeader">${$.lang('general.head.wallet_demo')}</div>` : ''}
             <div class="multiplier">${status === 'lose' && game.multiplier >= 1 ? (0).toFixed(2) : game.multiplier.toFixed(2)}x</div>
             <div class="divider"></div>
-            <div class="profit">${$.getCookie('unit') == 'disabled' ? game.profit.toFixed(8) : ('$' + (game.profit * $.getPriceCurrencyByCrypto(game.currency)).toFixed(2))} <i class="${window.Laravel.currency[game.currency].icon}" style="color: ${window.Laravel.currency[game.currency].style}"></i></div>
+            <div class="profit">${$.getCookie('unit') == 'disabled' ? game.profit.toFixed(8) : ('$' + (game.profit * $.getPriceCurrencyByCrypto(game.currency)).toFixed(2))} <img style="margin-left:3px;" width="16px" height="16px" src="/img/currency/svg/${game.currency}.svg"></div>
             ${$.isDemo() ? `<a href="javascript:void(0)" onclick="${$.isGuest() ? '$.auth()' : `$.setDemo(false); $('.resultPopup .demoHeader').fadeOut('fast'); $('.resultPopup').css({'padding-top': '10px'})`}; ${$.isGuest() ? '' : '$(this).slideUp(\'fast\');'}">${$.lang('general.demo_popup_link')}</a>` : ''}
         </div>
     `);
