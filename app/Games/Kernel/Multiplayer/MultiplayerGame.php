@@ -10,8 +10,10 @@ use App\Games\Kernel\Extended\ContinueGame;
 use App\Games\Kernel\Extended\ExtendedGame;
 use App\Games\Kernel\Extended\Turn;
 use App\Games\Kernel\ProvablyFairResult;
+use Illuminate\Support\Facades\Log;
 use App\Leaderboard;
 use App\Transaction;
+use App\Settings;
 use App\User;
 
 abstract class MultiplayerGame extends ExtendedGame {
@@ -64,6 +66,33 @@ abstract class MultiplayerGame extends ExtendedGame {
             $user->balance($currency)->demo($game->demo)->quiet(true)
                 ->add($game->profit, Transaction::builder()->message($this->metadata()->name())->game($this->metadata()->id())->get());
             event(new BalanceModification($user, $currency, 'add', $game->demo, $game->profit, $delay));
+			try {
+			$settingGameProfit = 'bigprofit_inhouse_game_'.$game->game;
+			$bigProfit = [$game->profit, $user->name, $game->currency, $game->_id];
+			$settingGameMul = 'bigmul_inhouse_game_'.$game->game;
+			$bigMul = [$game->multiplier, $user->name, $game->_id];
+			
+			if(Settings::where('name', $settingGameProfit)->first() === null){
+				Settings::create(['name' => $settingGameProfit, 'value' => json_encode($bigProfit)]);
+			} 
+			$settingGameInfo = json_decode(Settings::where('name', $settingGameProfit)->first()->value);
+			if($game->profit > $settingGameInfo[0]) {
+				Settings::where('name', $settingGameProfit)->update(['value' => json_encode($bigProfit)]);
+			}
+			
+			if(Settings::where('name', $settingGameMul)->first() === null){
+				Settings::create(['name' => $settingGameMul, 'value' => json_encode($bigMul)]);
+			} 
+			$settingGameInfo = json_decode(Settings::where('name', $settingGameMul)->first()->value);
+			if($multiplier > $settingGameInfo[0]) {
+				Settings::where('name', $settingGameMul)->update(['value' => json_encode($bigMul)]);
+			}
+			} catch (\Exception $ex) {
+			   Log::info('Exception block: '.$ex);
+			} catch (\Throwable $ex) {
+			   Log::info('Throwable block: '.$ex);
+			}
+			
         }
 
         Leaderboard::insert($game);

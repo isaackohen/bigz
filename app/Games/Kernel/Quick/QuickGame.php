@@ -165,7 +165,6 @@ abstract class QuickGame extends Game {
 
 
         $multiplierfloat = floatval(number_format($result->multiplier(), 2, '.', ''));
-
             $game = \App\Game::create([
                 'id' => DB::table('games')->count() + 1,
                 'user' => $data->user()->_id,
@@ -189,10 +188,29 @@ abstract class QuickGame extends Game {
                         Settings::where('name', 'bigwinner_inhouse_amount')->update(['value' => $usd_wager]);
                         Settings::where('name', 'bigwinner_inhouse_multi')->update(['value' => $multiplierfloat]);
 
-                    Settings::where('name', 'tg_bigwinner_inhouse_cron')->update(['value' => 1]);
-
-            }
-
+						Settings::where('name', 'tg_bigwinner_inhouse_cron')->update(['value' => 1]);
+					} 
+					
+					$settingGameProfit = 'bigprofit_inhouse_game_'.$this->metadata()->id();
+					$bigProfit = [$result->profit(), $data->user()->name, $currency, $game->_id];
+					$settingGameMul = 'bigmul_inhouse_game_'.$this->metadata()->id();
+					$bigMul = [$multiplierfloat, $data->user()->name, $game->_id];
+					
+					if(Settings::where('name', $settingGameProfit)->first() === null){
+						Settings::create(['name' => $settingGameProfit, 'value' => json_encode($bigProfit)]);
+					} 
+					$settingGameInfo = json_decode(Settings::where('name', $settingGameProfit)->first()->value);
+					if($result->profit() > $settingGameInfo[0]) {
+						Settings::where('name', $settingGameProfit)->update(['value' => json_encode($bigProfit)]);
+					}
+					
+					if(Settings::where('name', $settingGameMul)->first() === null){
+						Settings::create(['name' => $settingGameMul, 'value' => json_encode($bigMul)]);
+					} 
+					$settingGameInfo = json_decode(Settings::where('name', $settingGameMul)->first()->value);
+					if($multiplierfloat > $settingGameInfo[0]) {
+						Settings::where('name', $settingGameMul)->update(['value' => json_encode($bigMul)]);
+					}
 
                     if($data->user()->bonus1 == '2' && $currency == 'bonus') {
                         if($multiplierfloat < 0.95 || $multiplierfloat > 1.3 && $usd_wager > 0.1) {
