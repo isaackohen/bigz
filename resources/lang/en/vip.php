@@ -5,7 +5,7 @@ return [
         'level' => 'Loyalty Club - :level',
         '0' => 'New',
         '1' => 'Emerald',
-        '2' => 'Ruby',
+        '2' => 'Amethyst',
         '3' => 'Gold',
         '4' => 'Platinum',
         '5' => 'Diamond'
@@ -16,40 +16,38 @@ return [
     'benefits' => 'Loyalty Club Rankings:',
     'benefit_list' => [
         'emerald' => [
-            '1' => 'Daily Royalty Feature unlock.',
-            '2' => 'Access to Loyalty promocodes.',
-            '3' => 'Loyalty role on the Discord server.',
-            '4' => 'Increased Faucet Reward.',
-            '5' => 'Get 15 Free Slot Spins.'
+            '1' => 'Daily Cashback Feature unlocked',
+            '2' => 'Access to VIPDROPS',
+            '3' => 'Get 10 Free Slot Spins',
+            '4' => 'Faucet Amount Increased'
         ],
         'ruby' => [
-            '1' => 'Promocode use limit per day is increased from 8 to 16.',
-            '2' => 'Increased Daily Royalty Reward.',
-            '3' => 'Increased Faucet Reward.',
-            '4' => 'Promocode Reward increased by 25%.',
-            '5' => 'Get 25 Free Slot Spins.'
+            '1' => 'Daily DROP use-limit increased from 5 to 20',
+            '2' => 'Increased Daily Cashback Reward',
+            '3' => 'Faucet Amount Increased',
+            '4' => 'DROP Reward increased by 25%'
         ],
         'gold' => [
-            '1' => 'VIP codes do not affect the overall activation limit of promotional codes.',
-            '2' => 'Promocode Reward increased by 50%.',
-            '3' => 'Increased Daily Royalty Reward.',
-            '4' => 'Get 50 Free Slot Spins.'
+            '1' => 'VIPDROPS do not affect the overall activation limit of DROP code',
+            '2' => 'Promocode Reward increased by 50%',
+            '3' => 'Increased Daily Cashback Reward',
+            '4' => 'Get 50 Free Slot Spins'
         ],
         'platinum' => [
-            '1' => 'The required amount for withdrawal is reduced by 2 times.',
-            '2' => 'Increased Daily Royalty Reward.',
-            '3' => 'Get 75 Free Slot Spins.'
+            '1' => 'Increased Daily Royalty Reward',
+            '2' => 'Get 75 Free Slot Spins',
+            '3' => 'Use Faucet System Hourly'
         ],
         'diamond' => [
-            '1' => 'You are able to get customized and personalized rewards, such as custom border and avatar.',
-            '2' => 'Code activation limit now resets every 12 hours.',
-            '3' => 'Increased Daily Royalty Reward.',
-            '4' => 'Get 150 Free Slot Spins.'
+            '1' => 'You are able to get customized and personalized rewards, such as custom border and animated avatar',
+            '2' => 'DROP limit now resets every 12 hours',
+            '3' => 'Increased Daily Cashback Reward',
+            '4' => 'Get 150 Free Slot Spins'
         ]
     ],
     'bonus' => [
-        'tooltip' => 'Daily Royalty Reward',
-        'title' => 'Daily Royalty Reward',
+        'tooltip' => 'Daily Cashback',
+        'title' => 'Daily Cashback',
         'progress_title' => 'Progress',
         'description' => "Once you reach Emerald Rank <svg style='width: 14px; height: 14px'><use href='#vip-emerald'></use></svg> within Loyalty Club, you are eligible to use Daily Royalty Feature. 
         Each wager over ".\App\Settings::where('name', 'dailybonus_minbet_slots')->first()->value." unlock 0.01% of your total daily Royalty Prize.<br>

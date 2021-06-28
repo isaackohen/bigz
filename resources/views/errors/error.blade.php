@@ -29,13 +29,11 @@ header("Refresh:1");
   to   { opacity: 1; }
 }
 
-body {
-  font-family: 'Trebuchet MS', sans-serif;
-}
+
 </style>
     </head>
 
-        <p id="showMe" style="margin-top: 10vw; color: #fff; font-size: 0.85rem; font-weight: 600;">{{ $code ?? -1 }}</p>
+        <p id="showMe" style="margin-top: 10vw; color: #fff; font-size: 0.85rem; font-weight: 600;"></p>
 
         <div class="pageLoader">
             <img style="position: absolute; top: 0; bottom: 0; margin: auto; left: 0; right: 0; height: 100px; width: 100px;" src="/img/logo/bigz-preload-small.gif">

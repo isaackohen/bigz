@@ -6,8 +6,12 @@
     background: none !important;
 }
 
+.theme--dark .game-sidebar .game-sidebar-buttons-container {
+    background: #131e23;
+}
+
 .theme--dark .game-sidebar .game-sidebar-buttons-container .game-sidebar-buttons-container-button.active {
-    background: #212735;
+    background: #203135;
     border-radius: 3px;
 }
 
@@ -47,6 +51,10 @@
 
 .theme--dark .text-danger {
   color: !important;
+}
+
+.dropdown-top-menu-content {
+  display: none !important;
 }
 
 .theme--dark .text-primary {
@@ -125,11 +133,10 @@
 .theme--default .game-content-multiroulette .multiroulette_container .multiroulette_container_row .multiroulette_card .hexagon {
   position: absolute;
   left: 50%;
-  top: 14px;
   width: 70%;
   height: 80px;
-  transform: translateX(-50%);
-  font-size: 16pt;
+  transform: translateX(1%) translateY(-30%);
+  font-size: 12px;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -162,7 +169,7 @@
   } 
 
 .theme--dark .game-content-multiroulette .multiroulette_container .multiroulette_container_row .multiroulette_card {
-  width: 70px;
+  width: 90px;
   height: 70px;
   display: flex;
   border-radius: 3px;
@@ -171,21 +178,30 @@
       -ms-user-select: none;
           user-select: none;
   position: relative;
-  border: 3px solid transparent;
-  transition: border-color 0.3s ease;
+  border: 3px solid #0e1619;
+  transition: border-color 0.2s ease-in;
 }
 
 .theme--dark .game-content-multiroulette .multiroulette_container .multiroulette_container_row .multiroulette_card.red {
-	background: rgb(163 38 34);
+	background: #ff453f;
+  border-radius: 10px;
 }
 
 .theme--dark .game-content-multiroulette .multiroulette_container .multiroulette_container_row .multiroulette_card.black {
-	background: rgb(63 63 63);
+	background: #2a2f30;
+  border-radius: 10px;
 }
 
 .theme--dark .game-content-multiroulette .multiroulette_container .multiroulette_container_row .multiroulette_card.green {
-	background: rgb(61 134 62);
+    background: #35b066;
+    border-radius: 10px;
+    background-image: url(/img/logo/bigz-icon.svg);
+    background-size: 53%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
+
+
 
 .theme--dark .game-content-multiroulette .multiroulette_container .multiroulette_container_row .multiroulette_card .multiroulette_card_footer {
   position: absolute;
@@ -200,18 +216,16 @@
 .theme--dark .game-content-multiroulette .multiroulette_container .multiroulette_container_row .multiroulette_card .hexagon {
   position: absolute;
   left: 50%;
-  top: 8px;
   width: 70%;
-  height: 50px;
-  transform: translateX(-50%);
-  font-size: 16pt;
+  height: 80px;
+  transform: translateX(1%) translateY(-30%);
+  font-size: 12px;
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
 }
-
 
 
 .theme--dark .game-content-multiroulette .multiroulette_container .multiroulette_container_row .multiroulette_card:last-child {
@@ -240,7 +254,7 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  height: 197px;
+  height: 124px;
   z-index: 5;
   width: 45px;
   border-radius: 5px;
@@ -251,7 +265,8 @@
 	  display: flex;
 	  flex-direction: row;
 	  align-items: center;
-	  padding: 15px;
+	  padding: 5px;
+    border-radius: 8px;
 	  @include themed() {
             background: lighten(t('body'), 3%);
       }
@@ -260,7 +275,7 @@
 	}
 
 	.game-content-multiroulette .multirouletteMultiplayerTable .user:hover {
-	  background: #171f2c;
+	  background: #213237;
 	}
 
 	.game-content-multiroulette .multirouletteMultiplayerTable .user:first-child {
@@ -326,9 +341,8 @@
     padding: 15px;
     padding-right: 100px;
     padding-left: 100px;
-    transition: background 0.3s ease;
+    transition: background 0.2s ease-in;
     cursor: pointer;
-    background: #1d2532;
 }
 
 .theme--dark .game-content-multiroulette .multirouletteCustomHistory {

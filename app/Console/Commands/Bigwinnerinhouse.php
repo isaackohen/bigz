@@ -58,7 +58,7 @@ class Bigwinnerinhouse extends Command {
 
 
         $message = $bot->sendPhoto([
-            'chat_id' => -1001199743876,
+            'chat_id' => -1001575847632,
                 'photo' => 'https://bigz.imgix.net/i/tgthumb/inhouse/inhouse'.rand(1, 4).'.jpg?shad=-5&blur=29&chromasub=444&fm=png&auto=enhance&usm=50&exp=-9&mark=https%3A%2F%2Fassets.imgix.net%2F~text%3Ftxtclr%3Dfff%26q%3D100%26fm%3Dpng%26txt%3D'.$inlinemessage.'%2B%26w%3D500%26txtsize%3D23%26txtlead%3D0%26txtpad%3D25%26bg%3D55010a0d%26txtfont%3DAvenir-Heavy&markalign=center%2Cmiddle&txtalign=center&txtclr=d2d9dc&txtsize=18&txtpad=40&markscale=90&q=90&fit=crop&w=410&h=150&ixlib=js-2.0.0&s=dc591beb29755d2228f129c7a6770f17',
                 'reply_markup' => [
                     'inline_keyboard' => [[[
@@ -71,7 +71,7 @@ class Bigwinnerinhouse extends Command {
             Settings::where('name', 'tg_bigwinner_inhouse_cron')->update(['value' => 0]);
             Settings::where('name', 'toast_message')->update(['value' => $toastmessage]);
                 
-            event(new \App\Events\UserNotification());
+            event(new \App\Events\BigwinNotification());
     }
     }
 

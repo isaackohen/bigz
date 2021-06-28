@@ -880,7 +880,8 @@ header {
         @include themed() {
             .wallet {
                 display: flex;
-                margin-right: 10px;
+                margin-right: 5px;
+                margin-left: 5px;
                 cursor: pointer;
                 position: absolute;
                 left: 50%;
@@ -1546,7 +1547,7 @@ padding: 0.5rem 0.8rem;
 
             .messages {
                 height: calc(100% - #{$send-height});
-                padding: 10px;
+                padding: 6px;
 
                 .highlight {
                     display: inline-flex;
@@ -1586,15 +1587,9 @@ padding: 0.5rem 0.8rem;
                     }
 
                     .quiz_header {
-                        font-size: 0.91em;
-                        box-shadow: -3px -3px 8px 1px #11141f0d, 2px 2px 8px 0px #0d0d0d47, inset 1px 1px 0px 0px #1f2330 !important;
-                        background: linear-gradient(#262a37, #262a37);
-                        margin-top: -7px;
-                        margin-left: -8px;
-                        border-top-left-radius: 3px;
-                        border-top-right-radius: 3px;
-                        width: calc(100% + 16px);
-                        padding: 5px 6px;
+                       font-weight: 700;
+                        font-size: 0.9em;
+                        padding: 1px 2px;
 
                         span {
                             color: rgba(t('text'), 0.4);
@@ -1605,14 +1600,15 @@ padding: 0.5rem 0.8rem;
 
                     .answer {
                         .answer_header {
-                            color: #5171a9;
-                            font-size: 1.1em;
-                            margin-top: 5px;
+                       font-weight: 700;
+                        font-size: 0.9em;
+                        padding: 1px 2px;
+
                         }
 
                         .answer_user {
                             span {
-                                color: #5171a9;
+                                color: green;
                             }
                         }
                     }
@@ -1706,15 +1702,10 @@ padding: 0.5rem 0.8rem;
 
                 .message {
                     display: flex;
-                    border-radius: 3px;
-                    $message1: lighten(t('body'), 1.0%);
-                    $message2: lighten(t('body'), 3.0%);
-                    background: url("/img/misc/arrows.svg") repeat, linear-gradient($message1, $message2);
                     flex-wrap: wrap;
-                    box-shadow: 0 0 1px 1px #3c3c3c;
                     flex-direction: column;
-                    padding: 6px;
-                    margin-bottom: 10px;
+                    padding: 2px;
+                    margin-bottom: 12px;
                     position: relative;
 
                     .user {
@@ -1737,7 +1728,7 @@ padding: 0.5rem 0.8rem;
                         .name {
                             display: inline-flex;
                             font-weight: 600;
-                            font-size: 0.9em;
+                            font-size: 0.85em;
 
                             .vipRank {
                                 position: absolute;
@@ -1757,9 +1748,14 @@ padding: 0.5rem 0.8rem;
                         display: inline-flex;
                         flex-direction: column;
                         word-break: break-word;
-                        line-height: 1.3em;
-                        font-size: 0.9em;
-                        margin-top: 5px;
+                        border-radius: 4px;
+                        font-family: 'Proxima Nova Semi Bd';
+                        line-height: 1.1em;
+                        background: linear-gradient(#213237, #213237);
+                        border-bottom: 3px solid #2d3a3e;
+                        padding: 10px;
+                        font-size: 0.9rem;
+                        margin-top: 2px;
 
                         .sticker {
                             width: 110px;
@@ -1773,14 +1769,32 @@ padding: 0.5rem 0.8rem;
 
                         .game-link {
                             width: 100%;
-                            padding: 10px;
+                            padding: 5px;
                             border-radius: 3px;
-                            border: 1px solid rgba(t('text'), .1);
+                            border: 1px solid rgba(t('text'), .05);
                             margin-top: 1px;
                             cursor: pointer;
                         }
                     }
                 }
+
+
+                .message.from-vip-4 {
+                    .user {
+                        .avatar {
+                            box-shadow: 0 0 1px 1px #c8c0ff;
+                        }
+                    }
+                }
+
+                .message.from-vip-5 {
+                    .user {
+                        .avatar {
+                            box-shadow: 0 0 1px 1px #5dbbd4;
+                        }
+                    }
+                }
+
 
                 .message.from-user {
                     .user {
@@ -1800,7 +1814,6 @@ padding: 0.5rem 0.8rem;
                 }
 
                 .message.from-admin {
-                    box-shadow: inset 0 0 1px 1px #e74c3c;
                     .user {
                         .avatar {
 
@@ -2137,28 +2150,41 @@ footer {
 
 .overview-bet {
     display: flex;
-    margin-top: 5px;
+    margin-top: 10px;
     @include themed() {
         .option {
-            padding: 7px;
+            padding: 3px;
             width: 33.33%;
             display: inline-flex;
             border: 1px solid rgba(t('text'), 0.1);
-            border-radius: 3px;
-            margin: 5px;
+            border-radius: 6px;
+            margin: 2px;
             flex-direction: column;
             text-align: center;
             justify-content: center;
             align-items: center;
             span {
-                opacity: 0.7;
+                opacity: 0.8;
             }
         }
     }
 }
 
-.tooltip {
+.tooltip-inner {
+    @include themed() {
     z-index: 99999 !important;
+    font-size: 13px;
+    font-family: Proxima Nova Med;
+    border-radius: 8px;
+    background-color: lighten(t('body'), 3%) !important;
+    background: lighten(t('body'), 3%) !important;
+    }
+}
+
+.tooltip {
+    font-size: 13px;
+    font-family: Proxima Nova Med;
+    z-index: 99998 !important;
 }
 
 .live-win {
@@ -2687,16 +2713,21 @@ footer {
 			
 			.action {
 				display: inline-flex;
-				width: 30px;
-				height: 30px;
-				border-radius: 50%;
+				width: 26px;
+				height: 26px;
+				border-radius: 12%;
 				cursor: pointer;
+                font-size: 12px;
 				margin-right: 10px;
-				box-shadow: 0 0 1px 1px #718e98;
+				box-shadow: 0 0 1px 1px #232e32;
 				align-items: center;
 				justify-content: center;
 				color: #718e98;
-				transition: box-shadow 0.3s ease, color 0.3s ease;
+				transition: box-shadow 0.2s ease-in, color 0.2s ease-in;
+                
+                &:hover {
+                color: #3ab66b;
+                }
 			}
 			
 			@media (max-width: 780px) {
@@ -3905,14 +3936,15 @@ a:link {
 
 .popover {
         
-    background-color: #1b253b;
+    background-color: #19272b;
     border-radius: 10px;
 
     a {
-        color: $gray-700 !important;
-
+        @include themed() {
+        color: t('secondary') !important;
+            }
         &:hover {
-            color: black !important;
+            color: white !important;
         }
     }
 }
@@ -4112,6 +4144,11 @@ border-top-right-radius: 16px;
 
     .connectionLostContainer {
         z-index: 38001 !important;
+    }
+
+    .game-container-options {
+    padding: 0 10px;
+    height: 40px;
     }
 
     .chat {

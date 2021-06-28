@@ -13,7 +13,7 @@ function createUser($login, $password, $avatar = null, $additionalData = []) {
     $user = User::create(array_merge([
         'name' => $login,
         'password' => $password == null ? null : Hash::make($password),
-        'avatar' => $avatar ?? '/avatar/'.uniqid(),
+        'avatar' => '/img/avatars/default-'.rand(1, 6).'.png',
         'email' => null,
         'freegames' => 0,
         'client_seed' => \App\Games\Kernel\ProvablyFair::generateServerSeed(),

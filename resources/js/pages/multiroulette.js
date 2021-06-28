@@ -45,9 +45,9 @@ $.game('multiroulette', function (container, overviewData) {
 
     container.append("\n            <div class=\"multirouletteCustomHistory\"></div>\n            <div class=\"multiroulette_container_line\"></div>\n            <div class=\"multiroulette_container\">\n                <div class=\"multiroulette_container_row\"></div>\n            </div>\n        ");
 	var hex = {
-      0: ['#a32622', '#d4d4d4'],
-      1: ['#3f3f3f', '#d4d4d4'],
-      2: ['#3d863e', '#d4d4d4']
+      0: ['#e76376', '#d4d4d4'],
+      1: ['#2a2f30', '#d4d4d4'],
+      2: ['#3bc248', '#d4d4d4']
     };
 
     _.forEach($.multipliers().history, function (m) {
@@ -64,7 +64,7 @@ $.game('multiroulette', function (container, overviewData) {
         $('.multiroulette_container_row').append(card(i));
 		$(".multiroulette_container_line").prependTo(".multiroulette_container");  
     }
-	container.append(`<div class="multiroulette-bets"><div class="multirouletteMultiplayerTable red"><li class="multiroulette-info">ALL BETS 2X</li></div><div class="multirouletteMultiplayerTable green"><li class="multiroulette-info">ALL BETS 14X</li></div><div class="multirouletteMultiplayerTable black"><li class="multiroulette-info">ALL BET 2X</li></div><div></div></div>`);
+	container.append(`<div class="multiroulette-bets"><div class="multirouletteMultiplayerTable red"><li class="multiroulette-info">Red Bets (2X)</li></div><div class="multirouletteMultiplayerTable green"><li class="multiroulette-info">Green Bets (14X)</li></div><div class="multirouletteMultiplayerTable black"><li class="multiroulette-info">Black Bets (2X)</li></div><div></div></div>`);
 	_.forEach($.multipliers().players, function (data) {
       $(`.multirouletteMultiplayerTable.${data.data.target}`).append(`<div class="user" onclick="window.open('/user/${data.user._id}', '_blank')" style=""><div class="avatar"><img src="${data.user.avatar}" alt=""></div><div class="name">${data.user.name}</div><div class="bet">${$.getCookie('unit') == 'disabled' ? (data.game.wager).toFixed(8) : ('$' + (data.game.wager *  $.getPriceCurrencyByCrypto(data.game.currency)).toFixed(2))}<img style="margin-left:3px;" width="16px" height="16px" src="/img/currency/svg/${data.game.currency}.svg"></div></div>`);
 	});
@@ -93,6 +93,7 @@ $.game('multiroulette', function (container, overviewData) {
 
           clone();
           spin(data.data.index);
+          $.playSound('/sounds/bet.mp3', 150);
           setTimeout(function () {
             $("[data-multiroulette=\"".concat(data.data.index, "\"]")).addClass('selected');
             var color = hex[0];
@@ -102,7 +103,7 @@ $.game('multiroulette', function (container, overviewData) {
             var el = $.customHistoryPopover($("<div class=\"multirouletteCustomHistoryElement\" style=\"background: ".concat(color[0], "; border-bottom: 1px solid ").concat(color[1], "\">").concat(parseFloat(data.data.index) + '', "</div>")), {
               clientSeed: data.client_seed,
               serverSeed: data.server_seed,
-              nonce: data.nonce
+              nonce: data.nonce 
             });
             $('.multirouletteCustomHistory').prepend(el);
             el.hide().slideDown('fast');
@@ -161,7 +162,7 @@ $.on('/game/multiroulette', function () {
 		}, 'multiroulette-button multiroulette-button-black');
     component.history('multiroulette');
     $.history().add(function (e) {
-      return e.addClass('multiroulette-time');
+      return e.addClass('multiroulette-time'); 
     });
 	component.autoBets();
     component.play();

@@ -15,6 +15,9 @@
         die();
     }
 @endphp
+          @if(auth()->guest())
+                    <div style="margin-top: 60px;"></div>
+            @endif
 <div class="container-lg" id="gamecontainer">
     <div class="game-container mt-1">
 	    <div class="game-container-options">

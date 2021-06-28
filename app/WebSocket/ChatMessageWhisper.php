@@ -9,11 +9,11 @@ class ChatMessageWhisper extends WebSocketWhisper {
     }
 
     public function process($data): array {
-        $last3Hours = \Carbon\Carbon::now()->subMinutes(10);
+        $last3Hours = \Carbon\Carbon::now()->subMinutes(5);
         $user = User::where('_id', $this->user->id)->first();
-        if(strlen($data->message) < 1 || strlen($data->message) > 100) return reject(1, 'Message is too short or long');
+        if(strlen($data->message) < 1 || strlen($data->message) > 150) return reject(1, 'Message is too short or long');
         if($this->user->mute != null && !$this->user->mute->isPast()) return reject(2, 'User is banned');
-        if($user->created_at >= $last3Hours) return reject(2, 'User is banned');
+        if($user->created_at >= $last3Hours) return reject(3, 'User too new');
 
         $message = \App\Chat::create([
             'user' => $this->user->toArray(),

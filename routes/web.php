@@ -19,7 +19,7 @@ Route::post('partner_cashout', function() {
     });
 
 
-Route::get('/pokerclient/', function() {
+Route::get('/play/poker/', function() {
 function array_value_recursive($key, array $arr){
     $val = array();
     array_walk_recursive($arr, function($v, $k) use($key, &$val){
@@ -34,11 +34,11 @@ function array_value_recursive($key, array $arr){
     $now = \Carbon\Carbon::now()->timestamp;
     $last3minute = \Carbon\Carbon::now()->subMinutes(1)->timestamp;
     $pokersession = (\App\PokerSessions::orderBy('time', 'desc')->where('user', $user)->where('time', '>=', $last3minute)->first());
-
+/*
     if($pokersession) {
         $link = ($pokersession->session);
 } else {
-
+*/
 
     $api = new PokerApi(123, 'lkq9b2br-w8oy-01oy-qgtv-48a09v8sz91a', '217.182.195.96', 4000);
     $api->connect();
@@ -57,10 +57,59 @@ function array_value_recursive($key, array $arr){
 
         Log::notice($getRunLink);
         Log::notice($link);
-        //echo '<META HTTP-EQUIV=REFRESH CONTENT="0; '.$link.'">';
-}
+ 
+ /*       //echo '<META HTTP-EQUIV=REFRESH CONTENT="0; '.$link.'">';
+}*/
 
         $view = view('pokerplayer')->with('url', $link);
+        return view('layouts.app')->with('page', $view);
+
+    });
+
+Route::get('/pokerclient/', function() {
+function array_value_recursive($key, array $arr){
+    $val = array();
+    array_walk_recursive($arr, function($v, $k) use($key, &$val){
+        if($k == $key) array_push($val, $v);
+    });
+    return count($val) > 1 ? $val : array_pop($val);
+}
+
+    $login = auth()->user()->name;
+    $user = auth()->user()->id;
+
+    $now = \Carbon\Carbon::now()->timestamp;
+    $last3minute = \Carbon\Carbon::now()->subMinutes(1)->timestamp;
+    $pokersession = (\App\PokerSessions::orderBy('time', 'desc')->where('user', $user)->where('time', '>=', $last3minute)->first());
+/*
+    if($pokersession) {
+        $link = ($pokersession->session);
+} else {
+*/
+
+    $api = new PokerApi(123, 'lkq9b2br-w8oy-01oy-qgtv-48a09v8sz91a', '217.182.195.96', 4000);
+    $api->connect();
+    $getRunLink = $api->getRunLink($login); 
+    //      $linkarray = var_export($getRunLink, true);
+   //$link = json_encode($getRunLink);
+
+        $link = $getRunLink['uogetuserrunlink']['@attributes']['runlink'];
+        $explode = explode('/', $link);
+        $link = 'https://poker.bigz.io/alogin/'.$explode[4].'/';
+ 
+                     \App\PokerSessions::create([
+                    'session' => $link, 'time' => $now, 'user' => $user
+                    ]);
+
+
+        Log::notice($getRunLink);
+        Log::notice($link);
+ 
+     echo '<META HTTP-EQUIV=REFRESH CONTENT="0; '.$link.'">';
+ /*  
+        $view = view('pokerplayer')->with('url', $link);
+        }*/
+
         return view('layouts.app')->with('page', $view);
 
     });

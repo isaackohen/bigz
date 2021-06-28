@@ -1,5 +1,17 @@
 @import '../variables';
 
+.user-big-title {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: IndustryBlack, Open Sans;
+    color: #668791;
+    margin-left: 4px;
+    margin-right: 20px;
+}
+
+
+
 $profile-sidebar-padding: 30px;
 
 .theme--dark {
@@ -96,7 +108,14 @@ $profile-sidebar-padding: 30px;
             min-height: 300px;
 
             .cat {
-                background: url('/img/misc/carbon.png') repeat, rgba(t('text'), 0.015);
+                font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: IndustryBlack, Open Sans;
+    color: #668791;
+    margin-left: 4px;
+    margin-right: 20px;
+                background: url('/img/misc/carbon.png') repeat, rgba(t('text'), 0.065);
                 margin-left: -$profile-sidebar-padding;
                 width: calc(100% + #{$profile-sidebar-padding} * 2);
                 margin-bottom: 15px;

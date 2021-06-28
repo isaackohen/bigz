@@ -122,7 +122,7 @@ $.addChatMessage = function(message) {
                         <div class="answer_user"><span>${$.lang('general.quiz_user')}</span> <a class="disable-pjax" href="/user/${message.data.user._id}" target="_blank">${message.data.user.name}</a></div>
                         <div>${bitcoin(message.data.reward, 'btc').to($.unit()).value().toFixed($.unit() === 'satoshi' ? 0 : 8)} ${window.Laravel.currency[message.data.currency].name}</div>
                     </div>
-                </div>
+                </div> 
             </div>
         `);
     }
@@ -136,8 +136,12 @@ $.addChatMessage = function(message) {
             && $(`.chat .messages .os-content .message`).last().attr('data-message-type') === 'message') {
             $(`.chat .messages .os-content .message`).last().find('.content').append(`<div id="${message._id}">${userMessage}</div>`);
         } else $(`.chat .messages .os-content`).append(`
-            <div id="${message._id}" class="message from-${message.user.access}" data-message-type="message" data-message-user-id="${message.user._id}">
+            <div id="${message._id}" class="message from-${message.user.access} from-vip-${message.vipLevel}" data-message-type="message" data-message-user-id="${message.user._id}">
                 <div class="user">
+                        ${message.user.access === 'admin' ? `<div class="avatar" onclick="redirect('/support/')" data-toggle="tooltip" data-placement="left" title="Staff User">
+                           <svg><use href="#admin-icon"></use></svg>
+                        </div>` : ''}
+
                         ${message.vipLevel > 0 ? `<div class="avatar" onclick="$.vip()" data-toggle="tooltip" data-placement="left" title="${$.lang(`vip.rank.level`, { level: $.lang(`vip.rank.${message.vipLevel}`) })}">
                             ${$.vipIcon(message.vipLevel)}
                         </div>` : ''}
@@ -154,20 +158,25 @@ $.addChatMessage = function(message) {
 
     if(message.type === 'game_link') {
         $(`.chat .messages .os-content`).append(`
-            <div id="${message._id}" class="message from-${message.user.access}" data-message-type="game_link" data-message-user-id="${message.user._id}">
+            <div id="${message._id}" class="message from-${message.user.access}" data-message-type="game_link" data-message-user-id="${message.user._id}" >
                 <div class="user">
+                        ${message.user.access === 'admin' ? `<div class="avatar" onclick="redirect('/support/')" data-toggle="tooltip" data-placement="left" title="Staff User">
+                           <svg><use href="#admin-icon"></use></svg>
+                        </div>` : ''}
                         ${message.vipLevel > 0 ? `<div class="avatar" onclick="$.vip()" data-toggle="tooltip" data-placement="left" title="${$.lang(`vip.rank.level`, { level: $.lang(`vip.rank.${message.vipLevel}`) })}">
                             ${$.vipIcon(message.vipLevel)}
                         </div>` : ''}
                     <div class="name">
-                        <span onclick="redirect('/user/${message.user._id}')">${$.formatName(message.user.name)}</span>
+                        <span style="opacity: 0.7" onclick="redirect('/user/${message.user._id}')">${$.formatName(message.user.name)}</span> <span>&nbsp;shared a game</span>
                     </div>
                 </div>
                 <div class="content">
                      <div class="game-link" onclick="$.overview('${message.data._id}', '${message.data.game}')">
-                        <div>${message.data.game.capitalize()}: #${message.data.id}</div>
-                        <div>${$.lang('general.bets.bet')}: ${bitcoin(message.data.wager, 'btc').to($.unit()).value().toFixed($.unit() === 'satoshi' ? 0 : 8)} <i class="${window.Laravel.currency[message.data.currency].icon}" style="color: ${window.Laravel.currency[message.data.currency].style}"></i></div>
-                        <div>${$.lang('general.bets.win')}: ${message.data.multiplier.toFixed(2)}x</div>
+                        <div><b>Game</b>: ${message.data.game.capitalize()} <span style="opacity: 0.8;">(#${message.data.id})</span></div>
+                        <div>${$.lang('general.bets.bet')}: ${bitcoin(message.data.wager, 'btc').to($.unit()).value().toFixed($.unit() === 'satoshi' ? 0 : 8)} <img src="/img/currency/svg/${message.data.currency}.svg" style="width: 11px; height: 12px"> (${'$' + bitcoin(message.data.wager * $.getPriceCurrencyByCrypto(message.data.currency), 'btc').to($.unit()).value().toFixed(2)})</div>
+                        <div>${$.lang('general.bets.multiplier')}: ${message.data.multiplier.toFixed(2)}x</div>
+
+                        <div class="btn btn-primary-small-dark p-1 m-1 mt-3 d-none d-md-block" style="min-width: 100% !important;">View Game Details</div>
                     </div>
                 </div>
             </div>
@@ -265,6 +274,7 @@ $.sendChatMessage = function(selector) {
     }).then(function() {}, function(error) {
         if(error === 1) $.error($.lang('chat.error.length'));
         if(error === 2) $.error($.lang('chat.error.muted'));
+        if(error === 3) $.error($.lang('chat.error.new'));
     });
     $('[data-user-tag]').fadeOut('fast');
     sentNotify = false;

@@ -51,9 +51,8 @@ use Carbon\Carbon;
 
 
 
-      <button onclick="toggleClass()" title="Return to Home" class="btn btn-primary-small-dark btn-rounded p-1 m-2" style="min-width: 45px; font-size: 13px;"><i class="fas fa-home"></i></button>
+      <button onclick="redirect('/poker/')" title="Return to Home" class="btn btn-primary-small-dark btn-rounded p-1 m-2" style="min-width: 45px; font-size: 13px;"><i class="fas fa-home"></i></button>
       <button id="fullscreeniframe" title="Play Full Screen" class="btn btn-primary-small-dark btn-rounded p-1 m-2 ripple-surface" style="min-width: 45px; font-size: 13px;"><i class="fas fa-expand"></i></button>
-      <button onclick="toggleClass()" title="Toggle Width" class="btn btn-primary-small-dark btn-rounded p-1 m-2 ripple-surface" style="min-width: 45px; font-size: 12px;"><i class="far fa-rectangle-wide"></i></button>
     </div>
 </div>
 

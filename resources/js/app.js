@@ -365,6 +365,9 @@ $.overview = function(game_id, api_id) {
         $.whisper('Info', { game_id: game_id }).then(function(response) {
             $.loadScripts([`/js/pages/${api_id}.js`], function() {
                 $.loadCSS([`/css/pages/${api_id}.css`], function() {
+                    $('.server_seed_target').hide();
+                    $('.client_seed_target').hide();
+                    $('.nonce_target').hide();
                                     if(api_id == "slotmachine") {
                     $('.overview .heading').html(`<strong>${response.info.nonce}</strong> #${response.info.id}`);
                                    } else {
@@ -375,13 +378,16 @@ $.overview = function(game_id, api_id) {
                     $('.server_seed_target').text(response.info.server_seed).attr('href', `/fairness?verify=${response.info.game}-${response.info.server_seed}-${response.info.client_seed}-${response.info.nonce}`);
                     $('.client_seed_target').text(response.info.client_seed).attr('href', `/fairness?verify=${response.info.game}-${response.info.server_seed}-${response.info.client_seed}-${response.info.nonce}`);
                     $('.nonce_target').text(response.info.nonce).attr('href', `/fairness?verify=${response.info.game}-${response.info.server_seed}-${response.info.client_seed}-${response.info.nonce}`);
+                    $('.server_seed_target').show();
+                    $('.client_seed_target').show();
+                    $('.nonce_target').show();
                     }
                     if(response.user.private_bets !== true) $('.overview-player a').attr('href', '/user/'+response.info.user).html(response.user.name);
                     else $('.overview-player a').attr('href', 'javascript:void(0)').html($.lang('general.bets.hidden_name'));
 
-                    $('.overview-bet .option:nth-child(1) span').html(`<img src="/img/currency/svg/${window.Laravel.currency[response.info.currency].icon}.svg" style="width: 16px; height: 16px;"> ${$.getCookie('unit') == 'disabled' ? bitcoin(response.info.wager, 'btc').to($.unit()).value().toFixed(8) : ('$' + bitcoin(response.info.wager * $.getPriceCurrencyByCrypto(response.info.currency), 'btc').to($.unit()).value().toFixed(2))}`);
+                    $('.overview-bet .option:nth-child(1) span').html(`${$.getCookie('unit') == 'disabled' ? bitcoin(response.info.wager, 'btc').to($.unit()).value().toFixed(8) : ('$' + bitcoin(response.info.wager * $.getPriceCurrencyByCrypto(response.info.currency), 'btc').to($.unit()).value().toFixed(2))} <img src="/img/currency/svg/${window.Laravel.currency[response.info.currency].icon}.svg" style="width: 12px; height: 12px;">`);
                     $('.overview-bet .option:nth-child(2) span').html(`${response.info.status === 'lose' ? (0).toFixed(2) : response.info.multiplier.toFixed(2)}x`);
-                    $('.overview-bet .option:nth-child(3) span').html(`<img src="/img/currency/svg/${window.Laravel.currency[response.info.currency].icon}.svg" style="width: 16px; height: 16px;"> ${$.getCookie('unit') == 'disabled' ? bitcoin(response.info.profit, 'btc').to($.unit()).value().toFixed(8) : ('$' + bitcoin(response.info.profit * $.getPriceCurrencyByCrypto(response.info.currency), 'btc').to($.unit()).value().toFixed(2))}`);
+                    $('.overview-bet .option:nth-child(3) span').html(`${$.getCookie('unit') == 'disabled' ? bitcoin(response.info.profit, 'btc').to($.unit()).value().toFixed(8) : ('$' + bitcoin(response.info.profit * $.getPriceCurrencyByCrypto(response.info.currency), 'btc').to($.unit()).value().toFixed(2))} <img src="/img/currency/svg/${window.Laravel.currency[response.info.currency].icon}.svg" style="width: 12px; height: 12px;">`);
 
                     const share_url = `${window.location.origin}?game=${response.info.game}-${response.info._id}`;
                     $('[data-share="link"]').attr('data-link', share_url);
@@ -574,18 +580,30 @@ $(document).ready(function() {
     window.Echo.channel(`laravel_database_Everyone`)
         .listen('ChatMessage', (e) => $.addChatMessage(e.message))
             .listen('UserNotification', function(e) {
-                $.playSound('/sounds/toast1.mp3');
-                $.toastmessage(e.message);
-                $('#searchoverlay_result').html('');
+                $('#toastbar').html('');
                 $('#toastbar').html(e.message).fadeIn(300);
+                $.toastmessage(e.message);
+                $.playSound('/sounds/toast1.mp3');
+            })
+            .listen('BigwinNotification', function(e) {
+                $('#toastbar').html('');
+                $('#toastbar').html(e.message).fadeIn(300);
+                $.toastmessage(e.message);
+                $.playSound('/sounds/toastbigwin.mp3');
             })
             .listen('PromoNotification', function(e) {
-                $.playSound('/sounds/open.mp3');
-                $.discordmsg(e.message);
+                $.playSound('/sounds/toast1.mp3');
+                $.toastmessage(e.message);
+            })
+            .listen('NewVIPNotification', function(e) {
+                $('#toastbar').html('');
+                $('#toastbar').html(e.message).fadeIn(300);
+                $.newvip(e.message);
+                $.playSound('/sounds/cheer1.mp3');
             })
             .listen('QuizNotification', function(e) {
                 $.playSound('/sounds/open.mp3');
-                $.triviamsg(e.message);
+                $.toastmessage(e.message);
             })
         .listen('NewQuiz', function(e) {
             $.addChatMessage({
@@ -634,12 +652,12 @@ $(document).ready(function() {
         window.Echo.channel(`laravel_database_private-App.User.${$.userId()}`)
             .listen('Deposit', function(e) {
                 $.success($.lang('general.notifications.deposit', { sum: bitcoin(e.amount, 'btc').to($.unit()).value().toFixed(8), currency: e.currency }));
-                $.playSound('/sounds/ball4.mp3');
+                $.playSound('/sounds/toast1.mp3');
             })
             .listen('DepositCredited', function(e) {
                 $.success($.lang('general.notifications.depositcredited', { sum: bitcoin(e.amount, 'btc').to($.unit()).value().toFixed(8), currency: e.currency }));
                 Intercom('trackEvent', 'deposited');
-                $.playSound('/sounds/guessed.mp3');
+                $.playSound('/sounds/toastbigwin.mp3');
             })     
             .listen('WithdrawSent', function(e) {
                 $.success($.lang('general.notifications.withdrawsent', { sum: bitcoin(e.amount, 'btc').to($.unit()).value().toFixed(2), currency: e.currency }));
@@ -649,7 +667,7 @@ $(document).ready(function() {
                 $.success($.lang('general.notifications.bonuscredited', { sum: bitcoin(e.amount, 'btc').to($.unit()).value().toFixed(8), currency: e.currency }));
                 Intercom('trackEvent', 'deposited');
                 $.setCurrency('bonus');
-                $.playSound('/sounds/guessed.mp3');
+                $.playSound('/sounds/toastbigwin.mp3');
                 window.location.href = '/bonus';
             })  
             .listen('BalanceModification', function(e) {

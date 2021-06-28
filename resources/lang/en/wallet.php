@@ -35,9 +35,10 @@ return [
         'fee' => 'You need to have :fee <i class=":icon"></i> left on your account to cover the transaction fee.'
     ],
     'history' => [
-        'empty' => 'You haven’t ordered anything yet.',
+        'empty' => 'Nothing to show.',
         'name' => 'Currency',
         'sum' => 'Amount',
+        'ledger' => 'Ledger',
         'date' => 'Date',
         'status' => 'Status',
         'confirmations' => 'Confirmations',
@@ -45,7 +46,7 @@ return [
         'paid' => 'Successful',
         'wallet' => 'Address: :wallet',
         'cancel' => 'Cancel',
-        'withdraw_cancelled' => 'Payment has been cancelled.',
+        'withdraw_cancelled' => 'Cancelled.',
         'withdraw_status' => [
             'moderation' => 'Pending',
             'accepted' => 'Successful',
@@ -55,8 +56,8 @@ return [
         ]
     ],
     'copy' => 'Copy',
-    'fast' => 'Automatic instant deposit & instant withdrawals.',
-    'troubles' => 'Contact our live support if you have any questions.',
+    'fast' => 'Istant deposit & instant withdrawals.',
+    'troubles' => 'Contact support if you have any questions.',
 
     'copied' => 'Copied!'
 ];

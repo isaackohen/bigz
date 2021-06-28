@@ -104,7 +104,7 @@
                 <div class="menu" style="z-index: 99999; left: 0; margin: 0 auto; top: 2px; text-align: center;">
                     <div class="dropdown-top-menu">
                         
-                        <a href="/" data-page-trigger="'/'" data-toggle-class="active">Games</a>
+                        <a href="/" data-page-trigger="'/'" data-toggle-class="active"><i class="fad fa-lemon" style="margin-bottom:  1px; font-size: 10px !important";></i> Casino</a>
                         <div class="dropdown-top-menu-content">
                             <div class="menu-divider">
                                 <div class="row">
@@ -226,9 +226,9 @@
                                 <hr>
                             </div>
                         </div>
-                        <a href="/poker" data-page-trigger="'/poker'" data-toggle-class="active">Poker</a>
-                        <a href="/live" data-page-trigger="'/live'" data-toggle-class="active">Live</a>
-                        <a onclick="redirect('/bonus/')" data-page-trigger="'/bonus'" data-toggle-class="active">Bonus</a>
+                        <a href="/poker" data-page-trigger="'/poker'" data-toggle-class="active"><i class="fad fa-club" style="margin-bottom: 1px; font-size: 10px !important; margin-right: 5px !important;"></i>Poker</a>
+                        <a href="/live" data-page-trigger="'/live'" data-toggle-class="active"><i class="fad fa-tv-alt" style="margin-bottom: 1px; font-size: 10px !important; margin-right: 5px !important;"></i> Live</a>
+                        <a onclick="redirect('/bonus/')" data-page-trigger="'/bonus'" data-toggle-class="active"><i class="fad fa-gift-card" style="font-size: 9px !important;"></i> Bonus</a>
                     </div>
                     <div class="wallet" style="margin-left: 25px;">
                         <div class="wallet-switcher">
@@ -306,10 +306,13 @@
                             <a class="dropdown-item" onclick="$.vip()">VIP Progress</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" onclick="">Settings</a>
+                            <a class="dropdown-item" onclick="redirect('/user/{{ auth()->user()->id }}#settings')">Settings</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" onclick=" $.userinfo(auth()->user()->id())">Profile</a>
+                            <a class="dropdown-item" onclick="redirect('/user/{{ auth()->user()->id }}#profile')">Profile</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" onclick="redirect('/user/{{ auth()->user()->id }}#profile')">Support</a>
                         </li>
                         <li>
                             <a class="dropdown-item" onclick="$.request('/auth/logout', [], 'get').then(function() { window.location.reload(); });">Logout</a>
@@ -361,9 +364,72 @@
                 <div class="live_table_container"></div>
             </div>
         </div>
-        <footer class="text-center text-white">
+        <footer class="text-center text-white  d-none d-sm-block">
+            <section class="">
+  <footer class="text-white text-center text-md-start" style="background: #11191d; background-color: #11191d;">
+    <!-- Grid container -->
+    <div class="container p-4">
+      <!--Grid row-->
+      <div class="row">
+        <!--Grid column-->
+        <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+          <h5 class="text-uppercase"><i class="fak fa-bigz-letter" aria-hidden="true"></i> BIGZ.IO</h5>
+
+          <p style="opacity: 0.75">
+            BIGZ.io Casino is your source for the best casino action with unrivaled promotions and secure deposits. We take pride in our great direct live support and social interaction with BIGZ.io players. Payouts are instant credited to your wallet. BIGZ.io is operated by TGP Europe Ltd at 22A Castle Street, Douglas, Isle of Man, IM1 2EZ. 
+          </p>
+          <p style="opacity: 0.75">Play responsible. Gambling can be addictive.</p>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase mb-0">BIGZ</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="/bonus/" class="text-white">Promotions</a>
+            </li>
+            <li>
+              <a href="/live/" class="text-white">Live Casino</a>
+            </li>
+            <li>
+              <a href="/poker/" class="text-white">Poker</a>
+            </li>
+            <li>
+              <a href="/poker/" class="text-white">Provably Fair</a>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase mb-0">Contact</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-white">Live-Chat</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">E-mail</a>
+            </li>
+            <li>
+              <a href="{{ \App\Settings::where('name', 'twitter_link')->first()->value }}" class="text-white">Telegram</a>
+            </li>
+            <li>
+              <a href="{{ \App\Settings::where('name', 'telegram_link')->first()->value }}" class="text-white">Twitter</a>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </div>
+  </footer>
+</section>
         </footer>
-        <div class="navbar-bottom">
+        <div class="navbar-bottom d-none d-sm-block">
             <div class="headermiddle"><div class="bigz-icon" style="margin-right: 1px; padding: 2px 2px; height: 20px; width: 20px;"></div></div>
            <span class="navbar-bottom-icon"><i class="fad fa-megaphone"></i></span>  <span class="navbar-bottom-toastbar" id="toastbar">{{ \App\Settings::where('name', 'toast_message')->first()->value }}</span>
         </div>
@@ -601,3 +667,26 @@
 </body>
 </html>
 
+            @if(!auth()->guest())
+
+
+    <?php
+    $deposits = (\App\Invoice::where('user', auth()->user()->_id)->where('status', 1)->where('ledger', '!=','Offerwall Credit')->count());
+    $registercount = (\App\User::where('register_multiaccount_hash', auth()->user()->register_multiaccount_hash)->count());
+    $logincount = (\App\User::where('login_multiaccount_hash', auth()->user()->login_multiaccount_hash)->count());
+    $registeripcount = (\App\User::where('register_ip', auth()->user()->register_ip)->count());
+    $loginipcount = (\App\User::where('login_ip', auth()->user()->login_ip)->count());
+    ?>
+
+<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="f21aff7c-4109-4ccb-8b4f-1ff1556bd897";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
+</script>
+
+
+            <script>
+                            $crisp.push(["set", "user:nickname", ["{{ auth()->user()->name }}"]])
+                            $crisp.push(["set", "user:email", ["{{ auth()->user()->email }}"]])
+Code: $crisp.push(["set", "session:data", [[["uid", "{{ auth()->user()->id }}" ], ["vipLevel", "{{ auth()->user()->vipLevel() }}"], ["deposits", "{{ $deposits }}"],   ["freespins", "{{ auth()->user()->freegames }}"], ["created", "{{ auth()->user()->created_at }}"], ["register_ip", "{{ auth()->user()->register_ip }}"], ["login_ip", "{{ auth()->user()->login_ip }}"], ["accounts_loginhash", "{{ $logincount }}"], ["accounts_registerhash", "{{ $registercount }}"], ["accounts_registerip", "{{ $registeripcount }}"], ["accounts_loginip", "{{ $loginipcount }}"],  ]]])
+
+</script>
+
+@endif

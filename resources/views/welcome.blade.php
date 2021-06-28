@@ -54,14 +54,6 @@
 </div>   
               @if(!auth()->guest())
 
-    <div class="empty-between mt-5 mb-5"></div>
-
-    <div class="divider">
-                <div class="line-small-left"></div>
-                <div class="divider-title-left"><i class="fas fa-club"></i> Recommended for you</div>
-                <div class="line-small-left"></div>
-    </div>
-    <div class="container-flex owl-carousel casinogames" style="z-index: 1;">
         @php
         $user = auth()->user()->id;
         $recent = \App\RecentSlots::where('player', $user)->get();
@@ -73,6 +65,17 @@
         Log::notice($recentcount); 
 
         @endphp
+                @if($recentcount > 0)
+    <div class="empty-between mt-5 mb-5"></div>
+
+    <div class="divider">
+                <div class="line-small-left"></div>
+                <div class="divider-title-left"><i class="fas fa-club"></i> Recommended for you</div>
+                <div class="line-small-left"></div>
+    </div>
+                @endif
+    <div class="container-flex owl-carousel casinogames" style="z-index: 1;">
+
 
         @if($recentcount > 0)
 

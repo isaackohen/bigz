@@ -45,7 +45,7 @@ border-radius: 1px;
     <div class="divider">
                 <div class="line-small-left mb-3"></div>
                                     @if(!auth()->guest())
-                <div class="divider-title-left mb-3"><div class="btn btn-primary-small" onclick="redirect('/pokerclient/')"><i class="fak fa-bigz-letter"></i>  Play Poker</div> </div>
+                <div class="divider-title-left mb-3"><div class="btn btn-primary-small" onclick="redirect('/play/poker/')"><i class="fak fa-bigz-letter"></i>  Play Poker</div> </div>
                                     @else
                 <div class="divider-title-left mb-3"><div class="btn btn-primary-small" onclick="$.auth()"><i class="fak fa-bigz-letter"></i>  Signup</div> </div>
                                     @endif
@@ -62,7 +62,7 @@ border-radius: 1px;
                 </div>
                 <div class="desc">
                         <div class="btn btn-outlined-small mb-1">Poker Balance: {{ auth()->user()->pokerbalance() }}$</div>
-                        <div class="btn btn-outlined-small mb-1">Poker Webclient</div>
+                        <div class="btn btn-outlined-small mb-1" onclick="redirect('/play/poker/')">Poker Webclient</div>
                 </div>
             </div>
         </div>
@@ -88,9 +88,12 @@ border-radius: 1px;
                 <div class="icon">
                     <i class="fas fa-inbox-in"></i>
                 </div>
+                @php
+                        $currency = auth()->user()->clientCurrency();
+                @endphp
                 <div class="desc">
-                    <div class="btn balance-icon" style="background: transparent !important;"><span style="color: #fff !important; margin-left: 9px;">Select Currency</span></div>
-                    <div><input id="depositinput" class="input-transfer depositinput mt-1 mb-1" placeholder="Enter Amount"></div>
+                    <div class="btn balance-icon" style="background: transparent !important;"><span style="color: #fff !important; margin-left: 9px;"><img class="" width="15px" height="15px" src="/img/currency/svg/{{ $currency->id() }}.svg"> Select Currency</span></div>
+                    <div><input id="depositinput" class="input-transfer depositinput mt-1 mb-1" placeholder="Enter Deposit Amount in USD"></div>
                     <div class="btn btn-outlined-small mt-1 depositwallet">Deposit to Poker Balance</div>
                 </div>
             </div>

@@ -32,7 +32,25 @@ $.on('/bonus', function() {
                 $('.modal-ui-block').fadeOut('fast', () => $(this).html(''));
             });
         });
-        
+
+        $('#faucetrequest').on('click', function() {
+            const captcha = $('.g-recaptcha-response').val();
+                $.request('promocode/bonus', {
+                'captcha': captcha
+                }).then(function() {
+                $.success($.lang('bonus.offers.addedfaucet'));
+                
+            }, function(error) { 
+                if(error === 1) $.error($.lang('bonus.offers.timerwait'));
+                if(error === 2) $.error($.lang('bonus.offers.balancetoobig'));
+                if(error === 3) $.error($.lang('bonus.offers.invalid'));
+                if(error === 4) $.error($.lang('bonus.offers.verifycaptcha'));
+                if(error === 5) $.error($.lang('bonus.offers.tglinked'));
+            });
+        }); 
+
+
+
     $('.bo1').on('click', function() {
             $.request('offers/bonus1').then(function() {
                 $.success($.lang('bonus.offers.bonus1started'));
@@ -52,8 +70,8 @@ $.on('/bonus', function() {
             });
         });
 
-    $('.bo1-forfeit').on('click', function() {
-            $.request('offers/bonus1forfeit').then(function() {
+ $('#bo1-forfeit').on('click', function() {
+             $.request('offers/bonus1forfeit').then(function() {
                 $.success($.lang('bonus.offers.bonus1forfeit'));
             }, function(error) {
                 if(error === 1) $.error($.lang('bonus.offers.invalid'));

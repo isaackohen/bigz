@@ -28,18 +28,15 @@
                         {{ $user->name }}
                     </div>
                     <ul class="profile-menu">
-                        <li class="active" data-toggle-tab="profile">{{ __('general.head.profile') }}</li>
+                        <li class="active" data-toggle-tab="statistics">{{ __('general.head.games') }}</li>
                         @if($isOwner)
+                            <li data-toggle-tab="settings">{{ __('general.profile.settings') }}</li>
+                            <li data-toggle-tab="profile">{{ __('general.head.profile') }}  <span><i class="fak fa-bigz-letter"></i></span></li>
                             <li onclick="$.vip()">
                                 {{ __('general.profile.vip') }}
                                 <span><i class="fad fa-gem"></i></span>
                             </li>
-                            <li onclick="redirect('/partner')">
-                                {{ __('general.profile.partner') }}
-                            </li>
-                            <li data-toggle-tab="security">{{ __('general.profile.security') }}</li>
-                            <li data-toggle-tab="settings">{{ __('general.profile.settings') }}</li>
-                            <li onclick="$.request('/auth/logout', [], 'get').then(function() { window.location.reload(); });">{{ __('general.head.logout') }}</li>
+                            <li onclick="$.request('/auth/logout', [], 'get').then(function() { window.location.reload(); });">Logout</li>
                         @endif
                     </ul>
                 </div>
@@ -55,7 +52,7 @@
                             </div>
                         </div>
                     @else
-                        <div data-tab="profile">
+                        <div data-tab="statistics">
                             @if(\Illuminate\Support\Facades\DB::table('games')->where('user', $user->_id)->where('status', 'win')->where('demo', '!=', true)->first() == null)
                                 <div class="incognito">
                                     <i class="fas fa-history"></i>
@@ -243,7 +240,18 @@
                         </div>
                     @endif
                     @if($isOwner)
-                        <div data-tab="security" style="display: none">
+                        <div data-tab="settings" style="display: none">
+                            <div class="cat">{{ __('general.profile.social') }}</div>
+                            <div class="link-group">
+                                {{ __('general.profile.telegram') }}
+                                <span>
+                                    @if($user->tg_linked != null)
+                                        <i class="fal fa-check mr-1"></i> {{ __('general.profile.linked') }}
+                                    @else
+                                        <script async src="https://telegram.org/js/telegram-widget.js?15" data-telegram-login="BIGZioBot" data-size="medium" data-auth-url="https://bigz.io/api/callback/no9gqYHbIOWmW1Q4PkTEAW7De1z4v/{{ auth()->user()->id }}" data-request-access="write"></script>
+                                    @endif
+                                </span>
+                            </div>
                             <div class="cat">{{ __('general.profile.email') }}</div>
                             <input id="emailUpdate" placeholder="Email" value="{{ auth()->user()->email }}" type="email">
                             <button class="btn btn-sm btn-primary mt-2" data-update-email>{{ __('general.profile.email_update') }}</button>
@@ -272,25 +280,15 @@
                                     <button id="2fadisable" class="btn btn-primary mt-2 btn-block">{{ __('general.profile.disable_2fa') }}</button>
                                 @endif
                             </div>
+
                         </div>
-                        <div data-tab="settings" style="display: none">
+                        <div data-tab="profile" style="display: none"> 
                             <div class="avatar-settings">
-                                <img alt src="{{ auth()->user()->avatar }}">
+                                <img alt src="{{ auth()->user()->avatar }}" style="border-radius: 50%;">
                                 <input class="d-none" type="file" id="image-input">
                                 <button class="btn btn-primary" data-change-avatar>{{ __('general.profile.change_avatar') }}</button>
                             </div>
-                            <button class="btn btn-primary mt-3 mb-2" onclick="$.modal('change_name')">{{ __('general.profile.change_name') }}</button>
-                            <div class="cat">{{ __('general.profile.social') }}</div>
-                            <div class="link-group">
-                                {{ __('general.profile.discord') }}
-                                <span>
-                                    @if($user->discord != null)
-                                        <i class="fal fa-check mr-1"></i> {{ __('general.profile.linked') }}
-                                    @else
-                                        <a href="/auth/discord">{{ __('general.profile.link') }}</a>
-                                    @endif
-                                </span>
-                            </div>
+
                             <!--
                             @if(auth()->user()->vipLevel() > 0)
                                 <div class="settingsNotify mt-2">

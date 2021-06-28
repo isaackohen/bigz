@@ -29,7 +29,13 @@ return [
         'bonnus1completed' => 'Deposit offer completed and converted to your currency.',
         'bonus1forfeit' => 'Forfeited bonus offer.',
         'oneactive' => 'You can only have one bonus active at a time.',
-        'lowviplevel' => 'Your Loyalty level is too low.',
+        'timerwait' => 'Please wait before using faucet again.',
+        'balancetoobig' => 'Your current balance is too large to be using faucet.',
+        'verifycaptcha' => 'Please fill out captcha before using faucet.',
+        'tglinked' => 'Link your Telegram or get to first VIP level to unlock Faucet Feature.',
+        'lowviplevel' => 'Your VIP level is too low.',
+        'addedfaucet' => 'Faucet added to your bitcoin balance.',
+
         'invalid' => 'You are not eligible.'
     ],
 

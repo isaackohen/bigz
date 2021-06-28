@@ -4,6 +4,7 @@
     <div class="container-fluid">
 
           <iframe src="<?php echo $url; ?>" border="0"></iframe>
+      <button onclick="redirect('/')" title="Return to Home" class="btn btn-primary-small-dark btn-rounded p-1 m-2" style="min-width: 65px; font-size: 15px;"><i class="fas fa-home"></i></button>
 
     </div>
 
@@ -25,13 +26,26 @@ header {
   display: none !important;
 }
 
+.chat .fixed {
+  height:  100% !important;
+  top:  0px !important;
+}
+
+footer {
+  display:  none !important;
+}
+
+.live {
+  display:  none !important;
+}
+ 
 .wallet {
   display: none !important;
 }
 
 iframe { 
   width : 100%;
-  height : 85vh;
+  height : 95vh;
 }
 body {
     text-shadow: 0 0 black !important;

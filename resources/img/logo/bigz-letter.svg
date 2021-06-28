@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 778 705" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>.cls-1{fill:#fff;}.cls-2{fill:#bbbdbf;}.cls-3{fill:#80ce21;}.cls-4{fill:#94fc16;}</style>
+  </defs>
+  <polygon class="cls-3" points="185 314 166 377 0 209 559 55 401 439 778 314 300 705 224 490 401 207 185 314"/>
+  <polygon class="cls-4" points="5 208 139 246 484 114 559 55 5 208"/>
+  <path class="cls-4" d="M 491 101 L 401 202 L 224 490 L 316 553 C 374.333 402.333 432.667 251.667 491 101 Z"/>
+  <path class="cls-4" d="M 316 553 L 778 314 L 401 439 Z"/>
+</svg>

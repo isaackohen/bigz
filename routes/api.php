@@ -149,7 +149,7 @@ Route::post('chatHistory', function() {
         ]);
     return success($history);
 });
-
+/*
 Route::get('callback/KcxVGsn', function(Request $request) {
             Log::notice(json_encode($request->all()));
             $balancetype = \App\Settings::where('name', 'offerwall_balancetype')->first()->value;
@@ -168,7 +168,7 @@ Route::get('callback/KcxVGsn', function(Request $request) {
             return response('1', 200)
                 ->header('Content-Type', 'text/plain'); 
 });
-
+*/
     Route::post('callback/nowpayments', function(Request $request) {
          Log::critical(json_encode($request->all()));
 
@@ -176,6 +176,7 @@ Route::get('callback/KcxVGsn', function(Request $request) {
             return response('Ok', 200)  
                 ->header('Content-Type', 'text/plain'); 
         } 
+
 
        if($request->payment_status == 'confirming') {  
         $invoice = Invoice::where('hash', $request->get('order_description'))    
@@ -212,6 +213,13 @@ Route::get('callback/KcxVGsn', function(Request $request) {
                 $currency = $invoice->currency;
         $user->update(['wallet_'.$currency => null]);
 
+        if($user->firstdepo == null && $user->tg_linked != null) {
+        $user->update(['freegames' => $user->freegames + 10]);
+        $user->update(['firstdepo' => 1]);
+        }
+
+
+
         if($user->bonus1 == '1') {
             $currency = $invoice->currency;
             $rawdeposit = $request->get('outcome_amount');
@@ -229,6 +237,7 @@ Route::get('callback/KcxVGsn', function(Request $request) {
                 $base = $rawdeposit * \App\Http\Controllers\Api\WalletController::rateDollarUsdc();
             } elseif ($currency == 'matic') {
                 $base = $rawdeposit * \App\Http\Controllers\Api\WalletController::rateDollarMatic();
+
             } elseif ($currency == 'trx') {
                 $base = $rawdeposit * \App\Http\Controllers\Api\WalletController::rateDollarTron();
             } elseif ($currency == 'ltc') {
@@ -383,8 +392,8 @@ Route::middleware('auth')->prefix('wallet')->group(function() {
             'hash' => $hash,
         ]);      
         //$apikey = $currency->option('apikey');
-        $apikey = 'V68WSXK-8GQMEJG-GQFEYHR-HT02EYS';
-        $ipn = 'https://loff.io/api/callback/nowpayments';
+        $apikey = '6H8P34D-Q624VCH-NX8FXYH-TV62C69';
+        $ipn = 'https://bigz.io/api/callback/nowpayments';
         //$ipn = $currency->option('ipn');
         $price_amount = round($mindepositusd + 3, 3); //(usd, eur)
         $price_currency = 'usd'; //(usd, eur)
@@ -529,7 +538,7 @@ Log::notice($currency->nowpayments());
 Log::notice($request->sum);
 $usercurrenccy = $currency->nowpayments();
 $sumformat = number_format(floatval($request->sum), 6, '.', '');
-$ipnwithdr = 'https://bitsarcade.com/api/callback/nowpayments/withdrawals';
+$ipnwithdr = 'https://bigz.io/api/callback/nowpayments/withdrawals';
 try {
 $curl = curl_init();
 curl_setopt_array($curl, array(
@@ -1131,15 +1140,15 @@ Route::middleware('auth')->prefix('promocode')->group(function() {
         $validate = Validator::make($request->all(), [
         'captcha' => 'required|captcha'
         ]); 
-        $currency = Currency::find("eth");
+        $currency = Currency::find("btc");
         $faucetdollar = \App\Settings::where('name', 'faucet_dollar')->first()->value;
-        $faucetamount = number_format(($faucetdollar / \App\Http\Controllers\Api\WalletController::rateDollarEth()), 7, '.', '');
+        $faucetamount = number_format(($faucetdollar / \App\Http\Controllers\Api\WalletController::rateDollarBtc()), 7, '.', '');
         $faucetvipemerald = \App\Settings::where('name', 'faucet_vipemerald')->first()->value;
-        $faucetamountemerald = number_format(($faucetvipemerald / \App\Http\Controllers\Api\WalletController::rateDollarEth()), 7, '.', '');
+        $faucetamountemerald = number_format(($faucetvipemerald / \App\Http\Controllers\Api\WalletController::rateDollarBtc()), 7, '.', '');
         $faucetvipruby = \App\Settings::where('name', 'faucet_vipruby')->first()->value;
-        $faucetviprubyamount = number_format(($faucetvipruby / \App\Http\Controllers\Api\WalletController::rateDollarEth()), 7, '.', '');
+        $faucetviprubyamount = number_format(($faucetvipruby / \App\Http\Controllers\Api\WalletController::rateDollarBtc()), 7, '.', '');
         $faucetvipgoldplus = \App\Settings::where('name', 'faucet_vipgoldandabove')->first()->value;
-        $faucetvipgoldplusamount = number_format(($faucetvipgoldplus / \App\Http\Controllers\Api\WalletController::rateDollarEth()), 7, '.', '');
+        $faucetvipgoldplusamount = number_format(($faucetvipgoldplus / \App\Http\Controllers\Api\WalletController::rateDollarBtc()), 7, '.', '');
         $faucetmaxmultiplier = \App\Settings::where('name', 'faucetmaxmultiplier')->first()->value;
         $faucetmaxbalance = number_format(($faucetmaxmultiplier * $faucetviprubyamount), 7, '.', '');
         $user = auth()->user();
@@ -1150,8 +1159,8 @@ Route::middleware('auth')->prefix('promocode')->group(function() {
 
         if($validate->fails()) return reject(4, 'Please verify that you are not a robot');
         if(auth()->user()->bonus_claim != null && !auth()->user()->bonus_claim->isPast()) return reject(1, 'Please wait before trying again');
-        //if(auth()->user()->clientCurrency()->id() != 'doge') return reject(2, 'Balance is greater than zero'); 
-        if(auth()->user()->balance($currency)->get() > floatval($faucetmaxbalance)) return reject(2, 'Your ETH balance is too big'); 
+        if($user->tg_linked == null) return reject(5, 'Link your Telegram or get to first VIP level to unlock Faucet Feature.');
+        if(auth()->user()->balance($currency)->get() > floatval($faucetmaxbalance)) return reject(2, 'Your BTC balance is too big'); 
 
         if(count($same_login_hash) > 35) return reject(3, 'Expired (usages)');
         if(count($same_register_hash) > 35) return reject(3, 'Expired (usages)');
@@ -1182,12 +1191,12 @@ Route::middleware('auth')->prefix('promocode')->group(function() {
         $slice = mt_rand(0, count($slices) - 1);
         auth()->user()->balance($currency)->add($slices[$slice], \App\Transaction::builder()->message('Faucet')->get());
         auth()->user()->update([
-            'bonus_claim' => \Carbon\Carbon::now()->addMinutes(720)
+            'bonus_claim' => \Carbon\Carbon::now()->addMinutes(360)
         ]);
 
         return success([
             'slice' => $slice,
-            'next' => \Carbon\Carbon::now()->addMinutes(720)->timestamp
+            'next' => \Carbon\Carbon::now()->addMinutes(360)->timestamp
         ]);
         }
 
@@ -1212,12 +1221,12 @@ Route::middleware('auth')->prefix('promocode')->group(function() {
         $slice = mt_rand(0, count($slices) - 1);
         auth()->user()->balance($currency)->add($slices[$slice], \App\Transaction::builder()->message('Faucet')->get());
         auth()->user()->update([
-            'bonus_claim' => \Carbon\Carbon::now()->addMinutes(720)
+            'bonus_claim' => \Carbon\Carbon::now()->addMinutes(360)
         ]);
 
         return success([
             'slice' => $slice,
-            'next' => \Carbon\Carbon::now()->addMinutes(720)->timestamp
+            'next' => \Carbon\Carbon::now()->addMinutes(360)->timestamp
         ]);
         }
 
@@ -1242,16 +1251,16 @@ Route::middleware('auth')->prefix('promocode')->group(function() {
         $slice = mt_rand(0, count($slices) - 1);
         auth()->user()->balance($currency)->add($slices[$slice], \App\Transaction::builder()->message('Faucet')->get());
         auth()->user()->update([
-            'bonus_claim' => \Carbon\Carbon::now()->addMinutes(720)
+            'bonus_claim' => \Carbon\Carbon::now()->addMinutes(360)
         ]);
 
         return success([
             'slice' => $slice,
-            'next' => \Carbon\Carbon::now()->addMinutes(720)->timestamp
+            'next' => \Carbon\Carbon::now()->addMinutes(360)->timestamp
         ]);
         }
 
-        if(auth()->user()->vipLevel() > 2) {
+        if(auth()->user()->vipLevel() == 3) {
         $v = floatval($faucetvipgoldplusamount);
         $slices = [
             $v,
@@ -1272,23 +1281,54 @@ Route::middleware('auth')->prefix('promocode')->group(function() {
         $slice = mt_rand(0, count($slices) - 1);
         auth()->user()->balance($currency)->add($slices[$slice], \App\Transaction::builder()->message('Faucet')->get());
         auth()->user()->update([
-            'bonus_claim' => \Carbon\Carbon::now()->addMinutes(720)
+            'bonus_claim' => \Carbon\Carbon::now()->addMinutes(360)
         ]);
 
         return success([
             'slice' => $slice,
-            'next' => \Carbon\Carbon::now()->addMinutes(720)->timestamp
+            'next' => \Carbon\Carbon::now()->addMinutes(360)->timestamp
         ]);
         }
+
+if(auth()->user()->vipLevel() > 3) {
+        $v = floatval($faucetvipgoldplusamount);
+        $slices = [
+            $v,
+            $v * 1.20,
+            $v * 1.40,
+            $v * 1.20,
+            $v * 1.15,
+            $v,
+            $v * 2.50,
+            $v,
+            $v * 1.25,
+            $v * 1.5,
+            $v * 1.25,
+            $v * 1.7,
+            $v,
+            $v * 2.50
+        ];
+        $slice = mt_rand(0, count($slices) - 1);
+        auth()->user()->balance($currency)->add($slices[$slice], \App\Transaction::builder()->message('Faucet')->get());
+        auth()->user()->update([
+            'bonus_claim' => \Carbon\Carbon::now()->addMinutes(60)
+        ]);
+
+        return success([
+            'slice' => $slice,
+            'next' => \Carbon\Carbon::now()->addMinutes(60)->timestamp
+        ]);
+        }
+
 
 
     });
 
     Route::post('vipBonus', function() {
-                $currency = Currency::find("eth");
+                $currency = Currency::find("btc");
 
         if(auth()->user()->vipLevel() == 0) return reject(1, 'Invalid VIP level');
-        if(auth()->user()->weekly_bonus < 0.1) return reject(2, 'Daily bonus is too small');
+        if(auth()->user()->weekly_bonus < 0.1) return reject(2, 'Daily cashback is too small');
         if(auth()->user()->weekly_bonus_obtained) return reject(3, 'Already obtained in this week');
         auth()->user()->balance($currency)->add(((auth()->user()->weekly_bonus ?? 0) / 100) * auth()->user()->vipBonus(), \App\Transaction::builder()->message('Daily VIP bonus')->get());
         auth()->user()->update([

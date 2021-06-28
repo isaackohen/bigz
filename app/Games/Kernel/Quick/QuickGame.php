@@ -182,7 +182,7 @@ abstract class QuickGame extends Game {
             ]);
 
 
-                    if ($multiplierfloat > 1 && $usd_wager > 0.2) {
+                    if ($multiplierfloat > 20 && $usd_wager > 0.2) {
                         Settings::where('name', 'bigwinner_inhouse_player')->update(['value' => $data->user()->name]);
                         Settings::where('name', 'bigwinner_inhouse_game')->update(['value' => $this->metadata()->id()]);
                         Settings::where('name', 'bigwinner_inhouse_amount')->update(['value' => $usd_wager]);
@@ -230,10 +230,9 @@ abstract class QuickGame extends Game {
                        }
                     } 
 
-            Leaderboard::insert($game);
 
-            if($multiplierfloat < 0.95 || $multiplierfloat > 1.3 && $usd_wager > 0.1) {
-                Races::insert($game);
+            if($multiplierfloat < 0.95 || $multiplierfloat > 1.25 && $usd_wager > 0.1) {
+            Leaderboard::insert($game);
 
 
 

@@ -11,7 +11,8 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PromoNotification implements ShouldBroadcastNow {
+
+class BigwinNotification implements ShouldBroadcastNow {
 
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -29,7 +30,7 @@ class PromoNotification implements ShouldBroadcastNow {
     }
 
     public function broadcastWith() {
-        return ['message'=> 'Bot released DROPCODE on Telegram. Use DROPCODE on Bonus Page for free bonus.'];
+        return ['message'=> \App\Settings::where('name', 'toast_message')->first()->value];
     }
 
 }

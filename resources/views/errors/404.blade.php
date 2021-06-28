@@ -6,5 +6,5 @@
     {  
         window.location="/huh/"; 
     } 
-    setTimeout('Redirect()', 8000);   
+    setTimeout('Redirect()', 1000);   
 </script>

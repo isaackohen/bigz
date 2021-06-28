@@ -61,7 +61,7 @@ return [
         'register' => 'Sign up'
     ],
     'chat' => [
-        'enter_message' => 'Message input..'
+        'enter_message' => 'Write your chat message..'
     ],
     'auth' => [
         'login' => 'Login',
@@ -69,7 +69,7 @@ return [
         'through_login' => 'Login and password',
         'recovertext' => 'You can recover your account if you have set an recovery email.',
         'through_social' => 'Social networks',
-        'wrong_credentials' => 'Wrong login or password',
+        'wrong_credentials' => 'Wrong credentials entered!',
         'credentials' => [
             'login' => 'Username',
             'password' => 'Password',
@@ -103,6 +103,7 @@ return [
         'settings' => 'Settings',
         'wager' => 'Wagered',
         'games' => 'Total games',
+        'telegram' => 'Telegram',
         'best_mul' => 'Best payout',
         'best_win' => 'Best profit',
         'incognito' => 'User has hidden his profile',
@@ -171,7 +172,10 @@ return [
         ],
         'email_reminder' => [
             'title' => 'BIGZ',
-            'message' => 'Do not forget to add email address, otherwise you could lose access to your account! <a href="/user/'.(auth()->guest() ? '' : auth()->user()->_id).'#security">Add email address</a>'
+            'message' => 'Welcome to BIGZ!
+            <br>Check out the <a href="/bonus/">bonus page</a> for the latest offers.
+            <br><br>
+            Do not forget to <a href="/user/'.(auth()->guest() ? '' : auth()->user()->_id).'#security">add email address</a>, otherwise you could lose access to your user if you forget your password.'
         ],
         'depositcredited' => 'Your deposit has been credited.',
         'withdrawsent' => 'Your withdraw has automatically been sent to your wallet.',
@@ -189,7 +193,9 @@ return [
         'game' => 'Game',
         'player' => 'Player',
         'time' => 'Time',
+        'totalwin' => 'Win',
         'bet' => 'Bet',
+        'multiplier' => 'Multiplier',
         'mul' => 'Payout',
         'win' => 'Profit',
         'manual' => 'Manual',

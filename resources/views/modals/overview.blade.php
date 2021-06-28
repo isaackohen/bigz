@@ -2,33 +2,36 @@
   class="overview modal fade "
   id="overview modal"
   tabindex="-1"
-    style="display: block; padding-right: 15px;"
+    style="display: block; padding-right: 10px;"
   aria-labelledby="overview modal"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Overview</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Game Details</h5>
         <button
           type="button"
           data-mdb-dismiss="overview modal"
                 class="btn-secondary btn-close"
                 ><i class="fas fa-close-symbol"></i></button>
       </div>
+              <hr>
       <div class="modal-body">
         <div class="ui-blocker" style="display: none;">
             <div class="loader"><div></div></div>
         </div>
         <div class="modal-scrollable-content">
+            <div class="heading text-left"></div>
+            <div class="overview-player">
+                <div>{{ __('general.bets.player') }}: <a onclick="$.modal('overview')"></a></div>
+            </div>
             <div class="overview-share-options">
+                Share Game: 
                 @if(!auth()->guest())
                     <a data-share="chat" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="{{ __('general.share_chat') }}">
                         <i class="fas fa-comments"></i>
                     </a>
                 @endif
-                <a data-share="vk" target="_blank" data-toggle="tooltip" data-placement="top" title="{{ __('general.share_vk') }}">
-                    <i class="fab fa-vk"></i>
-                </a>
                 <a data-share="twitter" target="_blank" data-toggle="tooltip" data-placement="top" title="{{ __('general.share_twitter') }}">
                     <i class="fab fa-twitter"></i>
                 </a>
@@ -36,16 +39,10 @@
                     <i class="fab fa-telegram"></i>
                 </a>
             </div>
-
-            <div class="heading text-left"></div>
-
-            <div class="overview-player">
-                <div>{{ __('general.bets.player') }}: <a onclick="$.modal('overview')"></a></div>
-            </div>
             <div class="overview-bet">
                 <div class="option">{{ __('general.bets.bet') }}: <span></span></div>
-                <div class="option">{{ __('general.bets.mul') }}: <span></span></div>
-                <div class="option">{{ __('general.bets.win') }}: <span></span></div>
+                <div class="option">{{ __('general.bets.multiplier') }}: <span></span></div>
+                <div class="option">{{ __('general.bets.totalwin') }}: <span></span></div>
             </div>
 
             <div class="overview-render-target"></div>

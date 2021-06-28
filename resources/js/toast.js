@@ -4,7 +4,7 @@ $.success = function(message) {
         iziToast.show({
         timeout: '3500',
         color: 'dark',
-        iconUrl: '/img/logo/bigz-icon-success.svg',
+        iconUrl: '/img/logo/bigz-letter.svg',
         title: 'OK!',
         message: message,
         transitionIn: 'fadeInRight',
@@ -30,7 +30,28 @@ $.error = function(message) {
     };
 
 
+$.newvip = function(message) {
+        iziToast.show({
+        timeout: '10000',
+        color: 'dark',
+        iconUrl: '/img/logo/bigz-icon.svg',
+        title: 'BIGZ',
+        message: message,
+        transitionIn: 'fadeInRight',
+        transitionOut: 'fadeOutLeft',
+        position: 'topLeft', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+        progressBarColor: 'rgb(0, 255, 184)',
+        buttons: [
+          [
+            '<button>Join Telegram</button>',
+            function (instance, toast) {
+                redirect('https://t.me/bigzcasino');
+            }
+          ]
+        ]
+      });
 
+    };
 
     // custom toast
 $.toastmessage = function(message) {

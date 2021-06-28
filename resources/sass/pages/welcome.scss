@@ -5,12 +5,6 @@
     width: calc(100% + 80px) !important;
 }
 
-.live {
-    display: none !important;
-}
-
-
-
 .pageContent {
     margin-bottom: 80px !important;
 }
@@ -354,21 +348,22 @@
 .bigz_thumbnail {
     display: inline-flex;
     width: 200px;
-    height: 180px;
-    margin-bottom: 10px;
+    height: 190px;
+    margin-bottom: 8px;
+    border-bottom: 5px solid #0000004f;
+    border-right: 4px solid #00000061;
+
     font-size: 11px;
     background-size: cover;
-    background-repeat: no-repeat;
     background-position: center;
     z-index: 1;
-    transition: all 0.1s ease-in;
+    transition: all 0.1s ease;
     top: 0;
     position: relative;
     cursor: pointer;
-    border-radius: 12px;
+    border-radius: 15px;
     box-shadow: rgba(black, 0.2) 0 4px 6px -1px, rgba(black, 0.12) 0px 2px 4px -1px;
-    transition: all ease-in 0.2s;
-    margin-right: 10px !important;
+    margin-right: 15px !important;
 
     .btn-primary-small {
     font-size: 10px;
@@ -376,7 +371,9 @@
     }
 
     &:hover {
-        @include blur(black, 0.5, 0.8, 5px);
+        @include blur(black, 0.6, 0.8, 4px);
+        border-bottom: 5px solid rgba(0, 0, 0, 0.6) !important;
+        border-right: 4px solid rgba(0, 0, 0, 0.6) !important;
 
         .name {
         display: block;
@@ -406,7 +403,7 @@
         position: absolute;
         height: 100%;
         width: 100%;
-        @include blur(black, 0.5, 0.8, 5px);
+        @include blur(black, 0.6, 0.8, 4px);
         border-radius: 12px;
         color: white;     
 

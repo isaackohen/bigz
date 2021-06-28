@@ -46,7 +46,6 @@
                             <div class="line"></div>
                         </div>
                         <div class="walletOut">
-                            <div>{{ __('wallet.deposit.minimum') }}<span class="minAmount"></span></div>
                             <button class="btn btn-primary" id="deposit">{{ __('wallet.deposit.go') }}</button>
                         </div>
                         <div class="walletInfo mt-2">
@@ -170,13 +169,13 @@
                                     <tr>
                                         <th>
                                             <div>
-                                                <div>{{ __('wallet.history.deposit_name', ['sum' => $invoice->sum]) }} <i class="fas fa-coins"></i></div>
+                                                <div style="text-transform: uppercase;">{{ \App\Currency\Currency::find($invoice->currency)->alias() }} <img src="/img/currency/svg/{{ $invoice->currency }}.svg" style="width:11px; height:11px; margin-bottom: 2px;" alt="" class="walletbalance-icon" /></div>
                                                 <div data-highlight>{{ __('wallet.history.id', ['id' => $invoice->_id]) }}</div>
                                             </div>
                                         </th>
                                         <th class="d-none d-md-table-cell">
                                             <div>
-                                            <div><i class="{{ \App\Currency\Currency::find($invoice->currency)->icon() }}" style="color: {{ \App\Currency\Currency::find($invoice->currency)->style() }}"></i> -   {{ \App\Currency\Currency::find($invoice->currency)->name() }}</div>
+                                            <div> <img src="/img/currency/svg/{{ $invoice->currency }}.svg" style="height: 15px; width: 15px;" alt="" class="walletbalance-icon" /> {{ $invoice->sum }}</div>
                                             </div>
                                         </th>
                                         <th class="d-none d-md-table-cell">

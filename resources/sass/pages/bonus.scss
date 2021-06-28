@@ -23,6 +23,51 @@ $side-menu-width: 800px;
         }
     }
 
+    .expandableBlock {
+        margin-top: 15px;
+        transition: all 0.1s ease;
+
+        @include themed() {
+            .expandableBlockHeader {
+                background: #131e23;
+                border-radius: 10px;
+                padding: 0.75rem 1.5rem;
+                display: flex;
+                align-content: center;
+                cursor: pointer;
+
+                svg {
+                    width: 16px;
+                    height: 16px;
+                    margin-right: 10px;
+                }
+
+                i {
+                    position: absolute;
+                    right: 20px;
+                    margin-top: 3px;
+                }
+            }
+
+            .expandableBlockContent {
+                border: none;
+                margin-top: -5px;
+                border-top: none;
+                background: #19272b;
+                border-bottom-right-radius: 10px;
+                border-bottom-left-radius: 10px;
+                padding: 15px 23px;
+
+                ul {
+                    margin-bottom: 0;
+                    list-style: none;
+                    padding-left: 0;
+                }
+            }
+        }
+    }
+
+
 .vip {
     .vip-logo {
         width: 15%;
@@ -40,12 +85,12 @@ $side-menu-width: 800px;
 
     .progress {
         height: 25px;
-        border-radius: 3px;
+        border-radius: 8px;
         text-shadow: 1px 1px black;
         margin: 2px;
 
         @include themed() {
-            background: lighten(t('sidebar'), 3%);
+            background: #19272b;
 
             .progress-bar {
                 height: 25px;

@@ -139,7 +139,7 @@ class C27Controller extends Controller
 
                 /* Request Mascot Free Spins Session */
         if($slugsanitize == $freespinslot && $user->freegames > 0) {
-                $this->client->mascot->setPlayer(['Id' => $user->id . '-' . 'eth' . '-' . $mascotbonusid , 'BankGroupId' => $mascotbonusbankgroup]);
+                $this->client->mascot->setPlayer(['Id' => $user->id . '-' . 'btc' . '-' . $mascotbonusid , 'BankGroupId' => $mascotbonusbankgroup]);
                 usleep(11000);
                 $this->client->mascot->setBonus([   
                     'Id' => 'shared',   
@@ -157,8 +157,8 @@ class C27Controller extends Controller
                         [   
                             'GameId' => $slugsanitize,  
                             'BonusId' => 'shared',  
-                            'PlayerId' => $user->id . '-' . 'eth' . '-' . $mascotbonusid,  
-                            'AlternativeId' => time() . '_' . $user->id . '_' . 'eth', 
+                            'PlayerId' => $user->id . '-' . 'btc' . '-' . $mascotbonusid,  
+                            'AlternativeId' => time() . '_' . $user->id . '_' . 'btc', 
                             'Params' => [   
                                 'freeround_bet' => 1    
                             ],  
@@ -192,7 +192,7 @@ class C27Controller extends Controller
                 /* Request Free Spins Session for the other providers */ 
        if($slugsanitize == $freespinslot && $user->freegames > 0) {
        if(auth()->user()->access == 'moderator') {
-                $this->client->setPlayer(['Id' => $user->id . '-' . 'eth' . '-' . $mainbonusid , 'BankGroupId' => $mainbonusgroup]);
+                $this->client->setPlayer(['Id' => $user->id . '-' . 'btc' . '-' . $mainbonusid , 'BankGroupId' => $mainbonusgroup]);
                         usleep(11000);
                 $this->client->setBonus([   
                     'Id' => 'shared',   
@@ -212,8 +212,8 @@ class C27Controller extends Controller
                     'GameId' => $slugsanitize,  
                     'BonusId' => 'shared',
                     'StaticHost' => $staticserver,
-                    'PlayerId' => $user->id . '-' . 'eth' . '-' . $mainbonusid,  
-                    'AlternativeId' => time() . '_' . $user->id . '_' . 'eth', 
+                    'PlayerId' => $user->id . '-' . 'btc' . '-' . $mainbonusid,  
+                    'AlternativeId' => time() . '_' . $user->id . '_' . 'btc', 
                     'Params' => [   
                         'freeround_bet' => 1    
                 ],  
@@ -224,7 +224,7 @@ class C27Controller extends Controller
 
         else {
 
-            $this->client->setPlayer(['Id' => $user->id . '-' . 'eth' . '-' . $mainid , 'BankGroupId' => $mainbankgroup]);
+            $this->client->setPlayer(['Id' => $user->id . '-' . 'btc' . '-' . $mainid , 'BankGroupId' => $mainbankgroup]);
                     usleep(11000);
             $this->client->setBonus([   
                     'Id' => 'shared',   
@@ -243,8 +243,8 @@ class C27Controller extends Controller
                 [   
                     'GameId' => $slugsanitize,  
                     'BonusId' => 'shared',  
-                    'PlayerId' => $user->id . '-' . 'eth' . '-' . $mainid,  
-                    'AlternativeId' => time() . '_' . $user->id . '_' . 'eth', 
+                    'PlayerId' => $user->id . '-' . 'btc' . '-' . $mainid,  
+                    'AlternativeId' => time() . '_' . $user->id . '_' . 'btc', 
                     'Params' => [   
                         'freeround_bet' => 1    
                     ],  
@@ -626,11 +626,10 @@ class C27Controller extends Controller
                     }
                 }
 
-            Leaderboard::insert($game);
             
             if($usd_wager > floatval(0.10)) {
                 if($multi < 0.95 || $multi > 1.25) {
-                    Races::insert($game);
+                        Leaderboard::insert($game);
                     if ((Currency::find($currency)->dailyminslots() ?? 0) <= $subtract) {
                         if ($user->vipLevel() > 0 && ($user->weekly_bonus ?? 0) < 100) {
                         $user->update([

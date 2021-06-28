@@ -566,9 +566,9 @@ class SidebarFooterComponent {
 
     button(icon, tooltip, callback) {
         const id = $.randomId();
-        $(`.game-sidebar-footer`).append($(`<div class="action ${id}" data-toggle="tooltip" data-placement="top" title="${tooltip}"><i class="${icon}"></i></div>`));
+        $(`.game-sidebar-footer`).append($(`<div class="action ${id}" data-toggle="tooltip" data-placement="bottom" title="${tooltip}"><i class="${icon}"></i></div>`));
         $(`.game-sidebar-footer .action.${id}`).tooltip();
-		$(`.options-right`).append($(`<div class="action ${id}" data-toggle="tooltip" data-placement="top" title="${tooltip}"><i class="${icon}"></i></div>`));
+		$(`.options-right`).append($(`<div class="action ${id}" data-toggle="tooltip" data-placement="bottom" title="${tooltip}"><i class="${icon}"></i></div>`));
         $(`.options-right .action.${id}`).tooltip();
         $(document).on('click', `.game-sidebar-footer .action.${id}`, callback);
 		$(document).on('click', `.options-right .action.${id}`, callback);
