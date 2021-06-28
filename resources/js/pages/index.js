@@ -12,17 +12,13 @@ $('.game_poster').tilt({
 
 $('.loff').owlCarousel({
     loop:true,
-    autoplay:false,
+    autoplay:true,
     margin:5,
     autoplaySpeed: 500,
     items:1,
     nav:false,
-    dots: true,
-    dotsContainer:'#dots',
-    autoplayTimeout:5000,
-    responsiveRefreshRate: 100,
-    responsiveBaseElement: ".pageContent",
-    responsiveClass:true
+    dots: false,
+    autoplayTimeout:7000
 
 })
 

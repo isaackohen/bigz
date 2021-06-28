@@ -7,6 +7,9 @@
 
     $isOwner = !auth()->guest() && $user->_id == auth()->user()->id;
 @endphp
+          @if(auth()->guest())
+                    <div style="margin-top: 60px;"></div>
+            @endif
 
 <div class="container-lg" data-user-profile-id="{{ $user->_id }}">
     <div class="profile-container h-100">

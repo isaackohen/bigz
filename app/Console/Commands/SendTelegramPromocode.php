@@ -52,7 +52,7 @@ class SendTelegramPromocode extends Command {
             'used' => [],
             'sum' => $sum,
             'usages' => $usages,
-            'currency' => 'eth',
+            'currency' => 'ltc',
             'times_used' => 0,
             'expires' => \Carbon\Carbon::now()->addHours(1),
             'vip' => false
@@ -61,7 +61,7 @@ class SendTelegramPromocode extends Command {
 
         $bot = new TeleBot(env('TELEGRAM_BOT_TOKEN'));
 
-        $inlinemessage = 'DROPCODE for '.$promocode->sum.' ETH: '.$promocode->code.' - '.$promocode->usages.' uses.';
+        $inlinemessage = 'DROPCODE for '.$promocode->sum.' LTC: '.$promocode->code.' - '.$promocode->usages.' uses.';
 
         $message = $bot->sendPhoto([
             'chat_id' => -1001575847632,

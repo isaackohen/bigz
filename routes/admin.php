@@ -100,12 +100,18 @@ Route::prefix('notifications')->group(function() {
             'text' => request('text')
         ]);
         (new \App\ActivityLog\GlobalNotificationLog())->insert(['state' => true, 'text' => request('text'), 'icon' => request('icon')]);
+        Settings::where('name', 'globalnotification_message')->update(['value' => request('text')]);
+        event(new \App\Events\GlobalNotificationUpdate());
+
+
+        
         return success();
     });
     Route::post('/global_remove', function() {
         $n = \App\GlobalNotification::where('_id', request('id'));
         (new \App\ActivityLog\GlobalNotificationLog())->insert(['state' => false, 'text' => $n->first()->text, 'icon' => $n->first()->icon]);
         $n->delete();
+        event(new \App\Events\GlobalNotificationRemove());
         return success();
     });
 });

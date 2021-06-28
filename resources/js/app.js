@@ -415,9 +415,9 @@ $.overview = function(game_id, api_id) {
 };
 
 $.userinfo = function(userid) {
-    $.modal('user').then((e) => {
+    $.modal('userinfo').then((e) => {
         e.uiBlocker(); 
-		$.get('/modals.user?user='+ userid +'', function(response) {
+  $.get('/modals.userinfo?user='+ userid +'', function(response) {
             $('.modal-body').html(response);
             e.uiBlocker(false);
         });
@@ -591,9 +591,17 @@ $(document).ready(function() {
                 $.toastmessage(e.message);
                 $.playSound('/sounds/toastbigwin.mp3');
             })
+            .listen('GlobalNotificationUpdate', function(e) {
+                $.playSound('/sounds/toast1.mp3');
+                $('#notification-append').html('');
+                $('#notification-append').append(`<div id="bigz-notification-alert" class="alert fadeInRight" role="alert" style="">${e.message}</div>`);
+            })
+            .listen('GlobalNotificationRemove', function(e) {
+                $('#notification-append').html('');
+            })
             .listen('PromoNotification', function(e) {
                 $.playSound('/sounds/toast1.mp3');
-                $.toastmessage(e.message);
+                $.newvip(e.message);
             })
             .listen('NewVIPNotification', function(e) {
                 $('#toastbar').html('');

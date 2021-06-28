@@ -118,7 +118,7 @@ return [
         'avatar' => 'Avatar',
         'stats' => 'Statistics',
         'latest_games' => 'Latest games',
-        'vip' => 'Loyalty',
+        'vip' => 'VIP Club',
         'partner' => 'Partner Program',
         'change_name' => 'Change name',
         'new_name' => 'New name',
@@ -131,7 +131,7 @@ return [
         'linked' => 'Linked',
         'somebody_already_linked' => 'This social network account has already been linked to another account',
         'link_discord' => 'To access Loyalty promo-codes and roles on the Discord server, you need to link your account.',
-        'discord_vip' => 'Join <a href="'.\App\Settings::where('name', 'discord_invite_link')->first()->value.'" target="_blank" class="disable-pjax">our Discord server</a> and get access to exclusive Loyalty promocodes!',
+        'discord_vip' => 'Join <a href="'.\App\Settings::where('name', 'telegram_link')->first()->value.'" target="_blank" class="disable-pjax">our Telegram Group</a> and get access to exclusive Telegram DROPCODES.',
         'discord_vip_ok' => 'Update server role',
         'vip_discord_updated' => 'Discord server role has been updated.',
         'bets' => 'Bets',
@@ -165,10 +165,10 @@ return [
         ],
         'vip_discord' => [
             'title' => 'VIP',
-            'message' => "You have reached <svg style='width: 14px; height: 14px'><use href='#vip-emerald'></use></svg> Emerald Loyalty status!
-                         <br>We have added 15 free spins to your account!
-                         <br><br>Want exclusive Loyalty promocodes? Join <a href='".\App\Settings::where('name', 'discord_invite_link')->first()->value."' class='disable-pjax' target='_blank'>our Discord server</a>.
-                         <br><br><a href='javascript:void(0)' onclick='$(\".notifications-overlay\").click(); $.vip();' class='disable-pjax'>Loyalty Rewards and Bonuses</a>"
+            'message' => "You have reached <svg style='width: 14px; height: 14px'><use href='#vip-emerald'></use></svg> Emerald VIP Level!
+                         <br>We have added 10 free spins to your account!
+                         <br><br>Want exclusive VIPDROPCODES? Join <a href='".\App\Settings::where('name', 'telegram_link')->first()->value."' class='disable-pjax' target='_blank'>our Telegram Group</a>.
+                         <br><br><a href='javascript:void(0)' onclick='$(\".notifications-overlay\").click(); $.vip();' class='disable-pjax'>Telegram Rewards and Bonuses</a>"
         ],
         'email_reminder' => [
             'title' => 'BIGZ',
@@ -230,7 +230,7 @@ return [
         'unknown_error' => 'An error has occurred (Error :code)',
         'empty' => 'Select cells!',
         'gameinprogressbonus' => 'You currently have a game in-progress.',
-        'should_have_empty_balance' => 'Your ETH balance is too big',
+        'should_have_empty_balance' => 'Your BTC balance is too big',
         'captcha' => 'Please verify that you are not a robot',
         'autobet_pick_something' => 'Select cells for automatic bid mode.',
         'disabled_notifications' => 'You have refused to accept notifications. This can be changed in your browser settings.',
@@ -244,7 +244,7 @@ return [
         'enter_wallet' => 'Enter wallet number!',
         'promo_limit' => 'You have reached your promocode activation limit per day.',
         'autobet_mines_error' => 'You have selected more cells than the available crystals.',
-        'vip_only_promocode' => 'This promotional code is only available with Emerald Loyalty and above.'
+        'vip_only_promocode' => 'This promotional code is only available with Emerald VIP Level and above.'
     ],
     'profit_monitoring' => [
         'title' => 'Statistics',
@@ -254,8 +254,8 @@ return [
         'losses' => 'Losses',
         'no_data' => 'No data'
     ],
-    'add_email_notification' => 'Don\'t forget to add email address, otherwise you could lose access to your account! <a href="/user/'.(auth()->guest() ? '' : auth()->user()->_id).'#security">Add email address</a>',
-    'rain' => 'It\'s raining!<br>:sum :currency',
+    'add_email_notification' => 'Do not forget to <a href="/user/'.(auth()->guest() ? '' : auth()->user()->_id).'#security">add email address</a>, otherwise you could lose access to your user if you forget your password.',
+    'rain' => 'Faucet DROP for :sum :currency to:',
     'premiumrain' => 'Super Drop! <br>:sum :currency',
     'premiumsnow' => 'Super Drop! <br>:sum :currency',
     'snow' => 'It\'s raining!<br>:sum :currency',
@@ -337,11 +337,13 @@ return [
         'p' => 'Pair (J, Q, K, A)'
     ],
 	'poker' => [
-        'mindeposit' => 'Min. deposit $5',
-        'invalid' => 'invalid',
-        'notenough' => 'Not enough money',
-		'minwithdraw' => 'Min. withdrawal $5',
-		'success' => 'Success'
+        'mindeposit' => 'Min. deposit $5.00.',
+        'invalid' => 'Invalid request.',
+        'notenough' => 'Not enough balance.',
+		'minwithdraw' => 'Min. withdrawal $5.00 for poker transfers.',
+		'success' => 'Successful transfer.',
+        'needdeposit' => 'You need to deposit before you can transfer poker funds.',
+        'btcdeposit' => 'Bitcoin Poker exchanges are minimum of 50.00$ to preserve integrity of casino.'
     ],
     'deal' => 'Deal cards',
     'stand' => 'Stand',

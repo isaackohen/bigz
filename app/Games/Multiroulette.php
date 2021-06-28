@@ -49,13 +49,13 @@ class Multiroulette extends MultiplayerGame {
             'index' => $result
         ];
 
-        dispatch((new MultiplayerDisableBetAccepting($this))->delay(now()->addSeconds(6)));
-        dispatch((new MultiplayerUpdateData($this, $data))->delay(now()->addSeconds(6)));
-        dispatch((new MultiplayerUpdateTimestamp($this, -1))->delay(now()->addSeconds(6)));
+        dispatch((new MultiplayerDisableBetAccepting($this))->delay(now()->addSeconds(12)));
+        dispatch((new MultiplayerUpdateData($this, $data))->delay(now()->addSeconds(12)));
+        dispatch((new MultiplayerUpdateTimestamp($this, -1))->delay(now()->addSeconds(12)));
 
         event(new MultiplayerTimerStart($this));
 
-        dispatch((new MultiplayerFinishAndSetupNextGame($this, $data, now()->addSeconds(12)))->delay(6));
+        dispatch((new MultiplayerFinishAndSetupNextGame($this, $data, now()->addSeconds(24)))->delay(12));
     }
 
     public function onDispatchedFinish() {
@@ -76,7 +76,7 @@ class Multiroulette extends MultiplayerGame {
         foreach($this->getActiveGames() as $game) {
             $color = $this->userData($game)['data']['target'];
 			if($multipliercolor == $color) $multiplier = $multiplierset;
-            $this->win($game, $multiplier, 6000);
+            $this->win($game, $multiplier, 12000);
         }
     }
 

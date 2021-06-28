@@ -34,7 +34,7 @@ Route::any('callback/no9gqYHbIOWmW1Q4PkTEAW7De1z4v/{userid}', function(Request $
     $tglink = \App\Settings::where('name', 'telegram_link')->first()->value;
     $checkcount = \App\User::where('tg_linked', $request->id)->count();
 
-    if($checkcount == 0) {
+    if($checkcount == 0 and $user == null) {
         $user->update(['tg_linked' => $request->id]);   
     }
     header('Location: '.$tglink);
@@ -213,8 +213,9 @@ Route::get('callback/KcxVGsn', function(Request $request) {
                 $currency = $invoice->currency;
         $user->update(['wallet_'.$currency => null]);
 
-        if($user->firstdepo == null && $user->tg_linked != null) {
-        $user->update(['freegames' => $user->freegames + 10]);
+        if($user->firstdepo == null and $user->tg_linked != null) {
+        $user->update(['freegames' => $user->freegames + 5]);
+
         $user->update(['firstdepo' => 1]);
         }
 
@@ -469,17 +470,10 @@ Route::middleware('auth')->prefix('wallet')->group(function() {
     });
     
     Route::post('withdraw', function(Request $request) {
-        //if(!auth()->user()->validate2FA(false)) return reject(-1024);
-        //auth()->user()->reset2FAOneTimeToken();
-        
         $currency = Currency::find($request->currency);
-        
         if(floatval($request->sum) < floatval($currency->option('withdraw')) + floatval($currency->option('fee'))) return reject(1, 'Invalid withdraw value');
-
         if(auth()->user()->balance($currency)->get() < floatval($request->sum) + floatval($currency->option('fee'))) return reject(2, 'Not enough balance');
-
         if(\App\Withdraw::where('user', auth()->user()->_id)->where('status', 0)->count() > 0) return reject(3, 'Moderation is still in process');
-
         if(auth()->user()->access == 'moderator') return reject(1, 'Not available');
 
         auth()->user()->balance($currency)->subtract($request->sum + floatval($currency->option('fee')), \App\Transaction::builder()->message('Withdraw')->get());
@@ -583,13 +577,15 @@ Log::notice(json_encode($responsewithdraw));
 Route::middleware('auth')->prefix('pokerapi')->group(function() {
 
     Route::post('withdraw', function(Request $request) {
-		        $amount = $request->sum;  
+		        $amount = $request->sum; 
+                $deposits = (\App\Invoice::where('user', auth()->user()->_id)->where('status', 1)->where('ledger', '!=','Offerwall Credit')->count());
+                if($deposits < 1) return reject(3, 'Need to have deposited');
 				if($amount < 5) return reject(0, 'Min deposit');           
                 $getbalance = auth()->user()->pokerbalance();
                 if(floatval($amount) > floatval($getbalance)) return reject(2, 'Not enough balance');
                 if(auth()->user()->access == 'moderator') return reject(1, 'Not available');
                 $ltc = 'ltc';
-                $currency = Currency::find($ltc);  
+                $currency = Currency::find($ltc);
 				$api = new PokerApi(541, 'lkq9b2br-w8oy-01oy-qgtv-48a09v8sz91a', '217.182.195.96', 4000);
 				$api->connect();
 				$pokerwithdraw = '-'.$amount;
@@ -605,7 +601,10 @@ Route::middleware('auth')->prefix('pokerapi')->group(function() {
     Route::post('deposit', function(Request $request) { 
 	            $amount = $request->sum;
 				if($amount < 5) return reject(0, 'Min deposit');
-				$currency = $request->currency;
+                $currency = $request->currency;
+                if($currency == "btc" and $amount < '50') return reject(4, 'Min deposit BTC');
+                $deposits = (\App\Invoice::where('user', auth()->user()->_id)->where('status', 1)->where('ledger', '!=','Offerwall Credit')->count());
+                if($deposits < 1) return reject(3, 'Need to have deposited');
 				$cryptoamount = Currency::find($currency)->convertUsd($amount);
 				$userbalance = auth()->user()->balance(Currency::find($currency))->get();
 				Log::notice('User balance: '.$userbalance.' , Crypto Amount: '.$cryptoamount);
@@ -1062,7 +1061,7 @@ Route::middleware('auth')->prefix('promocode')->group(function() {
 
         if(auth()->user()->vipLevel() == 0) {
         auth()->user()->balance(Currency::find($promocode->currency))->add($base, \App\Transaction::builder()->message('Promocode crypto (base)')->get());
-    }
+        }
         if(auth()->user()->vipLevel() == 1) {
         auth()->user()->balance(Currency::find($promocode->currency))->add($base, \App\Transaction::builder()->message('Promocode crypto (emerald)')->get());
         }
@@ -1127,7 +1126,6 @@ Route::middleware('auth')->prefix('promocode')->group(function() {
             $v * 2
         ];
         $slice = mt_rand(0, count($slices) - 1);
-       // auth()->user()->balance(auth()->user()->clientCurrency())->add($slices[$slice], \App\Transaction::builder()->message('Referral bonus wheel')->get());
         auth()->user()->update([
             'referral_bonus_obtained' => (auth()->user()->referral_bonus_obtained ?? 0) + 1
         ]);
@@ -1165,10 +1163,6 @@ Route::middleware('auth')->prefix('promocode')->group(function() {
         if(count($same_login_hash) > 35) return reject(3, 'Expired (usages)');
         if(count($same_register_hash) > 35) return reject(3, 'Expired (usages)');
         if(count($same_login_ip) > 35) return reject(3, 'Expired (usages)');
-
-        //$progresscheck = \App\Game::where('user', $user)->where('status', 'in-progress')->get();
-        //if($progresscheck) return reject(3, 'Game in progress');
-
         if(auth()->user()->vipLevel() == 0) {
 
         $v = floatval($faucetamount);

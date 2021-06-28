@@ -13,9 +13,10 @@
     width: calc(100% - 90px);
 
     @include themed() {
+        border-radius: 7px;
         padding: 10px;
-        background: url("/img/misc/arrows.svg") repeat, linear-gradient(#22272e, #22272e);
-        border: 6px solid #22272e;
+        background: #213237;
+        border: 6px solid #2d3a3e;
     }
 }
 

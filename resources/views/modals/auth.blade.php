@@ -16,9 +16,6 @@
                     <div class="tab" onclick="$.register()" data-toggle-auth-tab="register">
                         Register
                     </div>
-                    <div class="tab" data-toggle-auth-tab="forgot">
-                        Forgot
-                    </div>
                 </div>
         <button
           type="button"

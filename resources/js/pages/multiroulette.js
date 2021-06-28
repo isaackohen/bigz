@@ -40,7 +40,7 @@ $.game('multiroulette', function (container, overviewData) {
 	  
       $('.multiroulette_container_row').stop().animate({
         left: "-=".concat(amount * gw + pos * gw - containerCenter + center)
-      }, 6000);
+      }, 12000);
     };
 
     container.append("\n            <div class=\"multirouletteCustomHistory\"></div>\n            <div class=\"multiroulette_container_line\"></div>\n            <div class=\"multiroulette_container\">\n                <div class=\"multiroulette_container_row\"></div>\n            </div>\n        ");
@@ -73,7 +73,7 @@ $.game('multiroulette', function (container, overviewData) {
     if ($.multipliers().timestamp === -1) spin($.multipliers().data.index);else {
       var now = +new Date() / 1000;
       var left = parseInt(now - $.multipliers().timestamp);
-      if (left >= 0 && left <= 6) setRoundTimer(left);
+      if (left >= 0 && left <= 12) setRoundTimer(left);
     }
     $.multiplayer(function (event, data) {
       switch (event) {
@@ -109,7 +109,7 @@ $.game('multiroulette', function (container, overviewData) {
             el.hide().slideDown('fast');
             $('.multirouletteCustomHistoryElement:nth-child(3)').remove();
 			$.blockPlayButton(false);
-          }, 6000);
+          }, 12000);
           break;
 
         case 'MultiplayerTimerStart':
@@ -117,7 +117,7 @@ $.game('multiroulette', function (container, overviewData) {
           setTimeout(function () {
             return users.slideUp('fast');
           }, 1000);
-          setRoundTimer(6);
+          setRoundTimer(12);
           break;
       }
     });

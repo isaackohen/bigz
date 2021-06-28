@@ -336,6 +336,7 @@ span {
 
 .row-main {
     color: rgb(204, 204, 204);
+    margin-inline: 0px;
     display: flex;
     flex-flow: row nowrap;
     -webkit-box-align: center;
@@ -348,25 +349,21 @@ span {
 .leaderboard-RowTable:nth-child(2) {
     background: linear-gradient(rgb(29, 44, 49) 0%, rgb(40, 54, 58) 100%);
     border-bottom: 2px solid rgb(148, 148, 149);
-    margin-inline: 0.5rem;
 }
 
 .leaderboard-RowTable:nth-child(3) {
     background: linear-gradient(rgb(29, 44, 49) 0%, rgb(41, 50, 53) 100%);
     border-bottom: 2px solid rgb(154, 110, 93);
-    margin-inline: 1rem;
 }
 
 .leaderboard-RowTable:nth-child(4) {
     background: linear-gradient(rgb(29, 44, 49) 0%, rgb(40, 54, 58) 100%);
     border-bottom: 2px solid rgb(150, 114, 236);
-    margin-inline: 1.5rem;
 }
 
 .leaderboard-RowTable:nth-child(5) {
     background: linear-gradient(rgb(29, 44, 49) 0%, rgb(35, 56, 62) 100%);
     border-bottom: 2px solid rgb(76, 112, 121);
-    margin-inline: 2rem;
 }
 
 @media(max-width: 1300px) {

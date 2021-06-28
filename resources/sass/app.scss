@@ -22,7 +22,15 @@ $chat-width: 312px;
 
 $card: 0 0 10px rgba(28, 39, 60, .05);
 
+.theme--dark .select2-results__option {
+ background: #213237;
+ color: white   
+}
 
+select2-results__options {
+     background: #213237;
+    color: white   
+}
 
 .owl-prev, .owl-next {
     margin-left: 10px;
@@ -47,6 +55,23 @@ $card: 0 0 10px rgba(28, 39, 60, .05);
     text-transform: uppercase;
     font-family: IndustryBlack, Open Sans;
     color: #fff;
+}
+
+#bigz-notification-alert {
+                            padding: 16px;
+                            display: -webkit-box;
+                            background:  linear-gradient(45deg, #23353a,#18282e);
+                            border-bottom: 4px solid #445459;
+                            margin-top: 1px;
+                            margin-left: 4px;
+                            position: absolute;
+                            font-family: 'Proxima Nova Semi Bd';
+                            font-size: 12px;
+                            border-radius: 0px !important;
+                            width:  100%;
+                            z-index: 99999999999;
+                            padding-top: 200p;
+                            box-shadow: 0px 13px 12px -2px rgb(23 35 39);
 }
 
 .row {
@@ -210,6 +235,34 @@ $card: 0 0 10px rgba(28, 39, 60, .05);
     margin: 0 auto;
     text-align: center;
 }
+
+       .flash {
+  -webkit-animation-name: flash;
+  animation-name: flash;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  }
+  @-webkit-keyframes flash {
+  0%, 50%, 100% {
+  opacity: 1;
+  }
+  
+  25%, 75% {
+  opacity: 0;
+  }
+  }
+  
+  @keyframes flash {
+  0%, 50%, 100% {
+  opacity: 1;
+  }
+  
+  25%, 75% {
+  opacity: 0;
+  }
+  } 
 
 .flag-icon-background {
     background-size: contain;
@@ -1616,13 +1669,9 @@ padding: 0.5rem 0.8rem;
 
                 .message.rain_bot {
                     overflow: hidden;
-                    box-shadow: -3px -3px 8px 1px #11141f0d, 2px 2px 8px 0px #0d0d0d47, inset 1px 1px 0px 0px #1f2330 !important;
-                    background-repeat: no-repeat !important;
-                    background: url(/img/misc/raining.svg) center center / 160%;
                     animation: 1s ease-in 3s 1 normal forwards running FadeOut;
-                    background-color: #374571;
                     color: white;
-                    text-shadow: 1px 2px #000000d4 !important;
+                    text-shadow: 1px 1px #000000d4 !important;
                     &:before {
                         content: '';
                         z-index: 1;
@@ -1631,7 +1680,7 @@ padding: 0.5rem 0.8rem;
                         top: 0;
                         width: 100%;
                         height: 100%;
-                        background: rgba(black, 0.35);
+                        background: rgba(black, 0.01);
                     }
 
                     .rain_desc {
@@ -2032,6 +2081,39 @@ padding: 0.5rem 0.8rem;
         }
     }
 }
+
+      .fadeInRight {
+  -webkit-animation-name: fadeInRight;
+  animation-name: fadeInRight;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  }
+  @-webkit-keyframes fadeInRight {
+  0% {
+  opacity: 0;
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+  }
+  100% {
+  opacity: 1;
+  -webkit-transform: none;
+  transform: none;
+  }
+  }
+  @keyframes fadeInRight {
+  0% {
+  opacity: 0;
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+  }
+  100% {
+  opacity: 1;
+  -webkit-transform: none;
+  transform: none;
+  }
+  } 
 
 .live-title {
     font-size: 1rem;font-weight: 700;
@@ -2805,6 +2887,7 @@ footer {
             z-index: 100;
             left: 50%;
             top: 50%;
+            font-size: 12px;
             transform: translate(-50%, -50%);
             align-content: center;
             justify-content: center;

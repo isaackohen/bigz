@@ -40,14 +40,15 @@ $.on('/leaderboard', function() {
 				$(this).next().slideDown(200, arguments.callee);
 			});
 		});
+
 		if($(this).index() == 0) {
-		Time = moment(moment().endOf('hour')).format('MM-DD-YYYY HH:mm:ss');
-		}
-		if($(this).index() == 1) {
 		Time = moment(moment().endOf('day')).format('MM-DD-YYYY HH:mm:ss');
 		}
-		if($(this).index() == 2) {
+		if($(this).index() == 1) {
 		Time = moment(moment().endOf('week')).format('MM-DD-YYYY HH:mm:ss');
+		}
+		if($(this).index() == 2) {
+		Time = moment(moment().endOf('hour')).format('MM-DD-YYYY HH:mm:ss');
 		}
 		makeTimer();
 	}).eq(0).addClass("active");

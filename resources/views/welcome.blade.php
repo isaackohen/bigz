@@ -1,7 +1,12 @@
           @if(auth()->guest())
                     <div style="margin-top: 80px;"></div>
             @endif
+<style>
+    #multiroulette:hover {
+      background-image: url('/assets/multiroulette4.gif') !important;
+    }
 
+    </style>
 
 <div class="container-xl"> 
     <div class="container mt-5 mb-3">
@@ -23,11 +28,17 @@
         @foreach(\App\Games\Kernel\Game::list() as $game)
         @if(!$game->isDisabled() &&  $game->metadata()->id() !== "slotmachine" && $game->metadata()->id() !== "evoplay" && $game->metadata()->id() !== "livecasino")
 
-            <div class="bigz_thumbnail" @if(!$game->isDisabled()) onclick="redirect('/game/{{ $game->metadata()->id() }}')" @endif style="background-image: url('/assets/turnkey/thumbnail/{{ $game->metadata()->id() }}.png')">
+            <div id="{{ $game->metadata()->id() }}" class="bigz_thumbnail" @if(!$game->isDisabled()) onclick="redirect('/game/{{ $game->metadata()->id() }}')" @endif style="background-image: url('/assets/turnkey/thumbnail/{{ $game->metadata()->id() }}.png')">
 
                 <div class="name">
-                <div class="gamename" style="display: flex; justify-content: center; margin-top: 25px;">
+                <div class="gamename" style="display: flex; justify-content: center; margin-top: 35px;">
                     <span style="font-size: 0.80rem">{{ $game->metadata()->name() }}</span>
+                </div>
+                <div class="gamename" style="display: flex; justify-content: center; margin-top: 5px;">
+                    <span style="font-size: 0.80rem">Provably Fair BIGZ Game</span>
+                </div>
+                <div class="button" style="display: flex; justify-content: center; margin-top: 10px;">
+                    <div class="btn btn-primary-small-dark"><i style="color: #3db96d;" class="fad fa-play"></i> Play</div>
                 </div>
                     
                 </div>
@@ -113,7 +124,6 @@
             </div>  
             @endif
         @endforeach
-
           @foreach(\App\Slotslist::all()->shuffle()->random(15) as $slots)
 
           @if($slots->p !== "amatic" && $slots->p !== "igrosoft" && $slots->p !== "egt" && $slots->p !== "greentube" && $slots->p !== "konami" && $slots->p !== "apollo")              

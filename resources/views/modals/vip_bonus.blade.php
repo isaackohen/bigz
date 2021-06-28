@@ -44,7 +44,7 @@
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
-      <div class="modal-header"><i style="color: #0fd560;" class="fad fa-gift me-1"></i><span>Daily Royalty</span>
+      <div class="modal-header"><i style="color: #0fd560;" class="fad fa-gift me-1"></i><span>Daily Cashback</span>
         <button
           type="button"
           data-mdb-dismiss="vip_bonus modal"

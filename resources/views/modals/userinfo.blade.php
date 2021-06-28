@@ -1,11 +1,11 @@
 @if(!isset($_GET['user']))
-<div class="user modal fade" id="user modal" tabindex="-1" style="display: block; padding-right: 15px;" aria-labelledby="user modal" aria-hidden="true">
+<div class="userinfo modal fade" id="userinfo modal" tabindex="-1" style="display: block; padding-right: 15px;" aria-labelledby="userinfo modal" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">User
         <button
           type="button"
-          data-mdb-dismiss="user modal"
+          data-mdb-dismiss="userinfo modal"
                 class="btn-secondary btn-close"
                 ><i class="fas fa-close-symbol"></i></button>
       </div>

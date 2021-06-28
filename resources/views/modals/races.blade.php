@@ -69,7 +69,7 @@ min-height: 300px;
 					<div class="modal_content"><div class="os-host os-host-foreign os-theme-thin-light rankings-table os-host-overflow os-host-overflow-x os-host-overflow-y os-host-resize-disabled os-host-transition"><div class="os-resize-observer-host observed"><div class="os-resize-observer" style="left: 0px; right: auto;"></div></div> <div class="os-size-auto-observer observed" style="height: calc(100% + 1px); float: left;"><div class="os-resize-observer"></div></div><div class="os-content-glue" style="margin: 0px; height: 3570px; width: 409px;"></div><div class="os-padding"><div class="os-viewport os-viewport-native-scrollbars-invisible" style="overflow: scroll;"><div class="os-content" style="padding: 0px; height: auto; width: 100%;">
 				</div>
 			</div>
-		</div>
+		</div> 
 		<div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-auto-hidden"><div class="os-scrollbar-track os-scrollbar-track-off"><div class="os-scrollbar-handle" style="width: 70.568%; transform: translate(0px, 0px);"></div></div></div> <div class="os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden"><div class="os-scrollbar-track os-scrollbar-track-off"><div class="os-scrollbar-handle" style="height: 9.80392%; transform: translate(0px, 0px);"></div></div></div> <div class="os-scrollbar-corner"></div></div></div>
 	</div>
 	@endif
@@ -199,13 +199,13 @@ min-height: 300px;
 							</th>
 							<th>
 							@if($loop->first)
-									<a onclick="$('.btn-close').click()" style="color: #ffa900; font-weight: 600;" href="/user/{{ \App\User::where('_id', $entry->user)->first()->_id }}" class=""><i class="fas fa-usd-circle" style="color:#02b320"></i> {{ \App\Settings::where('name', 'races_prize_1st')->first()->value }}</a>
+									<a onclick="$('.btn-close').click()" style="color: #ffa900; font-weight: 600;" href="/user/{{ \App\User::where('_id', $entry->user)->first()->_id }}" class=""><i class="fas fa-usd-circle" style="color:#02b320"></i> {{ \App\Settings::where('name', 'races_prize_1st_weekly')->first()->value }}</a>
 									@elseif($loop->index == 1)
-									<a onclick="$('.btn-close').click()" style="color: #bfdffb; font-weight: 400;" href="/user/{{ \App\User::where('_id', $entry->user)->first()->_id }}" class=""><i class="fas fa-usd-circle" style="color:#02b320"></i> {{ \App\Settings::where('name', 'races_prize_2nd')->first()->value }}</a>
+									<a onclick="$('.btn-close').click()" style="color: #bfdffb; font-weight: 400;" href="/user/{{ \App\User::where('_id', $entry->user)->first()->_id }}" class=""><i class="fas fa-usd-circle" style="color:#02b320"></i> {{ \App\Settings::where('name', 'races_prize_2nd_weekly')->first()->value }}</a>
 									@elseif($loop->index == 2)
-									<a onclick="$('.btn-close').click()" style="color: #d0898f; font-weight: 400;" href="/user/{{ \App\User::where('_id', $entry->user)->first()->_id }}" class=""><i class="fas fa-usd-circle" style="color:#02b320"></i> {{ \App\Settings::where('name', 'races_prize_3rd')->first()->value }}</a>
+									<a onclick="$('.btn-close').click()" style="color: #d0898f; font-weight: 400;" href="/user/{{ \App\User::where('_id', $entry->user)->first()->_id }}" class=""><i class="fas fa-usd-circle" style="color:#02b320"></i> {{ \App\Settings::where('name', 'races_prize_3rd_weekly')->first()->value }}</a>
 									@else
-									<a onclick="$('.btn-close').click()" href="/user/{{ \App\User::where('_id', $entry->user)->first()->_id }}" class="">{{ \App\Settings::where('name', 'races_prize_freespins')->first()->value }} FS</i></a>
+									<a onclick="$('.btn-close').click()" href="/user/{{ \App\User::where('_id', $entry->user)->first()->_id }}" class="">{{ \App\Settings::where('name', 'races_prize_freespins_weekly')->first()->value }} FS</i></a>
 							@endif
 							</th>
 						</tr>

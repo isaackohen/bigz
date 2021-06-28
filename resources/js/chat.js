@@ -36,11 +36,13 @@ $.addChatMessage = function(message) {
         $(`.chat .messages .os-content`).append(`
             <div class="message rain_bot">
                 <div class="content">
-                    <div class="rain_users">${users}</div>
                     <div class="mt-2 rain_desc">${$.lang(`general.${summer ? 'rain' : 'snow'}`, {
                             sum: bitcoin(message.data.reward, 'btc').to($.unit()).value().toFixed($.unit() === 'satoshi' ? 0 : 8),
                             currency: window.Laravel.currency[message.data.currency].name
                         })}${message.data.from === undefined ? '' : `&nbsp;(<a style="color: #a8a8a8" href="/user/${message.data.from._id}" class="disable-pjax" target="_blank">${$.formatName(message.data.from.name)}</a>)`}</div>
+                            <div class="rain_users">${users}</div>
+                            <hr>
+                            <div onclick="redirect('https://t.me/bigzcasino/')" class="btn btn-primary-small-dark p-1 m-1 mt-3 d-none d-md-block" style="min-width: 100% !important;">Join Telegram</div>
                 </div>
                 </div>
             </div>

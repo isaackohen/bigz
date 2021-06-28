@@ -17,16 +17,15 @@ use Carbon\Carbon;
 
     ?>
     @if($name != $freespinslot && $user->freegames > 0)
-  <div class="container-lg" style="z-index: 1;">
+  <div class="container-lg mt-5" style="z-index: 1;">
 
 <div class="alert alert-info" role="alert">
   You still have {{ $user->freegames }} free spins. Please complete your free spins on {{ $slotname }} or {{ $evoslotname }} before playing other slots.
 </div>
-<button onclick="redirect('/slots/{{ $freespinslot }}')" class="btn btn-primary p-1 m-1">{{ $slotname }}</button> <button onclick="redirect('/slots-evo/{{ $evoslotabsolute }}')" class="btn btn-primary p-1 m-1">{{ $evoslotname }}</button> <button onclick="redirect('/help/')" class="btn btn-secondary p-1 m-1">Help</button>
+<button onclick="redirect('/slots/{{ $freespinslot }}')" class="btn btn-primary-small-dark m-1 mt-1">{{ $slotname }}</button> <button onclick="redirect('/slots-evo/{{ $evoslotabsolute }}')" class="btn btn-primary-small-dark m-1 mt-1">{{ $evoslotname }}</button> <button onclick="redirect('/support/')" class="btn btn-primary-small-dark m-1 mt-1">Support</button>
 </div>
 <hr>
       @else
-
 
 
 <style>

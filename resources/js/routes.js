@@ -1,13 +1,12 @@
 $.routes = function() {
     return {
         '/': ['/js/pages/index.js'],
-        '/help': ['/js/pages/help.js'],
+        '/support': ['/js/pages/support.js'],
         '/bonus': ['/js/pages/bonus.js'],
         '/user': ['/js/pages/user.js'],
         '/fairness': ['/js/pages/fairness.js'],
 		'/leaderboard': ['/js/pages/leaderboard.js'],
         '/partner': ['/js/pages/partner.js'],
-        '/gamelist': ['/js/pages/gamelist.js'],
         '/game': [`/js/pages/${window.location.pathname.substr(window.location.pathname.lastIndexOf('/') + 1)}.js`],
         '/game/slot': ['/js/pages/slot.js'],
         '/game/slot/evoplay/': ['/js/pages/evoplay.js'],

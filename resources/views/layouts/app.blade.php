@@ -89,6 +89,7 @@
     <body>
         <div class="pageLoader">
             <img style="position: absolute; top: 0; bottom: 0; margin: auto; left: 0; right: 0; height: 100px; width: 100px;" src="/img/logo/bigz-preload-small.gif">
+
         </div>
     </div>
 </div>
@@ -104,7 +105,7 @@
                 <div class="menu" style="z-index: 99999; left: 0; margin: 0 auto; top: 2px; text-align: center;">
                     <div class="dropdown-top-menu">
                         
-                        <a href="/" data-page-trigger="'/'" data-toggle-class="active"><i class="fad fa-lemon" style="margin-bottom:  1px; font-size: 10px !important";></i> Casino</a>
+                        <a href="/" data-page-trigger="'/welcome'" data-toggle-class="active"><i class="fad fa-lemon" style="margin-bottom:  1px; font-size: 10px !important";></i> Casino</a>
                         <div class="dropdown-top-menu-content">
                             <div class="menu-divider">
                                 <div class="row">
@@ -268,7 +269,7 @@
                             @endforeach
                             <div class="option" onclick="redirect('/poker/')" style="font-family: Proxima Nova Semi Bd;text-shadow: 1px 1px black;border-top: 1px solid #354144;background: #212e34;">
                                 <div class="wallet-switcher-icon">
-                                    <img src="/img/currency/svg/bonus.svg" style="width: 18px; height: 18px;">
+                                    <i class="fad fa-balance-scale"></i>
                                 </div>
                                 <div class="wallet-switcher-content">
                                     <div>Exchange Poker Balance</div>
@@ -435,10 +436,16 @@
         </div>
     </div>
 
-                                @if(!auth()->guest())
 
                 <div class="chat">
                     <div class="fixed">
+                        <div id="notification-append"> 
+                          @foreach(\App\GlobalNotification::get() as $notification)
+                          <div id="bigz-notification-alert" class="alert" role="alert" style="">
+                            {{ $notification->text }}    
+                        </div>
+                            @endforeach
+                        </div>
                         <div class="chat-input-hint chatCommands" style="display: none"></div>
                         <div data-user-tag class="chat-input-hint" style="display: none">
                             <div class="hint-content"></div>
@@ -493,7 +500,6 @@
                         </div>
                     </div>
                 </div>
-                                                        @endif
 
     <div class="draggableWindow">
         <div class="head">
@@ -667,9 +673,7 @@
 </body>
 </html>
 
-            @if(!auth()->guest())
-
-
+@if(!auth()->guest())
     <?php
     $deposits = (\App\Invoice::where('user', auth()->user()->_id)->where('status', 1)->where('ledger', '!=','Offerwall Credit')->count());
     $registercount = (\App\User::where('register_multiaccount_hash', auth()->user()->register_multiaccount_hash)->count());
@@ -680,13 +684,10 @@
 
 <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="f21aff7c-4109-4ccb-8b4f-1ff1556bd897";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
 </script>
-
-
-            <script>
+<script>
                             $crisp.push(["set", "user:nickname", ["{{ auth()->user()->name }}"]])
                             $crisp.push(["set", "user:email", ["{{ auth()->user()->email }}"]])
-Code: $crisp.push(["set", "session:data", [[["uid", "{{ auth()->user()->id }}" ], ["vipLevel", "{{ auth()->user()->vipLevel() }}"], ["deposits", "{{ $deposits }}"],   ["freespins", "{{ auth()->user()->freegames }}"], ["created", "{{ auth()->user()->created_at }}"], ["register_ip", "{{ auth()->user()->register_ip }}"], ["login_ip", "{{ auth()->user()->login_ip }}"], ["accounts_loginhash", "{{ $logincount }}"], ["accounts_registerhash", "{{ $registercount }}"], ["accounts_registerip", "{{ $registeripcount }}"], ["accounts_loginip", "{{ $loginipcount }}"],  ]]])
-
+                            Code: $crisp.push(["set", "session:data", [[["uid", "{{ auth()->user()->id }}" ], ["vipLevel", "{{ auth()->user()->vipLevel() }}"], ["deposits", "{{ $deposits }}"],   ["freespins", "{{ auth()->user()->freegames }}"], ["created", "{{ auth()->user()->created_at }}"], ["register_ip", "{{ auth()->user()->register_ip }}"], ["login_ip", "{{ auth()->user()->login_ip }}"], ["accounts_loginhash", "{{ $logincount }}"], ["accounts_registerhash", "{{ $registercount }}"], ["accounts_registerip", "{{ $registeripcount }}"], ["accounts_loginip", "{{ $loginipcount }}"],  ]]])
 </script>
 
 @endif

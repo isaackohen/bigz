@@ -2,7 +2,7 @@
 
 return [
     'rank' => [
-        'level' => 'Loyalty Club - :level',
+        'level' => 'VIP Club - :level',
         '0' => 'New',
         '1' => 'Emerald',
         '2' => 'Amethyst',
@@ -10,10 +10,10 @@ return [
         '4' => 'Platinum',
         '5' => 'Diamond'
     ],
-    'description' => 'Your Loyalty Level increases simply by wagering bets in most games in any currency.',
-    'description.2' => 'Your progress to next Loyalty rank can be followed here.',
-    'benefits_description' => 'Loyalty Rewards:',
-    'benefits' => 'Loyalty Club Rankings:',
+    'description' => 'Your VIP Level increases simply by wagering bets in most games in any currency.',
+    'description.2' => 'Your progress to next VIP rank can be followed here.',
+    'benefits_description' => 'VIP Rewards:',
+    'benefits' => 'VIP Club Rankings:',
     'benefit_list' => [
         'emerald' => [
             '1' => 'Daily Cashback Feature unlocked',
@@ -49,11 +49,11 @@ return [
         'tooltip' => 'Daily Cashback',
         'title' => 'Daily Cashback',
         'progress_title' => 'Progress',
-        'description' => "Once you reach Emerald Rank <svg style='width: 14px; height: 14px'><use href='#vip-emerald'></use></svg> within Loyalty Club, you are eligible to use Daily Royalty Feature. 
-        Each wager over ".\App\Settings::where('name', 'dailybonus_minbet_slots')->first()->value." unlock 0.01% of your total daily Royalty Prize.<br>
-                          <br>The total size of which is determined by your Loyalty Club Rank.<br>
-                          <br>You can cash-in your Daily Royalty at any time, but keep in mind that after this you will not be able to receive this cash reward for the rest of the day.
-                          <br><br>We reset the Daily Royaltys every day at midnight. So make sure to remember to take the reward before midnight!",
-        'timeout' => "<br><strong>You have already received Daily Royalty.</strong><br>Come back tomorrow!<br><br>"
+        'description' => "Once you reach Emerald Rank <svg style='width: 14px; height: 14px'><use href='#vip-emerald'></use></svg> within VIP Club, you are eligible to use Daily Cashback Feature. 
+        Each wager over ".\App\Settings::where('name', 'dailybonus_minbet_slots')->first()->value." unlock 0.01% of your total daily cashback reward.<br>
+                          <br>The total size of which is determined by your VIP Club Rank.<br>
+                          <br>You can cash-in your Daily Cashback at any time, but keep in mind that after this you will not be able to receive this cash reward for the rest of the day.
+                          <br><br>We reset the Daily Cashback every day at midnight. So make sure to remember to take the reward before midnight!",
+        'timeout' => "<br><strong>You have already received Daily Cashback.</strong><br>Come back tomorrow!<br><br>"
     ]
 ];

@@ -12,6 +12,9 @@ $.on('/poker', function() {
 				if(error === 0) $.error($.lang('general.poker.mindeposit'));
                 if(error === 1) $.error($.lang('general.poker.invalid'));
                 if(error === 2) $.error($.lang('general.poker.notenough'));
+                if(error === 3) $.error($.lang('general.poker.needdeposit'));
+                if(error === 4) $.error($.lang('general.poker.btcdeposit'));
+
             });
         });
 
@@ -26,6 +29,8 @@ $.on('/poker', function() {
 				if(error === 0) $.error($.lang('general.poker.minwithdraw'));
                 if(error === 1) $.error($.lang('general.poker.invalid'));
                 if(error === 2) $.error($.lang('general.poker.notenough'));
+                if(error === 3) $.error($.lang('general.poker.needdeposit'));
+                if(error === 4) $.error($.lang('general.poker.btcdeposit'));
         });
     });
     

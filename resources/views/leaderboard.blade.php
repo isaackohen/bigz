@@ -10,16 +10,16 @@ use Carbon\Carbon;
         <div class="leaderboard-Tabs">
             <div class="leaderboard-TabGroup">
                 <div class="leaderboard-Tab active">
-                    Hourly
-					<canvas class="ink" height="73.00000108778477" width="196.0000029206276" style="border-radius: inherit; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%;"></canvas>
-                </div>
-                <div class="leaderboard-Tab">
                     Daily
 					<canvas class="ink" height="73.00000108778477" width="196.0000029206276" style="border-radius: inherit; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%;"></canvas>
                 </div>
                 <div class="leaderboard-Tab">
                     Weekly
 					<canvas class="ink" height="73.00000108778477" width="196.0000029206276" style="border-radius: inherit; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%;"></canvas>
+                </div>
+                <div class="leaderboard-Tab disabled">
+                    Hourly (soon)
+                    <canvas class="ink" height="73.00000108778477" width="196.0000029206276" style="border-radius: inherit; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%;"></canvas>
                 </div>
                 <div class="leaderboard-TabFill"></div>
             </div>
@@ -70,7 +70,7 @@ use Carbon\Carbon;
         </div>
     </div>
 	<!--- hourly --->
-    <div class="leaderboard-Table">
+    <div class="leaderboard-Table" style="display: none;">
         <div class="leaderboard-RowBase Header">
             <div class="leaderboard-cell1">#</div>
             <div class="leaderboard-cell2">Player</div>
@@ -93,7 +93,20 @@ use Carbon\Carbon;
                 <div class="leaderboard-user-fill"></div>
                 <div class="leaderboard-user-wager">
                     <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
-                    <div class="leaderboard-user-wager-info">--<span>.--</span></div>
+                    <div class="leaderboard-user-wager-info">
+                        
+                        @if($loop->first)
+                                    <span>{{ \App\Settings::where('name', 'races_prize_1st')->first()->value }}</span>
+                                    @elseif($loop->index == 1)
+                                    <span>{{ \App\Settings::where('name', 'races_prize_2nd')->first()->value }}</span>
+                                    @elseif($loop->index == 2)
+                                    <span>{{ \App\Settings::where('name', 'races_prize_3rd')->first()->value }}</span>
+                                    @else
+                                    <span>{{ \App\Settings::where('name', 'races_prize_freespins')->first()->value }}</span>
+                            @endif
+
+
+                    </div>
                 </div>
                 <div class="leaderboard-user-wager">
                     <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
@@ -109,7 +122,7 @@ use Carbon\Carbon;
     </div>
 	<!--- hourly end --->
 		<!--- daily --->
-    <div class="leaderboard-Table" style="display: none;">
+    <div class="leaderboard-Table">
         <div class="leaderboard-RowBase Header">
             <div class="leaderboard-cell1">#</div>
             <div class="leaderboard-cell2">Player</div>
@@ -130,8 +143,18 @@ use Carbon\Carbon;
                 </div>
                 <div class="leaderboard-user-fill"></div>
                 <div class="leaderboard-user-wager">
-                    <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
-                    <div class="leaderboard-user-wager-info">--<span>.--</span></div>
+                    <div class="leaderboard-user-wager-info">                        @if($loop->first)
+                                    <span>                    <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
+ {{ \App\Settings::where('name', 'races_prize_1st')->first()->value }}</span>
+                                    @elseif($loop->index == 1)
+                                    <span>                    <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
+ {{ \App\Settings::where('name', 'races_prize_2nd')->first()->value }}</span>
+                                    @elseif($loop->index == 2)
+                                    <span>                    <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
+ {{ \App\Settings::where('name', 'races_prize_3rd')->first()->value }}</span>
+                                    @else
+                                    <span>{{ \App\Settings::where('name', 'races_prize_freespins')->first()->value }}</span>
+                            @endif</div>
                 </div>
                 <div class="leaderboard-user-wager">
                     <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
@@ -168,8 +191,18 @@ use Carbon\Carbon;
                 </div>
                 <div class="leaderboard-user-fill"></div>
                 <div class="leaderboard-user-wager">
-                    <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
-                    <div class="leaderboard-user-wager-info">--<span>.--</span></div>
+                    <div class="leaderboard-user-wager-info">                        @if($loop->first)
+                                    <span>                    <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
+ {{ \App\Settings::where('name', 'races_prize_1st_weekly')->first()->value }}</span>
+                                    @elseif($loop->index == 1)
+                                    <span>                    <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
+ {{ \App\Settings::where('name', 'races_prize_2nd_weekly')->first()->value }}</span>
+                                    @elseif($loop->index == 2)
+                                    <span>                    <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
+ {{ \App\Settings::where('name', 'races_prize_3rd_weekly')->first()->value }}</span>
+                                    @else
+                                    <span>{{ \App\Settings::where('name', 'races_prize_freespins_weekly')->first()->value }}</span>
+                            @endif</div>
                 </div>
                 <div class="leaderboard-user-wager">
                     <i class="fas fa-usd-circle" style="color: #02b320; margin-top: 2px; margin-right: 4px;"></i>
