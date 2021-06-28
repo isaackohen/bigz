@@ -7,8 +7,8 @@
 
     {{ $rows->render() }}
 
-    <div class="table-responsive">
-        <table class="table table-condensed table-hover table-stats">
+    <div class="bootstrap-table-responsive">
+        <table class="bootstrap-table bootstrap-table-condensed bootstrap-table-hover table-stats">
             <thead>
                 <tr>
                     @foreach($headers as $key => $header)

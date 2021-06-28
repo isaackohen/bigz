@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-body">
                 <h5>Users</h5>
-                    <table id="datatable" class="table dt-responsive nowrap">
+                    <table id="datatable" class="bootstrap-table dt-responsive nowrap">
                         <thead>
                             <tr>
                                 <th>Username</th>

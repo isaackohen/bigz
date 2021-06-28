@@ -113,7 +113,7 @@
             <div class="card">
                 <div class="card-body p-3">
                     <h5>Deposits</h5>
-                    <table id="deposits" class="table dt-responsive nowrap">
+                    <table id="deposits" class="bootstrap-table dt-responsive nowrap">
                         <thead>
                             <tr>
                                 <th>Date</th>
@@ -140,7 +140,7 @@
                 <div class="card">
                     <div class="card-body p-3">
                         <h5>Withdrawals</h5>
-                        <table id="withdraws" class="table dt-responsive nowrap">
+                        <table id="withdraws" class="bootstrap-table dt-responsive nowrap">
                             <thead>
                                 <tr>
                                     <th>Date</th>
@@ -169,7 +169,7 @@
                     <div class="card">
                         <div class="card-body p-3">
                             <h5>Offerwall</h5>
-                            <table id="offerwall" class="table dt-responsive nowrap">
+                            <table id="offerwall" class="bootstrap-table dt-responsive nowrap">
                                 <thead>
                                     <tr>
                                         <th>Date</th>

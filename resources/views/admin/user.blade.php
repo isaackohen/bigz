@@ -24,8 +24,8 @@
                     </div>
 
                     <div class="mt-3 pt-2 border-top">
-                        <div class="table-responsive">
-                            <table class="table table-borderless mb-0 text-muted">
+                        <div class="bootstrap-table-responsive">
+                            <table class="bootstrap-table bootstrap-table-borderless mb-0 text-muted">
                                 <tbody>
                                     <tr>
                                         <th scope="row">Register IP</th>
@@ -140,7 +140,7 @@
         <div class="col-lg-9">
             <div class="card">
                 <div class="card-body">
-                    <table class="table dt-responsive nowrap">
+                    <table class="bootstrap-table dt-responsive nowrap">
                         <thead>
                         <tr>
                             <th>Currency</th>
@@ -262,7 +262,7 @@
                     @endif
                     <hr>
 
-                    <table id="transactions" class="table dt-responsive nowrap">
+                    <table id="transactions" class="bootstrap-table dt-responsive nowrap">
                         <thead>
                         <tr>
                             <th>Date</th>
@@ -286,7 +286,7 @@
                     </table>
                                         <hr>
 
-                    <table id="datatable" class="table dt-responsive nowrap">
+                    <table id="datatable" class="bootstrap-table dt-responsive nowrap">
                         <thead>
                             <tr>
                                 <th>Game</th>
