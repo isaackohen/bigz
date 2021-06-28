@@ -29,7 +29,8 @@
         "uglifyjs-webpack-plugin": "^2.2.0",
         "vue-template-compiler": "^2.6.11",
         "webpack-bundle-analyzer": "^3.8.0",
-        "webpack-obfuscator": "^0.28.2"
+        "webpack-obfuscator": "^0.28.2",
+        "tailwindcss": "^2.0"
     },
     "dependencies": {
         "@glidejs/glide": "^3.4.1",
