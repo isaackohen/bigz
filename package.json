@@ -4,20 +4,19 @@
     "private": true,
     "scripts": {
         "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch": "npm run development -- --watch",
-        "watch-poll": "npm run watch -- --watch-poll",
-        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
         "axios": ">=0.21.1",
         "bootstrap": "^4.6.0",
-        "cross-env": "^7.0",
         "cssnano": "^4.1.10",
         "jquery": "^3.6",
-        "laravel-mix": "^5.0.1",
+        "laravel-mix": "^6.0.12",
         "lodash": "^4.17.13",
         "mdb-ui-kit": "git+https://oauth2:RSvijhXTCHzKSR8Yry2J@git.mdbootstrap.com/mdb/standard/mdb-ui-kit-pro-essential",
         "optimize-css-assets-webpack-plugin": "^5.0.3",
@@ -30,7 +29,8 @@
         "vue-template-compiler": "^2.6.11",
         "webpack-bundle-analyzer": "^3.8.0",
         "webpack-obfuscator": "^0.28.2",
-        "tailwindcss": "^2.0"
+        "tailwindcss": "^2.0",
+        "postcss": "^8.2.8"
     },
     "dependencies": {
         "@glidejs/glide": "^3.4.1",
