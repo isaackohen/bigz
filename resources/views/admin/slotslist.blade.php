@@ -21,7 +21,7 @@
     <div class="col-12">
         <div class="card">
                 <div class="card-body">
-                    <table id="datatable" class="table dt-responsive nowrap">
+                    <table id="datatable" class="bootstrap-table dt-responsive nowrap">
                         <thead>
                             <tr>
                                 <th scope="col" style="width: 5%">Id</th>

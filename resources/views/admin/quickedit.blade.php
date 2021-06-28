@@ -28,8 +28,8 @@
                     </div>
                     <div class="mt-3 pt-2 border-top">
                         <h4 class="mb-3 font-size-15">Info</h4>
-                        <div class="table-responsive">
-                            <table class="table table-borderless mb-0 text-muted">
+                        <div class="bootstrap-table-responsive">
+                            <table class="bootstrap-table bootstrap-table-borderless mb-0 text-muted">
                                 <tbody>
                                     <tr>
                                         <th scope="row">Games</th>
@@ -124,7 +124,7 @@
         <div class="col-lg-9">
             <div class="card">
                 <div class="card-body">
-                    <table class="table dt-responsive nowrap">
+                    <table class="bootstrap-table dt-responsive nowrap">
                         <thead>
                         <tr>
                             <th>Currency</th>
@@ -221,7 +221,7 @@
                     <div class="alert alert-danger mb-4 p-4 text-center" role="alert">Only last 50 transactions and no games are shown as you are on Quick View. Go to <a style="color: blue; cursor: pointer;" onclick="redirect('/admin/user/{{ $user->_id }}')">Full View</a> for full transactions/games.</div>
 
 
-                    <table id="transactions" class="table dt-responsive nowrap">
+                    <table id="transactions" class="bootstrap-table dt-responsive nowrap">
                         <thead>
                         <tr>
                             <th>Date</th>

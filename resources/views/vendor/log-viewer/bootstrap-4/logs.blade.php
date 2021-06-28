@@ -7,8 +7,8 @@
         <h1>Logs</h1>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-sm table-hover">
+    <div class="bootstrap-table-responsive">
+        <table class="bootstrap-table bootstrap-table-sm bootstrap-table-hover">
             <thead>
                 <tr>
                     @foreach($headers as $key => $header)

@@ -53,8 +53,8 @@
                         </a>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-condensed">
+                <div class="bootstrap-table-responsive">
+                    <table class="bootstrap-table bootstrap-table-condensed">
                         <thead>
                             <tr>
                                 <td>@lang('File path') :</td>
@@ -117,8 +117,8 @@
                     </div>
                 @endif
 
-                <div class="table-responsive">
-                    <table id="entries" class="table table-condensed">
+                <div class="bootstrap-table-responsive">
+                    <table id="entries" class="bootstrap-table bootstrap-table-condensed">
                         <thead>
                             <tr>
                                 <th>@lang('ENV')</th>

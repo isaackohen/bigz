@@ -17,8 +17,8 @@
                 </a>
                 <h5 class="card-title mt-0 mb-0 header-title">Global Notifications</h5>
 
-                <div class="table-responsive mt-4">
-                    <table class="table table-hover table-nowrap mb-0">
+                <div class="bootstrap-table-responsive mt-4">
+                    <table class="bootstrap-table bootstrap-table-hover table-nowrap mb-0">
                         <thead>
                             <tr>
                                 <th scope="col" style="width: 10%">Icon</th>

@@ -49,8 +49,8 @@
                         </a>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-condensed mb-0">
+                <div class="bootstrap-table-responsive">
+                    <table class="bootstrap-table bootstrap-table-condensed mb-0">
                         <tbody>
                             <tr>
                                 <td>File path :</td>
@@ -109,8 +109,8 @@
                     </div>
                 @endif
 
-                <div class="table-responsive">
-                    <table id="entries" class="table mb-0">
+                <div class="bootstrap-table-responsive">
+                    <table id="entries" class="bootstrap-table mb-0">
                         <thead>
                             <tr>
                                 <th>ENV</th>
